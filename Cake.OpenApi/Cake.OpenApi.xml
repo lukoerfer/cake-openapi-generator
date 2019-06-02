@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Cake.OpenApi</name>
+    </assembly>
+    <members>
+        <member name="T:Cake.OpenApi.OpenApiAddin">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cake.OpenApi.OpenApiAddin.#ctor(Cake.Core.ICakeContext,Cake.OpenApi.OpenApiSettings)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <param name="settings"></param>
+        </member>
+        <member name="M:Cake.OpenApi.OpenApiAddin.Validate(Cake.Core.IO.FilePath,System.Boolean)">
+            <summary>
+            Validates an OpenAPI specification in a specified file
+            </summary>
+            <param name="inputFile"></param>
+            <param name="recommend"></param>
+        </member>
+        <member name="M:Cake.OpenApi.OpenApiAddin.Validate(System.Uri,System.Boolean)">
+            <summary>
+            Validates an OpenAPI specification at a specified URI
+            </summary>
+            <param name="inputSource"></param>
+            <param name="recommend"></param>
+        </member>
+        <member name="M:Cake.OpenApi.OpenApiAddin.Validate(System.Action{Cake.OpenApi.OpenApiValidateOptions})">
+            <summary>
+            Validates an OpenAPI specification based on the specified options
+            </summary>
+            <param name="handler">A handler to configure the options</param>
+        </member>
+        <member name="M:Cake.OpenApi.OpenApiAddin.Validate(Cake.OpenApi.OpenApiValidateOptions)">
+            <summary>
+            Validates an OpenAPI specification based on the specified options
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="M:Cake.OpenApi.OpenApiAddin.Generate(Cake.Core.IO.FilePath,System.String,Cake.Core.IO.DirectoryPath)">
+            <summary>
+            Generates OpenAPI files based on a specification file and a generator type at an output directory
+            </summary>
+            <param name="inputFile"></param>
+            <param name="generator"></param>
+            <param name="outputDirectory"></param>
+        </member>
+        <member name="M:Cake.OpenApi.OpenApiAddin.Generate(System.Uri,System.String,Cake.Core.IO.DirectoryPath)">
+            <summary>
+            Generates OpenAPI files based on a specification at some URI and a generator type at an output directory
+            </summary>
+            <param name="inputSource"></param>
+            <param name="generator"></param>
+            <param name="outputDirectory"></param>
+        </member>
+        <member name="M:Cake.OpenApi.OpenApiAddin.Generate(System.Action{Cake.OpenApi.OpenApiGenerateOptions})">
+            <summary>
+            Generates OpenAPI files based on the specified options
+            </summary>
+            <param name="handler"></param>
+        </member>
+        <member name="M:Cake.OpenApi.OpenApiAddin.Generate(Cake.OpenApi.OpenApiGenerateOptions)">
+            <summary>
+            Generates OpenAPI files based on the specified options
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="T:Cake.OpenApi.OpenApiAliases">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Cake.OpenApi.OpenApiAliases.SetupOpenAPI(Cake.Core.ICakeContext,System.String,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <param name="tool"></param>
+            <param name="version"></param>
+            <param name="endpoint"></param>
+        </member>
+        <member name="M:Cake.OpenApi.OpenApiAliases.SetupOpenAPI(Cake.Core.ICakeContext,System.Action{Cake.OpenApi.OpenApiSettings})">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <param name="handler"></param>
+        </member>
+        <member name="M:Cake.OpenApi.OpenApiAliases.SetupOpenAPI(Cake.Core.ICakeContext,Cake.OpenApi.OpenApiSettings)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <param name="settings"></param>
+        </member>
+        <member name="M:Cake.OpenApi.OpenApiAliases.OpenAPI(Cake.Core.ICakeContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Cake.OpenApi.OpenApiGenerateOptions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.InputSource">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.Generator">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.OutputDirectory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.AdditionalProperties">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.ImportMappings">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.TypeMappings">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Cake.OpenApi.OpenApiSettings">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiSettings.Tool">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiSettings.Version">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiSettings.Endpoint">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Cake.OpenApi.OpenApiValidateOptions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiValidateOptions.InputSource">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiValidateOptions.Recommend">
+            <summary>
+            
+            </summary>
+        </member>
+    </members>
+</doc>
