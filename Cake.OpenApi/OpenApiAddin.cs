@@ -30,72 +30,72 @@ namespace Cake.OpenApi
         }
 
         /// <summary>
-        /// Validates an OpenAPI specification in a specified file
+        /// Validates an OpenAPI specification from a file
         /// </summary>
-        /// <param name="inputFile"></param>
+        /// <param name="specification"></param>
         /// <param name="recommend"></param>
-        public void Validate(FilePath inputFile, bool recommend = false)
+        public void Validate(FilePath specification = null, bool recommend = false)
         {
-            Validate(new Uri(inputFile.FullPath, UriKind.RelativeOrAbsolute), recommend);
+            Validate(specification?.ToUri(), recommend);
         }
 
         /// <summary>
-        /// Validates an OpenAPI specification at a specified URI
+        /// Validates an OpenAPI specification from a URI
         /// </summary>
-        /// <param name="inputSource"></param>
+        /// <param name="specification"></param>
         /// <param name="recommend"></param>
-        public void Validate(Uri inputSource, bool recommend = false)
+        public void Validate(Uri specification = null, bool recommend = false)
         {
             OpenApiValidateOptions options = new OpenApiValidateOptions()
             {
-                InputSource = inputSource,
+                InputSource = specification,
                 Recommend = recommend
             };
             Validate(options);
         }
 
         /// <summary>
-        /// Validates an OpenAPI specification based on the specified options
+        /// Validates an OpenAPI specification
         /// </summary>
         /// <param name="handler">A handler to configure the options</param>
         public void Validate(Action<OpenApiValidateOptions> handler)
         {
             OpenApiValidateOptions options = new OpenApiValidateOptions();
-            handler.Invoke(options);
+            handler?.Invoke(options);
             Validate(options);
         }
 
         /// <summary>
-        /// Validates an OpenAPI specification based on the specified options
+        /// Validates an OpenAPI specification
         /// </summary>
         /// <param name="options"></param>
         public void Validate(OpenApiValidateOptions options)
         {
-            _generator.Validate(options);
+            _generator.Validate(options ?? new OpenApiValidateOptions());
         }
 
         /// <summary>
-        /// Generates OpenAPI files based on a specification file and a generator type at an output directory
+        /// Generates OpenAPI files based on a specification from a file
         /// </summary>
-        /// <param name="inputFile"></param>
+        /// <param name="specification"></param>
         /// <param name="generator"></param>
         /// <param name="outputDirectory"></param>
-        public void Generate(FilePath inputFile, string generator, DirectoryPath outputDirectory)
+        public void Generate(FilePath specification = null, string generator = null, DirectoryPath outputDirectory = null)
         {
-            Generate(new Uri(inputFile.FullPath, UriKind.RelativeOrAbsolute), generator, outputDirectory);
+            Generate(specification?.ToUri(), generator, outputDirectory);
         }
 
         /// <summary>
-        /// Generates OpenAPI files based on a specification at some URI and a generator type at an output directory
+        /// Generates OpenAPI files based on a specification from a URI
         /// </summary>
-        /// <param name="inputSource"></param>
+        /// <param name="specification"></param>
         /// <param name="generator"></param>
         /// <param name="outputDirectory"></param>
-        public void Generate(Uri inputSource, string generator, DirectoryPath outputDirectory)
+        public void Generate(Uri specification = null, string generator = null, DirectoryPath outputDirectory = null)
         {
             OpenApiGenerateOptions options = new OpenApiGenerateOptions()
             {
-                InputSource = inputSource,
+                Specification = specification,
                 Generator = generator,
                 OutputDirectory = outputDirectory
             };
@@ -103,25 +103,24 @@ namespace Cake.OpenApi
         }
 
         /// <summary>
-        /// Generates OpenAPI files based on the specified options
+        /// Generates OpenAPI files
         /// </summary>
         /// <param name="handler"></param>
         public void Generate(Action<OpenApiGenerateOptions> handler)
         {
             OpenApiGenerateOptions options = new OpenApiGenerateOptions();
-            handler.Invoke(options);
+            handler?.Invoke(options);
             Generate(options);
         }
 
         /// <summary>
-        /// Generates OpenAPI files based on the specified options
+        /// Generates OpenAPI files
         /// </summary>
         /// <param name="options"></param>
         public void Generate(OpenApiGenerateOptions options)
         {
-            _generator.Generate(options);
+            _generator.Generate(options ?? new OpenApiGenerateOptions());
         }
-
 
     }
 }

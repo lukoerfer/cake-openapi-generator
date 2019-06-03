@@ -23,7 +23,7 @@ namespace Cake.OpenApi.Internal
             ProcessArgumentBuilder arguments = GetBaseArguments()
                 .Append("generate")
                 .Append("-i")
-                .Append(options.InputSource.ToString())
+                .Append(options.Specification.ToString())
                 .Append("-g")
                 .Append(options.Generator)
                 .Append("-o")

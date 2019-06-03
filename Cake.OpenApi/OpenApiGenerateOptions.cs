@@ -13,7 +13,7 @@ namespace Cake.OpenApi
         /// <summary>
         /// 
         /// </summary>
-        public Uri InputSource { get; set; }
+        public Uri Specification { get; set; }
 
         /// <summary>
         /// 

@@ -17,6 +17,8 @@ namespace Cake.OpenApi.Internal
 
         private ToolResolution(ICakeContext context, OpenApiSettings settings)
         {
+            _context = context;
+            _settings = settings;
             _factory = new Dictionary<string, Func<Tool>>()
             {
                 { "installed", () => new InstalledTool(context, settings) },
