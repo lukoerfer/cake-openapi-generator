@@ -13,7 +13,7 @@ namespace Cake.OpenApi.Internal
     {
         private const string DEFAULT_VERSION = "3.3.4";
 
-        private static readonly Uri MAVEN_LOCAL = FindMavenLocal();
+        private static readonly Uri MAVEN_LOCAL = MavenLocal();
 
         private static readonly Uri MAVEN_CENTRAL = new Uri("http://central.maven.org/maven2/");
 
@@ -25,9 +25,9 @@ namespace Cake.OpenApi.Internal
             
         }
 
-        protected override ProcessArgumentBuilder GetBaseArguments()
+        protected override ProcessArgumentBuilder GetArguments()
         {
-            return base.GetBaseArguments()
+            return base.GetArguments()
                 .Append("-jar")
                 .Append(ResolvePackage().FullPath);
         }
@@ -52,7 +52,7 @@ namespace Cake.OpenApi.Internal
             return new Uri(path, UriKind.Relative);
         }
 
-        private static FilePath SearchJavaExecutable(ICakeContext context)
+        public static FilePath SearchJavaExecutable(ICakeContext context)
         {
             if (context.IsRunningOnWindows())
             {
@@ -68,7 +68,7 @@ namespace Cake.OpenApi.Internal
             }
         }
 
-        private static Uri FindMavenLocal()
+        private static Uri MavenLocal()
         {
             string userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             return new Uri(System.IO.Path.Combine(userProfile, ".m2/repository/"));

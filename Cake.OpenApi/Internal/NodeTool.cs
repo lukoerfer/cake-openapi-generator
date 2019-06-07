@@ -8,16 +8,20 @@ using Cake.Common;
 namespace Cake.OpenApi.Internal
 {
     internal class NodeTool : ExternalRuntimeTool
-    {        
-        public NodeTool(ICakeContext context, OpenApiSettings settings) 
+    {
+        public override bool IsProvided => base.IsProvided && _isJavaInstalled;
+
+        private readonly bool _isJavaInstalled;
+
+        public NodeTool(ICakeContext context, OpenApiSettings settings)
             : base(context, settings, SearchNpxExecutable(context))
         {
-            
+            _isJavaInstalled = JavaTool.SearchJavaExecutable(_context) != null;
         }
 
-        protected override ProcessArgumentBuilder GetBaseArguments()
+        protected override ProcessArgumentBuilder GetArguments()
         {
-            return base.GetBaseArguments()
+            return base.GetArguments()
                 .Append("-p")
                 .Append(GetPackageName())
                 .Append("openapi-generator");

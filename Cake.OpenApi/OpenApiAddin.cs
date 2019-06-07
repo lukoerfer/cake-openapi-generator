@@ -48,7 +48,7 @@ namespace Cake.OpenApi
         {
             OpenApiValidateOptions options = new OpenApiValidateOptions()
             {
-                InputSource = specification,
+                Specification = specification,
                 Recommend = recommend
             };
             Validate(options);
@@ -71,7 +71,11 @@ namespace Cake.OpenApi
         /// <param name="options"></param>
         public void Validate(OpenApiValidateOptions options)
         {
-            _generator.Validate(options ?? new OpenApiValidateOptions());
+            if (options?.Specification == null)
+            {
+                throw new ArgumentException("Missing parameter for OpenAPI validation", "specification");
+            }
+            _generator.Validate(options);
         }
 
         /// <summary>
@@ -119,7 +123,19 @@ namespace Cake.OpenApi
         /// <param name="options"></param>
         public void Generate(OpenApiGenerateOptions options)
         {
-            _generator.Generate(options ?? new OpenApiGenerateOptions());
+            if (options?.Specification == null)
+            {
+                throw new ArgumentException("Missing parameter for OpenAPI generation", "specification");
+            }
+            if (options?.Generator == null)
+            {
+                throw new ArgumentException("Missing parameter for OpenAPI generation", "generator");
+            }
+            if (options?.OutputDirectory == null)
+            {
+                throw new ArgumentException("Missing parameter for OpenAPI generation", "outputDirectory");
+            }
+            _generator.Generate(options);
         }
 
     }

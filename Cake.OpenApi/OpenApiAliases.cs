@@ -55,7 +55,14 @@ namespace Cake.OpenApi
         [CakeMethodAlias]
         public static void SetupOpenAPI(this ICakeContext context, OpenApiSettings settings)
         {
-            _settings = settings;
+            if (_settings == null)
+            {
+                _settings = settings ?? new OpenApiSettings();
+            }
+            else
+            {
+                throw new InvalidOperationException("Multiple calls to SetupOpenAPI are not allowed");
+            }
         }
 
         /// <summary>
@@ -90,7 +97,7 @@ namespace Cake.OpenApi
             string endpoint = context.ArgumentOrEnvironmentVariable("OPENAPI_ENDPOINT", "CAKE_", null);
             if (endpoint != null)
             {
-                _settings.Endpoint = new Uri(endpoint);
+                _settings.Endpoint = new Uri(endpoint, UriKind.Absolute);
             }
         }
     }

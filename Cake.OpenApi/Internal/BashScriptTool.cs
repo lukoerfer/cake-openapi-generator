@@ -20,9 +20,9 @@ namespace Cake.OpenApi.Internal
             
         }
 
-        protected override ProcessSettings SetupProcess()
+        protected override ProcessSettings GetProcessSettings()
         {
-            ProcessSettings process = base.SetupProcess();
+            ProcessSettings process = base.GetProcessSettings();
             if (_settings.IsVersionRequested)
             {
                 process.EnvironmentVariables.Add("OPENAPI_GENERATOR_VERSION", _settings.Version);

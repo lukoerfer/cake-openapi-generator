@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 using Cake.Common;
 using Cake.Core;
@@ -20,7 +22,7 @@ namespace Cake.OpenApi.Internal
 
         public override void Generate(OpenApiGenerateOptions options)
         {
-            ProcessArgumentBuilder arguments = GetBaseArguments()
+            ProcessArgumentBuilder arguments = GetArguments()
                 .Append("generate")
                 .Append("-i")
                 .Append(options.Specification.ToString())
@@ -28,15 +30,32 @@ namespace Cake.OpenApi.Internal
                 .Append(options.Generator)
                 .Append("-o")
                 .Append(options.OutputDirectory.FullPath);
+            if (options.ConfigurationFile != null)
+            {
+                arguments.Append("-c").Append(options.ConfigurationFile.ToString());
+            } 
+            // Ignore additional properties if configuration file is specified
+            else if (options.AdditionalProperties?.Count > 0)
+            {
+                arguments.AppendSwitch("additional-properties", GetArgumentDictionaryString(options.AdditionalProperties));
+            }
+            if (options.ImportMappings?.Count > 0)
+            {
+                arguments.AppendSwitch("import-mappings", GetArgumentDictionaryString(options.ImportMappings));
+            }
+            if (options.TypeMappings?.Count > 0)
+            {
+                arguments.AppendSwitch("type-mappings", GetArgumentDictionaryString(options.TypeMappings));
+            }
             RunProcess(arguments);
         }
 
         public override void Validate(OpenApiValidateOptions options)
         {
-            ProcessArgumentBuilder arguments = GetBaseArguments()
+            ProcessArgumentBuilder arguments = GetArguments()
                 .Append("validate")
                 .Append("-i")
-                .Append(options.InputSource.ToString());
+                .Append(options.Specification.ToString());
             if (options.Recommend)
             {
                 arguments.Append("--recommend");
@@ -44,21 +63,26 @@ namespace Cake.OpenApi.Internal
             RunProcess(arguments);
         }
 
-        protected virtual ProcessArgumentBuilder GetBaseArguments()
-        {
-            return new ProcessArgumentBuilder();
-        }
-
         private void RunProcess(ProcessArgumentBuilder arguments)
         {
-            ProcessSettings process = SetupProcess();
+            ProcessSettings process = GetProcessSettings();
             process.Arguments = arguments;
             _context.StartProcess(_executable, process);
         }
 
-        protected virtual ProcessSettings SetupProcess()
+        protected virtual ProcessArgumentBuilder GetArguments()
+        {
+            return new ProcessArgumentBuilder();
+        }
+
+        protected virtual ProcessSettings GetProcessSettings()
         {
             return new ProcessSettings();
+        }
+
+        private string GetArgumentDictionaryString(Dictionary<string, string> arguments)
+        {
+            return string.Join(",", arguments?.Select(entry => $"{entry.Key}={entry.Value}"));
         }
 
     }

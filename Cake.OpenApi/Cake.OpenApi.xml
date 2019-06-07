@@ -18,55 +18,55 @@
         </member>
         <member name="M:Cake.OpenApi.OpenApiAddin.Validate(Cake.Core.IO.FilePath,System.Boolean)">
             <summary>
-            Validates an OpenAPI specification in a specified file
+            Validates an OpenAPI specification from a file
             </summary>
-            <param name="inputFile"></param>
+            <param name="specification"></param>
             <param name="recommend"></param>
         </member>
         <member name="M:Cake.OpenApi.OpenApiAddin.Validate(System.Uri,System.Boolean)">
             <summary>
-            Validates an OpenAPI specification at a specified URI
+            Validates an OpenAPI specification from a URI
             </summary>
-            <param name="inputSource"></param>
+            <param name="specification"></param>
             <param name="recommend"></param>
         </member>
         <member name="M:Cake.OpenApi.OpenApiAddin.Validate(System.Action{Cake.OpenApi.OpenApiValidateOptions})">
             <summary>
-            Validates an OpenAPI specification based on the specified options
+            Validates an OpenAPI specification
             </summary>
             <param name="handler">A handler to configure the options</param>
         </member>
         <member name="M:Cake.OpenApi.OpenApiAddin.Validate(Cake.OpenApi.OpenApiValidateOptions)">
             <summary>
-            Validates an OpenAPI specification based on the specified options
+            Validates an OpenAPI specification
             </summary>
             <param name="options"></param>
         </member>
         <member name="M:Cake.OpenApi.OpenApiAddin.Generate(Cake.Core.IO.FilePath,System.String,Cake.Core.IO.DirectoryPath)">
             <summary>
-            Generates OpenAPI files based on a specification file and a generator type at an output directory
+            Generates OpenAPI files based on a specification from a file
             </summary>
-            <param name="inputFile"></param>
+            <param name="specification"></param>
             <param name="generator"></param>
             <param name="outputDirectory"></param>
         </member>
         <member name="M:Cake.OpenApi.OpenApiAddin.Generate(System.Uri,System.String,Cake.Core.IO.DirectoryPath)">
             <summary>
-            Generates OpenAPI files based on a specification at some URI and a generator type at an output directory
+            Generates OpenAPI files based on a specification from a URI
             </summary>
-            <param name="inputSource"></param>
+            <param name="specification"></param>
             <param name="generator"></param>
             <param name="outputDirectory"></param>
         </member>
         <member name="M:Cake.OpenApi.OpenApiAddin.Generate(System.Action{Cake.OpenApi.OpenApiGenerateOptions})">
             <summary>
-            Generates OpenAPI files based on the specified options
+            Generates OpenAPI files
             </summary>
             <param name="handler"></param>
         </member>
         <member name="M:Cake.OpenApi.OpenApiAddin.Generate(Cake.OpenApi.OpenApiGenerateOptions)">
             <summary>
-            Generates OpenAPI files based on the specified options
+            Generates OpenAPI files
             </summary>
             <param name="options"></param>
         </member>
@@ -110,7 +110,12 @@
             
             </summary>
         </member>
-        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.InputSource">
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.Specification">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.SpecificationFile">
             <summary>
             
             </summary>
@@ -130,12 +135,172 @@
             
             </summary>
         </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.ConfigurationFile">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:Cake.OpenApi.OpenApiGenerateOptions.ImportMappings">
             <summary>
             
             </summary>
         </member>
         <member name="P:Cake.OpenApi.OpenApiGenerateOptions.TypeMappings">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.Authorization">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.ApiPackage">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.ArtifactId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.ArtifactVersion">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.SystemProperties">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.TemplatingEngine">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.EnablePostProcessFile">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.GenerateAliasAsModel">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.GitRepository">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.GitUser">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.GroupId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.HttpUserAgent">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.IgnoreFile">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.InstantiationTypes">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.InvokerPackage">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.LanguageSpecificPrimitives">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.Library">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.LogToStandardError">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.MinimalUpdate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.ModelNamePrefix">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.ModelNameSuffix">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.ModelPackage">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.PackageName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.ReleaseNote">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.RemoveOperationIdPrefix">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.ReservedWordsMappings">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.SkipOverwrite">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.SkipValidation">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.StrictMode">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.TemplateDirectory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiGenerateOptions.Verbose">
             <summary>
             
             </summary>
@@ -165,12 +330,17 @@
             
             </summary>
         </member>
-        <member name="P:Cake.OpenApi.OpenApiValidateOptions.InputSource">
+        <member name="P:Cake.OpenApi.OpenApiValidateOptions.Specification">
             <summary>
             
             </summary>
         </member>
         <member name="P:Cake.OpenApi.OpenApiValidateOptions.Recommend">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Cake.OpenApi.OpenApiValidateOptions.SpecificationFile">
             <summary>
             
             </summary>

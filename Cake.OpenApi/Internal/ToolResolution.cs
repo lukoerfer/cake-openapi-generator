@@ -1,4 +1,5 @@
-﻿using Cake.Core;
+﻿using Cake.Common.Diagnostics;
+using Cake.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,8 +24,8 @@ namespace Cake.OpenApi.Internal
             {
                 { "installed", () => new InstalledTool(context, settings) },
                 { "bash", () => new BashScriptTool(context, settings) },
-                { "java", () => new JavaTool(context, settings) },
                 { "node", () => new NodeTool(context, settings) },
+                { "java", () => new JavaTool(context, settings) },
                 { "rest", () => new RestApiTool(context, settings) },
                 { "online", () => new OnlineTool(context, settings) }
             };
@@ -38,7 +39,14 @@ namespace Cake.OpenApi.Internal
         public Tool Get()
         {
             Tool generator = _settings.IsToolRequested ? GetRequested() : GetSuitable();
-
+            if (_settings.IsVersionRequested && !generator.SupportsVersion)
+            {
+                _context.Warning("The selected OpenAPI tool may not fulfill the requested version!");
+            }
+            if (_settings.IsEndpointRequested && !generator.SupportsEndpoint)
+            {
+                _context.Warning("The selected OpenAPI tool won't use the requested endpoint!");
+            }
             return generator;
         }
 
@@ -46,6 +54,7 @@ namespace Cake.OpenApi.Internal
         {
             if (_factory.TryGetValue(_settings.Tool, out Func<Tool> creator))
             {
+                _context.Information($"Using requested OpenAPI generator tool '{_settings.Tool}'");
                 return creator.Invoke();
             }
             else
