@@ -2,9 +2,9 @@
 
 using Cake.Core;
 using Cake.Core.Annotations;
-using Cake.OpenApi.Internal;
+using Cake.CodeGen.OpenApi.Internal;
 
-namespace Cake.OpenApi
+namespace Cake.CodeGen.OpenApi
 {
     /// <summary>
     /// Provides a wrapper to invoke the OpenAPI generator

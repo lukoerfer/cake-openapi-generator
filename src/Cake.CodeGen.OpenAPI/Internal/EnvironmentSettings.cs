@@ -2,7 +2,7 @@
 using Cake.Common;
 using Cake.Core;
 
-namespace Cake.OpenApi.Internal
+namespace Cake.CodeGen.OpenApi.Internal
 {
     internal static class EnvironmentSettings
     {

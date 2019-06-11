@@ -5,7 +5,7 @@ using Cake.Common;
 using Cake.Core;
 using Cake.Core.IO;
 
-namespace Cake.OpenApi.Internal.Tools
+namespace Cake.CodeGen.OpenApi.Internal.Tools
 {
     internal abstract class CommandLineTool : Tool
     {

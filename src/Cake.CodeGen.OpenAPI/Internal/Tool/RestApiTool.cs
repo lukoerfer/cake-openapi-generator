@@ -3,7 +3,7 @@
 using Cake.Core;
 using Cake.Http;
 
-namespace Cake.OpenApi.Internal.Tools
+namespace Cake.CodeGen.OpenApi.Internal.Tools
 {
     internal class RestApiTool : Tool
     {

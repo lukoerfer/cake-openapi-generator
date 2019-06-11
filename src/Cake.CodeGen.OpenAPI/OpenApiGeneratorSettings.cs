@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cake.OpenApi
+namespace Cake.CodeGen.OpenApi
 {
     /// <summary>
     /// 

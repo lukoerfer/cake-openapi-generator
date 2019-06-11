@@ -3,10 +3,10 @@
 using Cake.Core;
 using Cake.Core.IO;
 
-using Cake.OpenApi.Internal;
-using Cake.OpenApi.Internal.Tools;
+using Cake.CodeGen.OpenApi.Internal;
+using Cake.CodeGen.OpenApi.Internal.Tools;
 
-namespace Cake.OpenApi
+namespace Cake.CodeGen.OpenApi
 {
     /// <summary>
     /// 

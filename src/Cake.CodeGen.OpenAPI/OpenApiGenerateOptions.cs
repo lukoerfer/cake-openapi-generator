@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using Cake.Core.IO;
 
-namespace Cake.OpenApi
+namespace Cake.CodeGen.OpenApi
 {
     /// <summary>
     /// 

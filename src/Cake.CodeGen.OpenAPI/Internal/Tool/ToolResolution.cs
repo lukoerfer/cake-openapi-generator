@@ -5,7 +5,7 @@ using System.Linq;
 using Cake.Core;
 using Cake.Common.Diagnostics;
 
-namespace Cake.OpenApi.Internal.Tools
+namespace Cake.CodeGen.OpenApi.Internal.Tools
 {
     internal class ToolResolution
     {

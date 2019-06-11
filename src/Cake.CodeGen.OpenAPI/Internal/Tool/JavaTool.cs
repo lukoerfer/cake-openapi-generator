@@ -6,7 +6,7 @@ using Cake.Common;
 using Cake.Common.IO;
 using Cake.Common.Net;
 
-namespace Cake.OpenApi.Internal.Tools
+namespace Cake.CodeGen.OpenApi.Internal.Tools
 {
     internal class JavaTool : ExternalRuntimeTool
     {
