@@ -11,11 +11,11 @@ namespace Cake.OpenApi.Internal.Tools
     {
         private readonly ICakeContext Context;
 
-        private readonly OpenApiSettings Settings;
+        private readonly OpenApiGeneratorSettings Settings;
 
         private readonly Dictionary<string, Func<Tool>> Factory;
 
-        private ToolResolution(ICakeContext context, OpenApiSettings settings)
+        private ToolResolution(ICakeContext context, OpenApiGeneratorSettings settings)
         {
             Context = context;
             Settings = settings;
@@ -30,7 +30,7 @@ namespace Cake.OpenApi.Internal.Tools
             };
         }
 
-        public static ToolResolution Setup(ICakeContext context, OpenApiSettings settings)
+        public static ToolResolution Setup(ICakeContext context, OpenApiGeneratorSettings settings)
         {
             return new ToolResolution(context, settings);
         }

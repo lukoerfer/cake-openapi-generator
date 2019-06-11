@@ -5,7 +5,7 @@ namespace Cake.OpenApi
     /// <summary>
     /// 
     /// </summary>
-    public class OpenApiSettings
+    public class OpenApiGeneratorSettings
     {
         /// <summary>
         /// 

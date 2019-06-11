@@ -18,7 +18,7 @@ namespace Cake.OpenApi.Internal.Tools
 
         public override bool IsProvided => base.IsProvided;
 
-        public JavaTool(ICakeContext context, OpenApiSettings settings) 
+        public JavaTool(ICakeContext context, OpenApiGeneratorSettings settings) 
             : base(context, settings, SearchJavaExecutable(context))
         {
             

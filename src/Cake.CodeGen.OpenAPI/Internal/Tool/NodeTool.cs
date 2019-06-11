@@ -12,7 +12,7 @@ namespace Cake.OpenApi.Internal.Tools
 
         private readonly bool IsJavaInstalled;
 
-        public NodeTool(ICakeContext context, OpenApiSettings settings)
+        public NodeTool(ICakeContext context, OpenApiGeneratorSettings settings)
             : base(context, settings, SearchNpxExecutable(context))
         {
             IsJavaInstalled = JavaTool.SearchJavaExecutable(Context) != null;

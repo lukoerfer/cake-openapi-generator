@@ -13,17 +13,17 @@ namespace Cake.OpenApi
         /// <summary>
         /// 
         /// </summary>
-        public Uri Specification { get; set; }
+        internal Uri Specification { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public string Generator { get; set; }
+        internal string Generator { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public DirectoryPath OutputDirectory { get; set; }
+        internal DirectoryPath OutputDirectory { get; set; }
 
         /// <summary>
         /// 

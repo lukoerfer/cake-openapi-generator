@@ -12,9 +12,9 @@ namespace Cake.OpenApi
     [CakeAliasCategory("OpenAPI")]
     public static class OpenApiAliases
     {
-        private static OpenApiSettings Settings;
+        private static OpenApiGeneratorSettings Settings;
 
-        private static OpenApiRunner Runner;
+        private static OpenApiGenerator Runner;
 
         /// <summary>
         /// Defines the settings for the OpenAPI generator
@@ -24,15 +24,15 @@ namespace Cake.OpenApi
         /// <param name="version"></param>
         /// <param name="endpoint"></param>
         [CakeMethodAlias]
-        public static void SetupOpenAPI(this ICakeContext context, string tool = null, string version = null, string endpoint = null)
+        public static void SetupOpenApiGenerator(this ICakeContext context, string tool = null, string version = null, string endpoint = null)
         {
-            OpenApiSettings settings = new OpenApiSettings()
+            OpenApiGeneratorSettings settings = new OpenApiGeneratorSettings()
             {
                 Tool = tool,
                 Version = version,
                 Endpoint = string.IsNullOrWhiteSpace(endpoint) ? null : new Uri(endpoint)
             };
-            context.SetupOpenAPI(settings);
+            context.SetupOpenApiGenerator(settings);
         }
 
         /// <summary>
@@ -41,11 +41,11 @@ namespace Cake.OpenApi
         /// <param name="context"></param>
         /// <param name="handler"></param>
         [CakeMethodAlias]
-        public static void SetupOpenAPI(this ICakeContext context, Action<OpenApiSettings> handler)
+        public static void SetupOpenApiGenerator(this ICakeContext context, Action<OpenApiGeneratorSettings> handler)
         {
-            OpenApiSettings settings = new OpenApiSettings();
+            OpenApiGeneratorSettings settings = new OpenApiGeneratorSettings();
             handler.Invoke(settings);
-            context.SetupOpenAPI(settings);
+            context.SetupOpenApiGenerator(settings);
         }
 
         /// <summary>
@@ -54,11 +54,11 @@ namespace Cake.OpenApi
         /// <param name="context"></param>
         /// <param name="settings"></param>
         [CakeMethodAlias]
-        public static void SetupOpenAPI(this ICakeContext context, OpenApiSettings settings)
+        public static void SetupOpenApiGenerator(this ICakeContext context, OpenApiGeneratorSettings settings)
         {
             if (Settings == null)
             {
-                Settings = settings ?? new OpenApiSettings();
+                Settings = settings ?? new OpenApiGeneratorSettings();
             }
             else
             {
@@ -72,13 +72,13 @@ namespace Cake.OpenApi
         /// <param name="context"></param>
         /// <returns></returns>
         [CakePropertyAlias]
-        public static OpenApiRunner OpenAPI(this ICakeContext context)
+        public static OpenApiGenerator OpenApiGenerator(this ICakeContext context)
         {
             if (Runner == null)
             {
-                OpenApiSettings settings = Settings ?? new OpenApiSettings();
+                OpenApiGeneratorSettings settings = Settings ?? new OpenApiGeneratorSettings();
                 context.ApplyEnvironmentSettings(settings);
-                Runner = new OpenApiRunner(context, settings);
+                Runner = new OpenApiGenerator(context, settings);
             }
             return Runner;
         }

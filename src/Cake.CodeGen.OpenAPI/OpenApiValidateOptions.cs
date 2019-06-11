@@ -6,17 +6,17 @@ namespace Cake.OpenApi
     /// <summary>
     /// 
     /// </summary>
-    public class OpenApiValidateOptions
+    internal class OpenApiValidateOptions
     {
         /// <summary>
         /// 
         /// </summary>
-        public Uri Specification { get; set; }
+        internal Uri Specification { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public bool Recommend { get; set; }
+        internal bool Recommend { get; set; }
 
     }
 }

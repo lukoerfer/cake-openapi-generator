@@ -11,7 +11,7 @@ namespace Cake.OpenApi
     /// <summary>
     /// 
     /// </summary>
-    public class OpenApiRunner
+    public class OpenApiGenerator
     {
         private readonly ICakeContext Context;
 
@@ -22,7 +22,7 @@ namespace Cake.OpenApi
         /// </summary>
         /// <param name="context"></param>
         /// <param name="settings"></param>
-        public OpenApiRunner(ICakeContext context, OpenApiSettings settings)
+        public OpenApiGenerator(ICakeContext context, OpenApiGeneratorSettings settings)
         {
             Context = context;
             // Tool = ToolResolution.Setup(context, settings).GetTool();
@@ -54,22 +54,7 @@ namespace Cake.OpenApi
             Validate(options);
         }
 
-        /// <summary>
-        /// Validates an OpenAPI specification
-        /// </summary>
-        /// <param name="handler">A handler to configure the options</param>
-        public void Validate(Action<OpenApiValidateOptions> handler)
-        {
-            OpenApiValidateOptions options = new OpenApiValidateOptions();
-            handler?.Invoke(options);
-            Validate(options);
-        }
-
-        /// <summary>
-        /// Validates an OpenAPI specification
-        /// </summary>
-        /// <param name="options"></param>
-        public void Validate(OpenApiValidateOptions options)
+        private void Validate(OpenApiValidateOptions options)
         {
             if (options?.Specification == null)
             {

@@ -12,9 +12,9 @@ namespace Cake.OpenApi.Internal.Tools
 
         protected readonly ICakeContext Context;
 
-        protected readonly OpenApiSettings Settings;
+        protected readonly OpenApiGeneratorSettings Settings;
 
-        protected Tool(ICakeContext context, OpenApiSettings settings)
+        protected Tool(ICakeContext context, OpenApiGeneratorSettings settings)
         {
             Context = context;
             Settings = settings;

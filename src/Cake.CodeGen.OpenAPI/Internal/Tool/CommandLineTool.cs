@@ -13,7 +13,7 @@ namespace Cake.OpenApi.Internal.Tools
 
         private readonly FilePath Executable;
 
-        protected CommandLineTool(ICakeContext context, OpenApiSettings settings, FilePath executable) : base(context, settings)
+        protected CommandLineTool(ICakeContext context, OpenApiGeneratorSettings settings, FilePath executable) : base(context, settings)
         {
             Executable = executable;
         }

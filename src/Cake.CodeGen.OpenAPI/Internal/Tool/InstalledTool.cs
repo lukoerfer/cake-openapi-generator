@@ -8,7 +8,7 @@ namespace Cake.OpenApi.Internal.Tools
 
         public override bool SupportsEndpoint => false;
 
-        public InstalledTool(ICakeContext context, OpenApiSettings settings) 
+        public InstalledTool(ICakeContext context, OpenApiGeneratorSettings settings) 
             : base(context, settings, context.Tools.Resolve("openapi-generator"))
         {
             

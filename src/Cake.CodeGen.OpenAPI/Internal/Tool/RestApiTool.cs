@@ -13,7 +13,7 @@ namespace Cake.OpenApi.Internal.Tools
 
         public override bool SupportsEndpoint => true;
 
-        public RestApiTool(ICakeContext context, OpenApiSettings settings) : base(context, settings)
+        public RestApiTool(ICakeContext context, OpenApiGeneratorSettings settings) : base(context, settings)
         {
             
         }

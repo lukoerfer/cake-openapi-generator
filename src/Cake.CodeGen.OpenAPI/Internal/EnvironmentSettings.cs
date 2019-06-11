@@ -8,7 +8,7 @@ namespace Cake.OpenApi.Internal
     {
         private const string ENVIRONMENT_VARIABLE_PREFIX = "CAKE_";
 
-        public static void ApplyEnvironmentSettings(this ICakeContext context, OpenApiSettings settings)
+        public static void ApplyEnvironmentSettings(this ICakeContext context, OpenApiGeneratorSettings settings)
         {
             string tool = context.GetEnvironmentSetting("OPENAPI_TOOL");
             if (tool != null)

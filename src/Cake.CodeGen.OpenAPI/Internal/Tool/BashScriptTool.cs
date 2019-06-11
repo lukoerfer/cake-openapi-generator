@@ -9,7 +9,7 @@ namespace Cake.OpenApi.Internal.Tools
 
         public override bool SupportsEndpoint => false;
 
-        public BashScriptTool(ICakeContext context, OpenApiSettings settings) 
+        public BashScriptTool(ICakeContext context, OpenApiGeneratorSettings settings) 
             : base(context, settings, context.Tools.Resolve("openapi-generator-cli"))
         {
             

@@ -9,7 +9,7 @@ namespace Cake.OpenApi.Internal.Tools
 
         public override bool SupportsEndpoint => false;
 
-        protected ExternalRuntimeTool(ICakeContext context, OpenApiSettings settings, FilePath executable) 
+        protected ExternalRuntimeTool(ICakeContext context, OpenApiGeneratorSettings settings, FilePath executable) 
             : base(context, settings, executable)
         {
 

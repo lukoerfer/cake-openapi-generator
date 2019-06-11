@@ -10,7 +10,7 @@ namespace Cake.OpenApi.Internal.Tools
 
         public override bool SupportsEndpoint => false;
 
-        public OnlineTool(ICakeContext context, OpenApiSettings settings) : base(context, settings)
+        public OnlineTool(ICakeContext context, OpenApiGeneratorSettings settings) : base(context, settings)
         {
 
         }
