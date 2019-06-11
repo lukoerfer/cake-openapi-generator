@@ -5,7 +5,6 @@ using Cake.Core.IO;
 using Cake.Common;
 using Cake.Common.IO;
 using Cake.Common.Net;
-using Cake.Common.Diagnostics;
 
 namespace Cake.OpenApi.Internal.Tools
 {
@@ -36,18 +35,18 @@ namespace Cake.OpenApi.Internal.Tools
         {
             Uri package = GetPackageResource();
             FilePath localPackage = FilePath.FromString(new Uri(MAVEN_LOCAL, package).LocalPath);
-            if (!_context.FileExists(localPackage))
+            if (!Context.FileExists(localPackage))
             {
                 Uri remotePackage = new Uri(MAVEN_CENTRAL, package);
-                _context.EnsureDirectoryExists(localPackage.GetDirectory());
-                _context.DownloadFile(remotePackage.ToString(), localPackage);
+                Context.EnsureDirectoryExists(localPackage.GetDirectory());
+                Context.DownloadFile(remotePackage.ToString(), localPackage);
             }
             return localPackage;
         }
 
         private Uri GetPackageResource()
         {
-            string version = _settings.Version ?? DEFAULT_VERSION;
+            string version = Settings.Version ?? DEFAULT_VERSION;
             string path = $"org/openapitools/openapi-generator-cli/{version}/openapi-generator-cli-{version}.jar";
             return new Uri(path, UriKind.Relative);
         }

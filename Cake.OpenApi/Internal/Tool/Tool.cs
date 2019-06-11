@@ -10,15 +10,14 @@ namespace Cake.OpenApi.Internal.Tools
 
         public abstract bool SupportsEndpoint { get; }
 
+        protected readonly ICakeContext Context;
 
-        protected readonly ICakeContext _context;
-
-        protected readonly OpenApiSettings _settings;
+        protected readonly OpenApiSettings Settings;
 
         protected Tool(ICakeContext context, OpenApiSettings settings)
         {
-            _context = context;
-            _settings = settings;
+            Context = context;
+            Settings = settings;
         }
 
         public abstract void Generate(OpenApiGenerateOptions options);

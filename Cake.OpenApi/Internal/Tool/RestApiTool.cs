@@ -1,13 +1,13 @@
-﻿using Cake.Core;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+
+using Cake.Core;
+using Cake.Http;
 
 namespace Cake.OpenApi.Internal.Tools
 {
     internal class RestApiTool : Tool
     {
-        public override bool IsProvided => _settings.IsEndpointRequested;
+        public override bool IsProvided => Settings.IsEndpointRequested;
 
         public override bool SupportsVersion => false;
 
@@ -25,12 +25,24 @@ namespace Cake.OpenApi.Internal.Tools
 
         public override void Validate(OpenApiValidateOptions options)
         {
-            
+            throw new InvalidOperationException("Validation is not supported by REST API");
         }
 
         protected virtual Uri GetEndpoint()
         {
-            return _settings.Endpoint;
+            return Settings.Endpoint;
+        }
+
+        private bool IsClientGenerator(string generator)
+        {
+            string content = Context.HttpGet("");
+            return false;
+        }
+
+        private bool IsServerGenerator(string generator)
+        {
+            string content = Context.HttpGet("");
+            return false;
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Cake.OpenApi.Internal.Tools
 {
     internal class OnlineTool : RestApiTool
     {
-        public override bool IsProvided => !_settings.IsEndpointRequested;
+        public override bool IsProvided => !Settings.IsEndpointRequested;
 
         public override bool SupportsEndpoint => false;
 

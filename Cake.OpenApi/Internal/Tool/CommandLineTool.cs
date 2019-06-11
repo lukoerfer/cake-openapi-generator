@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 using Cake.Common;
@@ -10,14 +9,13 @@ namespace Cake.OpenApi.Internal.Tools
 {
     internal abstract class CommandLineTool : Tool
     {
-        public override bool IsProvided => _executable != null;
+        public override bool IsProvided => Executable != null;
 
-
-        private readonly FilePath _executable;
+        private readonly FilePath Executable;
 
         protected CommandLineTool(ICakeContext context, OpenApiSettings settings, FilePath executable) : base(context, settings)
         {
-            _executable = executable;
+            Executable = executable;
         }
 
         public override void Generate(OpenApiGenerateOptions options)
@@ -67,7 +65,7 @@ namespace Cake.OpenApi.Internal.Tools
         {
             ProcessSettings process = GetProcessSettings();
             process.Arguments = arguments;
-            _context.StartProcess(_executable, process);
+            Context.StartProcess(Executable, process);
         }
 
         protected virtual ProcessArgumentBuilder GetArguments()

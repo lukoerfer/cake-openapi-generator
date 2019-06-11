@@ -2,21 +2,20 @@
 
 using Cake.Core;
 using Cake.Core.IO;
-using Cake.Common.Diagnostics;
 using Cake.Common;
 
 namespace Cake.OpenApi.Internal.Tools
 {
     internal class NodeTool : ExternalRuntimeTool
     {
-        public override bool IsProvided => base.IsProvided && _isJavaInstalled;
+        public override bool IsProvided => base.IsProvided && IsJavaInstalled;
 
-        private readonly bool _isJavaInstalled;
+        private readonly bool IsJavaInstalled;
 
         public NodeTool(ICakeContext context, OpenApiSettings settings)
             : base(context, settings, SearchNpxExecutable(context))
         {
-            _isJavaInstalled = JavaTool.SearchJavaExecutable(_context) != null;
+            IsJavaInstalled = JavaTool.SearchJavaExecutable(Context) != null;
         }
 
         protected override ProcessArgumentBuilder GetArguments()
@@ -30,9 +29,9 @@ namespace Cake.OpenApi.Internal.Tools
         private string GetPackageName()
         {
             string version = "";
-            if (_settings.IsVersionRequested)
+            if (Settings.IsVersionRequested)
             {
-                version = "@cli-" + _settings.Version;
+                version = "@cli-" + Settings.Version;
             }
             return "@openapitools/openapi-generator-cli" + version;
         }

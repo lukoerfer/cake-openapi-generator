@@ -2,7 +2,6 @@
 
 using Cake.Core;
 using Cake.Core.IO;
-using Cake.Common.IO;
 
 using Cake.OpenApi.Internal;
 using Cake.OpenApi.Internal.Tools;
@@ -14,9 +13,9 @@ namespace Cake.OpenApi
     /// </summary>
     public class OpenApiRunner
     {
-        private readonly ICakeContext _context;
+        private readonly ICakeContext Context;
 
-        private readonly Tool _generator;
+        private readonly Tool Tool;
 
         /// <summary>
         /// 
@@ -25,9 +24,9 @@ namespace Cake.OpenApi
         /// <param name="settings"></param>
         public OpenApiRunner(ICakeContext context, OpenApiSettings settings)
         {
-            _context = context;
-            // _generator = ToolResolution.Setup(context, settings).Get();
-            _generator = new JavaTool(context, settings);
+            Context = context;
+            // Tool = ToolResolution.Setup(context, settings).GetTool();
+            Tool = new JavaTool(context, settings);
         }
 
         /// <summary>
@@ -76,7 +75,7 @@ namespace Cake.OpenApi
             {
                 throw new ArgumentException("Missing parameter for OpenAPI validation", "specification");
             }
-            _generator.Validate(options);
+            Tool.Validate(options);
         }
 
         /// <summary>
@@ -136,7 +135,7 @@ namespace Cake.OpenApi
             {
                 throw new ArgumentException("Missing parameter for OpenAPI generation", "outputDirectory");
             }
-            _generator.Generate(options);
+            Tool.Generate(options);
         }
 
     }

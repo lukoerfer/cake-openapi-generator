@@ -12,9 +12,9 @@ namespace Cake.OpenApi
     [CakeAliasCategory("OpenAPI")]
     public static class OpenApiAliases
     {
-        private static OpenApiSettings _settings;
+        private static OpenApiSettings Settings;
 
-        private static OpenApiRunner _addin;
+        private static OpenApiRunner Runner;
 
         /// <summary>
         /// Defines the settings for the OpenAPI generator
@@ -56,9 +56,9 @@ namespace Cake.OpenApi
         [CakeMethodAlias]
         public static void SetupOpenAPI(this ICakeContext context, OpenApiSettings settings)
         {
-            if (_settings == null)
+            if (Settings == null)
             {
-                _settings = settings ?? new OpenApiSettings();
+                Settings = settings ?? new OpenApiSettings();
             }
             else
             {
@@ -74,13 +74,13 @@ namespace Cake.OpenApi
         [CakePropertyAlias]
         public static OpenApiRunner OpenAPI(this ICakeContext context)
         {
-            if (_addin == null)
+            if (Runner == null)
             {
-                OpenApiSettings settings = _settings ?? new OpenApiSettings();
+                OpenApiSettings settings = Settings ?? new OpenApiSettings();
                 context.ApplyEnvironmentSettings(settings);
-                _addin = new OpenApiRunner(context, settings);
+                Runner = new OpenApiRunner(context, settings);
             }
-            return _addin;
+            return Runner;
         }
 
     }
