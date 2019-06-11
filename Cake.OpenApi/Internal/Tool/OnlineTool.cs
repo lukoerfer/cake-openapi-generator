@@ -2,7 +2,7 @@
 
 using Cake.Core;
 
-namespace Cake.OpenApi.Internal
+namespace Cake.OpenApi.Internal.Tools
 {
     internal class OnlineTool : RestApiTool
     {

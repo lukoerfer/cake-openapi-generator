@@ -2,9 +2,9 @@
 
 using Cake.Core.IO;
 
-namespace Cake.OpenApi
+namespace Cake.OpenApi.Internal
 {
-    internal static class Extensions
+    internal static class FilePathToUri
     {
         public static Uri ToUri(this FilePath filePath)
         {

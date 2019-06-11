@@ -5,7 +5,7 @@ using Cake.Common;
 using Cake.Core;
 using Cake.Core.IO;
 
-namespace Cake.OpenApi.Internal
+namespace Cake.OpenApi.Internal.Tools
 {
     internal class BashScriptTool : CommandLineTool
     {

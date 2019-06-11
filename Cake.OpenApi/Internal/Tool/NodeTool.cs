@@ -5,7 +5,7 @@ using Cake.Core.IO;
 using Cake.Common.Diagnostics;
 using Cake.Common;
 
-namespace Cake.OpenApi.Internal
+namespace Cake.OpenApi.Internal.Tools
 {
     internal class NodeTool : ExternalRuntimeTool
     {

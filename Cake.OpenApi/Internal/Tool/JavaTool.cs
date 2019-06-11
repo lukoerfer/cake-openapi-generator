@@ -7,7 +7,7 @@ using Cake.Common.IO;
 using Cake.Common.Net;
 using Cake.Common.Diagnostics;
 
-namespace Cake.OpenApi.Internal
+namespace Cake.OpenApi.Internal.Tools
 {
     internal class JavaTool : ExternalRuntimeTool
     {

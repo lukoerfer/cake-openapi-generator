@@ -1,22 +1,23 @@
-﻿using Cake.ArgumentHelpers;
+﻿using System;
+
 using Cake.Core;
 using Cake.Core.Annotations;
-using System;
+using Cake.OpenApi.Internal;
 
 namespace Cake.OpenApi
 {
     /// <summary>
-    /// 
+    /// Provides a wrapper to invoke the OpenAPI generator
     /// </summary>
     [CakeAliasCategory("OpenAPI")]
     public static class OpenApiAliases
     {
         private static OpenApiSettings _settings;
 
-        private static OpenApiAddin _addin;
+        private static OpenApiRunner _addin;
 
         /// <summary>
-        /// 
+        /// Defines the settings for the OpenAPI generator
         /// </summary>
         /// <param name="context"></param>
         /// <param name="tool"></param>
@@ -35,7 +36,7 @@ namespace Cake.OpenApi
         }
 
         /// <summary>
-        /// 
+        /// Defines the settings for the OpenAPI generator
         /// </summary>
         /// <param name="context"></param>
         /// <param name="handler"></param>
@@ -48,7 +49,7 @@ namespace Cake.OpenApi
         }
 
         /// <summary>
-        /// 
+        /// Defines the settings for the OpenAPI generator
         /// </summary>
         /// <param name="context"></param>
         /// <param name="settings"></param>
@@ -71,34 +72,16 @@ namespace Cake.OpenApi
         /// <param name="context"></param>
         /// <returns></returns>
         [CakePropertyAlias]
-        public static OpenApiAddin OpenAPI(this ICakeContext context)
+        public static OpenApiRunner OpenAPI(this ICakeContext context)
         {
             if (_addin == null)
             {
-                _settings = _settings ?? new OpenApiSettings();
-                ApplyEnvironmentSettings(context);
-                _addin = new OpenApiAddin(context, _settings);
+                OpenApiSettings settings = _settings ?? new OpenApiSettings();
+                context.ApplyEnvironmentSettings(settings);
+                _addin = new OpenApiRunner(context, settings);
             }
             return _addin;
         }
 
-        private static void ApplyEnvironmentSettings(ICakeContext context)
-        {
-            string tool = context.ArgumentOrEnvironmentVariable("OPENAPI_TOOL", "CAKE_", null);
-            if (tool != null)
-            {
-                _settings.Tool = tool;
-            }
-            string version = context.ArgumentOrEnvironmentVariable("OPENAPI_VERSION", "CAKE_", null);
-            if (version != null)
-            {
-                _settings.Version = version;
-            }
-            string endpoint = context.ArgumentOrEnvironmentVariable("OPENAPI_ENDPOINT", "CAKE_", null);
-            if (endpoint != null)
-            {
-                _settings.Endpoint = new Uri(endpoint, UriKind.Absolute);
-            }
-        }
     }
 }

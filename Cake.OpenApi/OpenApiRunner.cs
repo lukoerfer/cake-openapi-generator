@@ -5,13 +5,14 @@ using Cake.Core.IO;
 using Cake.Common.IO;
 
 using Cake.OpenApi.Internal;
+using Cake.OpenApi.Internal.Tools;
 
 namespace Cake.OpenApi
 {
     /// <summary>
     /// 
     /// </summary>
-    public class OpenApiAddin
+    public class OpenApiRunner
     {
         private readonly ICakeContext _context;
 
@@ -22,10 +23,10 @@ namespace Cake.OpenApi
         /// </summary>
         /// <param name="context"></param>
         /// <param name="settings"></param>
-        public OpenApiAddin(ICakeContext context, OpenApiSettings settings)
+        public OpenApiRunner(ICakeContext context, OpenApiSettings settings)
         {
             _context = context;
-            // _generator = GeneratorResolution.Init(context, settings).Get();
+            // _generator = ToolResolution.Setup(context, settings).Get();
             _generator = new JavaTool(context, settings);
         }
 

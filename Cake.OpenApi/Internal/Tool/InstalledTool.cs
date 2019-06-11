@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Cake.OpenApi.Internal
+namespace Cake.OpenApi.Internal.Tools
 {
     internal class InstalledTool : CommandLineTool
     {

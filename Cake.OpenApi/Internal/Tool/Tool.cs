@@ -1,6 +1,6 @@
 ﻿using Cake.Core;
 
-namespace Cake.OpenApi.Internal
+namespace Cake.OpenApi.Internal.Tools
 {
     internal abstract class Tool
     {

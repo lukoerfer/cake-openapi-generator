@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cake.OpenApi.Internal
+namespace Cake.OpenApi.Internal.Tools
 {
     internal class ToolResolution
     {
@@ -31,7 +31,7 @@ namespace Cake.OpenApi.Internal
             };
         }
 
-        public static ToolResolution Init(ICakeContext context, OpenApiSettings settings)
+        public static ToolResolution Setup(ICakeContext context, OpenApiSettings settings)
         {
             return new ToolResolution(context, settings);
         }
