@@ -2,6 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Lukas Körfer</Authors>
+    <PackageIconUrl>https://cdn.rawgit.com/cake-contrib/graphics/a5cf0f881c390650144b2243ae551d5b9f836196/png/cake-contrib-medium.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/lukoerfer/cake-codegen-openapi</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/lukoerfer/cake-codegen-openapi/master/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/lukoerfer/cake-codegen-openapi.git</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

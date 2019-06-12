@@ -6,8 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EAAC4D8A-66A3-4538-867C-8D6FBF346ED5}"
 	ProjectSection(SolutionItems) = preProject
 		build.cake = build.cake
-		build.ps1 = build.ps1
-		build.sh = build.sh
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.CodeGen.OpenAPI", "Cake.CodeGen.OpenAPI\Cake.CodeGen.OpenAPI.csproj", "{7E981A75-C03C-4F1F-BBF6-64D5E997EB83}"

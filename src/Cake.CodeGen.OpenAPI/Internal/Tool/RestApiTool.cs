@@ -25,7 +25,7 @@ namespace Cake.CodeGen.OpenApi.Internal.Tools
 
         public override void Validate(OpenApiValidateOptions options)
         {
-            throw new InvalidOperationException("Validation is not supported by REST API");
+            throw new InvalidOperationException("Validation is not supported by REST API and Online tool");
         }
 
         protected virtual Uri GetEndpoint()
