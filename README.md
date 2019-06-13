@@ -4,7 +4,7 @@ Cake Addin for code generation via the [OpenAPI Generator](https://openapi-gener
 ## Motivation
 
 ## Installation
-Simply register the addin in your `build.cake` file via the `#addin` preprocessor directive:
+Since the addin is available on NuGet, it can simply be registered in your `build.cake` file via the `#addin` preprocessor directive:
 
     #addin nuget:?package=Cake.CodeGen.OpenAPI&version=1.0.0
 
