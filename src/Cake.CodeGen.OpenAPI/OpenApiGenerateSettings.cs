@@ -8,21 +8,12 @@ namespace Cake.CodeGen.OpenApi
     /// <summary>
     /// 
     /// </summary>
-    public class OpenApiGenerateOptions
+    public class OpenApiGenerateSettings
     {
-        /// <summary>
-        /// 
-        /// </summary>
         internal Uri Specification { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
         internal string Generator { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
         internal DirectoryPath OutputDirectory { get; set; }
 
         /// <summary>

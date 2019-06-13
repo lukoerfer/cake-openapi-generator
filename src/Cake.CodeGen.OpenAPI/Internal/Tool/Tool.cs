@@ -20,8 +20,6 @@ namespace Cake.CodeGen.OpenApi.Internal.Tools
             Settings = settings;
         }
 
-        public abstract void Generate(OpenApiGenerateOptions options);
-
-        public abstract void Validate(OpenApiValidateOptions options);
+        public abstract void Generate(OpenApiGenerateSettings options);
     }
 }

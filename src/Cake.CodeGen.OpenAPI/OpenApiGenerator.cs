@@ -30,37 +30,14 @@ namespace Cake.CodeGen.OpenApi
         }
 
         /// <summary>
-        /// Validates an OpenAPI specification from a file
+        /// Generates OpenAPI files based on a specification from a file
         /// </summary>
         /// <param name="specification"></param>
-        /// <param name="recommend"></param>
-        public void Validate(FilePath specification = null, bool recommend = false)
+        /// <param name="generator"></param>
+        /// <param name="outputDirectory"></param>
+        public void Generate(FilePath specification = null, string generator = null, DirectoryPath outputDirectory = null)
         {
-            Validate(specification?.ToUri(), recommend);
-        }
-
-        /// <summary>
-        /// Validates an OpenAPI specification from a URI
-        /// </summary>
-        /// <param name="specification"></param>
-        /// <param name="recommend"></param>
-        public void Validate(Uri specification = null, bool recommend = false)
-        {
-            OpenApiValidateOptions options = new OpenApiValidateOptions()
-            {
-                Specification = specification,
-                Recommend = recommend
-            };
-            Validate(options);
-        }
-
-        private void Validate(OpenApiValidateOptions options)
-        {
-            if (options?.Specification == null)
-            {
-                throw new ArgumentException("Missing parameter for OpenAPI validation", "specification");
-            }
-            Tool.Validate(options);
+            Generate(specification?.ToUri(), generator, outputDirectory);
         }
 
         /// <summary>
@@ -69,7 +46,18 @@ namespace Cake.CodeGen.OpenApi
         /// <param name="specification"></param>
         /// <param name="generator"></param>
         /// <param name="outputDirectory"></param>
-        public void Generate(FilePath specification = null, string generator = null, DirectoryPath outputDirectory = null)
+        public void Generate(FilePath specification = null, string generator = null, DirectoryPath outputDirectory = null, OpenApiGenerateSettings settings = null)
+        {
+            Generate(specification?.ToUri(), generator, outputDirectory);
+        }
+
+        /// <summary>
+        /// Generates OpenAPI files based on a specification from a file
+        /// </summary>
+        /// <param name="specification"></param>
+        /// <param name="generator"></param>
+        /// <param name="outputDirectory"></param>
+        public void Generate(FilePath specification = null, string generator = null, DirectoryPath outputDirectory = null, Action<OpenApiGenerateSettings> configurator = null)
         {
             Generate(specification?.ToUri(), generator, outputDirectory);
         }
@@ -82,7 +70,41 @@ namespace Cake.CodeGen.OpenApi
         /// <param name="outputDirectory"></param>
         public void Generate(Uri specification = null, string generator = null, DirectoryPath outputDirectory = null)
         {
-            OpenApiGenerateOptions options = new OpenApiGenerateOptions()
+            OpenApiGenerateSettings options = new OpenApiGenerateSettings()
+            {
+                Specification = specification,
+                Generator = generator,
+                OutputDirectory = outputDirectory
+            };
+            Generate(options);
+        }
+
+        /// <summary>
+        /// Generates OpenAPI files based on a specification from a URI
+        /// </summary>
+        /// <param name="specification"></param>
+        /// <param name="generator"></param>
+        /// <param name="outputDirectory"></param>
+        public void Generate(Uri specification = null, string generator = null, DirectoryPath outputDirectory = null, OpenApiGenerateSettings settings = null)
+        {
+            OpenApiGenerateSettings options = new OpenApiGenerateSettings()
+            {
+                Specification = specification,
+                Generator = generator,
+                OutputDirectory = outputDirectory
+            };
+            Generate(options);
+        }
+
+        /// <summary>
+        /// Generates OpenAPI files based on a specification from a URI
+        /// </summary>
+        /// <param name="specification"></param>
+        /// <param name="generator"></param>
+        /// <param name="outputDirectory"></param>
+        public void Generate(Uri specification = null, string generator = null, DirectoryPath outputDirectory = null, Action<OpenApiGenerateSettings> configurator = null)
+        {
+            OpenApiGenerateSettings options = new OpenApiGenerateSettings()
             {
                 Specification = specification,
                 Generator = generator,
@@ -94,19 +116,8 @@ namespace Cake.CodeGen.OpenApi
         /// <summary>
         /// Generates OpenAPI files
         /// </summary>
-        /// <param name="handler"></param>
-        public void Generate(Action<OpenApiGenerateOptions> handler)
-        {
-            OpenApiGenerateOptions options = new OpenApiGenerateOptions();
-            handler?.Invoke(options);
-            Generate(options);
-        }
-
-        /// <summary>
-        /// Generates OpenAPI files
-        /// </summary>
         /// <param name="options"></param>
-        public void Generate(OpenApiGenerateOptions options)
+        public void Generate(OpenApiGenerateSettings options)
         {
             if (options?.Specification == null)
             {

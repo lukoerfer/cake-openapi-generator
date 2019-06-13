@@ -18,7 +18,7 @@ namespace Cake.CodeGen.OpenApi.Internal.Tools
             Executable = executable;
         }
 
-        public override void Generate(OpenApiGenerateOptions options)
+        public override void Generate(OpenApiGenerateSettings options)
         {
             ProcessArgumentBuilder arguments = GetArguments()
                 .Append("generate")
@@ -44,19 +44,6 @@ namespace Cake.CodeGen.OpenApi.Internal.Tools
             if (options.TypeMappings?.Count > 0)
             {
                 arguments.AppendSwitch("type-mappings", GetArgumentDictionaryString(options.TypeMappings));
-            }
-            RunProcess(arguments);
-        }
-
-        public override void Validate(OpenApiValidateOptions options)
-        {
-            ProcessArgumentBuilder arguments = GetArguments()
-                .Append("validate")
-                .Append("-i")
-                .Append(options.Specification.ToString());
-            if (options.Recommend)
-            {
-                arguments.Append("--recommend");
             }
             RunProcess(arguments);
         }

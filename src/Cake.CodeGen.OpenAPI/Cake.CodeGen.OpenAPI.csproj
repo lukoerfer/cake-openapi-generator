@@ -1,12 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Authors>Lukas Körfer</Authors>
-    <PackageIconUrl>https://cdn.rawgit.com/cake-contrib/graphics/a5cf0f881c390650144b2243ae551d5b9f836196/png/cake-contrib-medium.png</PackageIconUrl>
+
     <PackageProjectUrl>https://github.com/lukoerfer/cake-codegen-openapi</PackageProjectUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/lukoerfer/cake-codegen-openapi/master/LICENSE</PackageLicenseUrl>
+    <Authors>Lukas Körfer</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIconUrl>https://cdn.rawgit.com/cake-contrib/graphics/a5cf0f881c390650144b2243ae551d5b9f836196/png/cake-contrib-medium.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/lukoerfer/cake-codegen-openapi.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>cake code-generation openapi</PackageTags>
+    <Description>Cake Addin for code generation via the OpenAPI Generator (f.k.a. Swagger Codegen)</Description>
   </PropertyGroup>
 
   <ItemGroup>
