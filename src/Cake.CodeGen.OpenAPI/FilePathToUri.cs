@@ -2,7 +2,7 @@
 
 using Cake.Core.IO;
 
-namespace Cake.CodeGen.OpenApi.Internal
+namespace Cake.CodeGen.OpenApi
 {
     internal static class FilePathToUri
     {

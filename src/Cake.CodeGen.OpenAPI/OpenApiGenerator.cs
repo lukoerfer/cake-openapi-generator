@@ -13,125 +13,99 @@ namespace Cake.CodeGen.OpenApi
     /// </summary>
     public class OpenApiGenerator
     {
-        private readonly ICakeContext Context;
-
-        private readonly Tool Tool;
+        private readonly OpenApiGeneratorTool Tool;
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="context"></param>
         /// <param name="settings"></param>
-        public OpenApiGenerator(ICakeContext context, OpenApiGeneratorSettings settings)
+        public OpenApiGenerator(ICakeContext context, string version = null)
         {
-            Context = context;
-            // Tool = ToolResolution.Setup(context, settings).GetTool();
-            Tool = new JavaTool(context, settings);
+            Tool = new OpenApiGeneratorTool(context, version);
         }
 
         /// <summary>
-        /// Generates OpenAPI files based on a specification from a file
+        /// Generates code based on an OpenAPI specification from a file
         /// </summary>
         /// <param name="specification"></param>
         /// <param name="generator"></param>
         /// <param name="outputDirectory"></param>
-        public void Generate(FilePath specification = null, string generator = null, DirectoryPath outputDirectory = null)
+        public OpenApiGenerator Generate(FilePath specification, string generator, DirectoryPath outputDirectory, Action<OpenApiGenerateSettings> configurator)
         {
-            Generate(specification?.ToUri(), generator, outputDirectory);
+            return Generate(specification?.ToUri(), generator, outputDirectory, configurator);
         }
 
         /// <summary>
-        /// Generates OpenAPI files based on a specification from a file
+        /// Generates code based on an OpenAPI specification from a file
         /// </summary>
         /// <param name="specification"></param>
         /// <param name="generator"></param>
         /// <param name="outputDirectory"></param>
-        public void Generate(FilePath specification = null, string generator = null, DirectoryPath outputDirectory = null, OpenApiGenerateSettings settings = null)
+        public OpenApiGenerator Generate(FilePath specification, string generator, DirectoryPath outputDirectory, OpenApiGenerateSettings settings = null)
         {
-            Generate(specification?.ToUri(), generator, outputDirectory);
+            return Generate(specification?.ToUri(), generator, outputDirectory, settings);
         }
 
         /// <summary>
-        /// Generates OpenAPI files based on a specification from a file
+        /// Generates code based on an OpenAPI specification from a URI
         /// </summary>
         /// <param name="specification"></param>
         /// <param name="generator"></param>
         /// <param name="outputDirectory"></param>
-        public void Generate(FilePath specification = null, string generator = null, DirectoryPath outputDirectory = null, Action<OpenApiGenerateSettings> configurator = null)
+        public OpenApiGenerator Generate(Uri specification, string generator, DirectoryPath outputDirectory, Action<OpenApiGenerateSettings> configurator)
         {
-            Generate(specification?.ToUri(), generator, outputDirectory);
+            OpenApiGenerateSettings settings = new OpenApiGenerateSettings();
+            configurator?.Invoke(settings);
+            return Generate(specification, generator, outputDirectory, settings);
         }
 
         /// <summary>
-        /// Generates OpenAPI files based on a specification from a URI
+        /// Generates code based on an OpenAPI specification from a URI
         /// </summary>
         /// <param name="specification"></param>
         /// <param name="generator"></param>
         /// <param name="outputDirectory"></param>
-        public void Generate(Uri specification = null, string generator = null, DirectoryPath outputDirectory = null)
+        public OpenApiGenerator Generate(Uri specification, string generator, DirectoryPath outputDirectory, OpenApiGenerateSettings settings = null)
         {
-            OpenApiGenerateSettings options = new OpenApiGenerateSettings()
+            var args = new ProcessArgumentBuilder();
+            args.Append("generate");
+            args.Append("-i").Append(specification.ToString());
+            args.Append("-g").Append(generator);
+            args.Append("-o").Append(outputDirectory.FullPath);
+            args.Append(settings?.AsArguments().Render() ?? string.Empty);
+            Tool.Run(args);
+            return this;
+        }
+
+        /// <summary>
+        /// Validates an OpenAPI specification from a file
+        /// </summary>
+        /// <param name="specification"></param>
+        /// <param name="recommend"></param>
+        /// <returns></returns>
+        public OpenApiGenerator Validate(FilePath specification, bool recommend = false)
+        {
+            return Validate(specification.ToUri(), recommend);
+        }
+
+        /// <summary>
+        /// Validates an OpenAPI specification from a URI
+        /// </summary>
+        /// <param name="specification"></param>
+        /// <param name="recommend"></param>
+        /// <returns></returns>
+        public OpenApiGenerator Validate(Uri specification, bool recommend = false)
+        {
+            var args = new ProcessArgumentBuilder();
+            args.Append("validate");
+            args.Append("-i").Append(specification.ToString());
+            if (recommend)
             {
-                Specification = specification,
-                Generator = generator,
-                OutputDirectory = outputDirectory
-            };
-            Generate(options);
-        }
-
-        /// <summary>
-        /// Generates OpenAPI files based on a specification from a URI
-        /// </summary>
-        /// <param name="specification"></param>
-        /// <param name="generator"></param>
-        /// <param name="outputDirectory"></param>
-        public void Generate(Uri specification = null, string generator = null, DirectoryPath outputDirectory = null, OpenApiGenerateSettings settings = null)
-        {
-            OpenApiGenerateSettings options = new OpenApiGenerateSettings()
-            {
-                Specification = specification,
-                Generator = generator,
-                OutputDirectory = outputDirectory
-            };
-            Generate(options);
-        }
-
-        /// <summary>
-        /// Generates OpenAPI files based on a specification from a URI
-        /// </summary>
-        /// <param name="specification"></param>
-        /// <param name="generator"></param>
-        /// <param name="outputDirectory"></param>
-        public void Generate(Uri specification = null, string generator = null, DirectoryPath outputDirectory = null, Action<OpenApiGenerateSettings> configurator = null)
-        {
-            OpenApiGenerateSettings options = new OpenApiGenerateSettings()
-            {
-                Specification = specification,
-                Generator = generator,
-                OutputDirectory = outputDirectory
-            };
-            Generate(options);
-        }
-
-        /// <summary>
-        /// Generates OpenAPI files
-        /// </summary>
-        /// <param name="options"></param>
-        public void Generate(OpenApiGenerateSettings options)
-        {
-            if (options?.Specification == null)
-            {
-                throw new ArgumentException("Missing parameter for OpenAPI generation", "specification");
+                args.Append("--recommend");
             }
-            if (options?.Generator == null)
-            {
-                throw new ArgumentException("Missing parameter for OpenAPI generation", "generator");
-            }
-            if (options?.OutputDirectory == null)
-            {
-                throw new ArgumentException("Missing parameter for OpenAPI generation", "outputDirectory");
-            }
-            Tool.Generate(options);
+            Tool.Run(args);
+            return this;
         }
 
     }

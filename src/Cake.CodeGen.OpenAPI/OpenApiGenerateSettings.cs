@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Linq;
+using Cake.Core;
 using Cake.Core.IO;
 
 namespace Cake.CodeGen.OpenApi
@@ -10,12 +11,6 @@ namespace Cake.CodeGen.OpenApi
     /// </summary>
     public class OpenApiGenerateSettings
     {
-        internal Uri Specification { get; set; }
-
-        internal string Generator { get; set; }
-
-        internal DirectoryPath OutputDirectory { get; set; }
-
         /// <summary>
         /// 
         /// </summary>
@@ -190,6 +185,153 @@ namespace Cake.CodeGen.OpenApi
         /// 
         /// </summary>
         public bool Verbose { get; set; }
+
+        public ProcessArgumentBuilder AsArguments()
+        {
+            var args = new ProcessArgumentBuilder();
+            if (ConfigurationFile != null)
+            {
+                args.Append("-c").Append(ConfigurationFile.FullPath);
+            }
+            else if (AdditionalProperties.Count > 0)
+            {
+                args.Append("--additional-properties=" + Stringify(AdditionalProperties));
+            }
+            if (ImportMappings.Count > 0)
+            {
+                args.Append("--import-mappings=" + Stringify(ImportMappings));
+            }
+            if (TypeMappings.Count > 0)
+            {
+                args.Append("--type-mappings=" + Stringify(TypeMappings));
+            }
+            if (Authorization != null)
+            {
+                args.Append("-a").Append(Authorization);
+            }
+            if (ApiPackage != null)
+            {
+                args.Append("--api-package").Append(ApiPackage);
+            }
+            if (ArtifactId != null)
+            {
+                args.Append("--artifact-id").Append(ArtifactId);
+            }
+            if (ArtifactVersion != null)
+            {
+                args.Append("--artifact-version").Append(ArtifactVersion);
+            }
+            if (SystemProperties.Count > 0)
+            {
+
+            }
+            if (TemplatingEngine != null)
+            {
+                args.Append("-e").Append(TemplatingEngine);
+            }
+            if (EnablePostProcessFile)
+            {
+                args.Append("--enable-post-process-file");
+            }
+            if (GenerateAliasAsModel)
+            {
+                args.Append("--generate-alias-as-model");
+            }
+            if (GitRepository != null)
+            {
+                args.Append("--git-repo-id").Append(GitRepository);
+            }
+            if (GitUser != null)
+            {
+                args.Append("--git-user-id").Append(GitUser);
+            }
+            if (GroupId != null)
+            {
+                args.Append("--group-id").Append(GroupId);
+            }
+            if (HttpUserAgent != null)
+            {
+                args.Append("--http-user-agent").Append(HttpUserAgent);
+            }
+            if (IgnoreFile != null)
+            {
+                args.Append("--ignore-file-override").Append(IgnoreFile.FullPath);
+            }
+            if (InstantiationTypes.Count > 0)
+            {
+                
+            }
+            if (InvokerPackage != null)
+            {
+                args.Append("--invoker-package").Append(InvokerPackage);
+            }
+            if (LanguageSpecificPrimitives.Count > 0)
+            {
+
+            }
+            if (Library != null)
+            {
+                args.Append("--library").Append(Library);
+            }
+            if (LogToStandardError)
+            {
+                args.Append("--log-to-stderr");
+            }
+            if (MinimalUpdate)
+            {
+                args.Append("--minimal-update");
+            }
+            if (ModelNamePrefix != null)
+            {
+                args.Append("--model-name-prefix").Append(ModelNamePrefix);
+            }
+            if (ModelNameSuffix != null)
+            {
+                args.Append("--model-name-suffix").Append(ModelNameSuffix);
+            }
+            if (ModelPackage != null)
+            {
+                args.Append("--model-package").Append(ModelPackage);
+            }
+            if (PackageName != null)
+            {
+                args.Append("--package-name").Append(PackageName);
+            }
+            if (ReleaseNote != null)
+            {
+                args.Append("--release-note").Append(ReleaseNote);
+            }
+            if (RemoveOperationIdPrefix)
+            {
+                args.Append("--reserved-words-mappings");
+            }
+            if (SkipOverwrite)
+            {
+                args.Append("-s");
+            }
+            if (SkipValidation)
+            {
+                args.Append("--skip-validate-spec");
+            }
+            if (StrictMode)
+            {
+
+            }
+            if (TemplateDirectory != null)
+            {
+                args.Append("-t").Append(TemplateDirectory.FullPath);
+            }
+            if (Verbose)
+            {
+                args.Append("-v");
+            }
+            return args;
+        }
+
+        private static string Stringify(Dictionary<string, string> dict)
+        {
+            return string.Join(",", dict.Select(entry => entry.Key + "=" + entry.Value));
+        }
 
     }
 }
