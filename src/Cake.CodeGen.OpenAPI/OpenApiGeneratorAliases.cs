@@ -6,13 +6,13 @@ using Cake.Core.Annotations;
 namespace Cake.CodeGen.OpenApi
 {
     /// <summary>
-    /// Provides a wrapper to invoke the OpenAPI generator
+    /// Provides the functionality of the OpenAPI generator in Cake
     /// </summary>
     [CakeAliasCategory("OpenAPI")]
     public static class OpenApiGeneratorAliases
     {
         /// <summary>
-        /// 
+        /// Provides an OpenAPI generator of the latest version
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
@@ -23,13 +23,13 @@ namespace Cake.CodeGen.OpenApi
         }
 
         /// <summary>
-        /// 
+        /// Provides an OpenAPI generator for a specific version
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="version"></param>
+        /// <param name="context">The Cake context</param>
+        /// <param name="version">A version supported by the OpenAPI generator</param>
         /// <returns></returns>
         [CakeMethodAlias]
-        public static OpenApiGenerator OpenApiGeneratorWithVersion(this ICakeContext context, string version)
+        public static OpenApiGenerator OpenApiGeneratorForVersion(this ICakeContext context, string version)
         {
             return new OpenApiGenerator(context, version);
         }

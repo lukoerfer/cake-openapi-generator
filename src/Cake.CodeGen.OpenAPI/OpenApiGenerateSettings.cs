@@ -195,15 +195,15 @@ namespace Cake.CodeGen.OpenApi
             }
             else if (AdditionalProperties.Count > 0)
             {
-                args.Append("--additional-properties=" + Stringify(AdditionalProperties));
+                args.Append("--additional-properties=" + string.Join(",", AdditionalProperties.Select(entry => entry.Key + "=" + entry.Value)));
             }
             if (ImportMappings.Count > 0)
             {
-                args.Append("--import-mappings=" + Stringify(ImportMappings));
+                args.Append("--import-mappings=" + string.Join(",", ImportMappings.Select(entry => entry.Key + "=" + entry.Value)));
             }
             if (TypeMappings.Count > 0)
             {
-                args.Append("--type-mappings=" + Stringify(TypeMappings));
+                args.Append("--type-mappings=" + string.Join(",", TypeMappings.Select(entry => entry.Key + "=" + entry.Value)));
             }
             if (Authorization != null)
             {
@@ -223,7 +223,7 @@ namespace Cake.CodeGen.OpenApi
             }
             if (SystemProperties.Count > 0)
             {
-
+                args.Append("--type-mappings=" + string.Join(",", SystemProperties.Select(entry => entry.Key + "=" + entry.Value)));
             }
             if (TemplatingEngine != null)
             {
@@ -259,7 +259,7 @@ namespace Cake.CodeGen.OpenApi
             }
             if (InstantiationTypes.Count > 0)
             {
-                
+                args.Append("--instantiation-types").Append(string.Join(",", InstantiationTypes));
             }
             if (InvokerPackage != null)
             {
@@ -267,7 +267,7 @@ namespace Cake.CodeGen.OpenApi
             }
             if (LanguageSpecificPrimitives.Count > 0)
             {
-
+                args.Append("--language-specific-primitives").Append(string.Join(",", LanguageSpecificPrimitives));
             }
             if (Library != null)
             {
@@ -326,11 +326,6 @@ namespace Cake.CodeGen.OpenApi
                 args.Append("-v");
             }
             return args;
-        }
-
-        private static string Stringify(Dictionary<string, string> dict)
-        {
-            return string.Join(",", dict.Select(entry => entry.Key + "=" + entry.Value));
         }
 
     }
