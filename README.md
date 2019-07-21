@@ -15,7 +15,7 @@ As an additional dependency, Java needs to be installed and available to Cake. T
 
 ``` csharp
 Setup(context => {
-    context.Tools.RegisterFile("/path/to/java/executable");
+    context.Tools.RegisterFile("/path/to/java(.exe)");
 });
 ```
 
