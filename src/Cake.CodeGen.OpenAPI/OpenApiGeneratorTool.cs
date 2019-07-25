@@ -5,12 +5,11 @@ using Cake.Core.IO;
 using Cake.Common;
 using Cake.Common.IO;
 using Cake.Common.Net;
-using Cake.Common.Diagnostics;
 using Cake.Common.Xml;
 
-namespace Cake.CodeGen.OpenApi.Internal.Tools
+namespace Cake.CodeGen.OpenApi
 {
-    public class OpenApiGeneratorTool
+    internal class OpenApiGeneratorTool
     {
         private static readonly Uri MAVEN_LOCAL = MavenLocal();
 

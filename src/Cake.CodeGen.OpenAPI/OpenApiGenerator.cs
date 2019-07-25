@@ -3,23 +3,20 @@
 using Cake.Core;
 using Cake.Core.IO;
 
-using Cake.CodeGen.OpenApi.Internal;
-using Cake.CodeGen.OpenApi.Internal.Tools;
-
 namespace Cake.CodeGen.OpenApi
 {
     /// <summary>
-    /// 
+    /// Wraps the functionality of the OpenAPI generator
     /// </summary>
     public class OpenApiGenerator
     {
         private readonly OpenApiGeneratorTool Tool;
 
         /// <summary>
-        /// 
+        /// Creates a new wrapper around the OpenAPI generator
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="settings"></param>
+        /// <param name="context">The Cake context</param>
+        /// <param name="version">A version supported by the OpenAPI generator, defaults to null meaning the latest version</param>
         public OpenApiGenerator(ICakeContext context, string version = null)
         {
             Tool = new OpenApiGeneratorTool(context, version);
@@ -28,9 +25,11 @@ namespace Cake.CodeGen.OpenApi
         /// <summary>
         /// Generates code based on an OpenAPI specification from a file
         /// </summary>
-        /// <param name="specification"></param>
-        /// <param name="generator"></param>
-        /// <param name="outputDirectory"></param>
+        /// <param name="specification">The path to a file containing an OpenAPI specification</param>
+        /// <param name="generator">A generator identifier supported by the OpenAPI generator</param>
+        /// <param name="outputDirectory">The path to a directory where the files should be generated</param>
+        /// <param name="configurator">An action that can be used to configure the passed settings object</param>
+        /// <returns>The same wrapper for method chaining</returns>
         public OpenApiGenerator Generate(FilePath specification, string generator, DirectoryPath outputDirectory, Action<OpenApiGenerateSettings> configurator)
         {
             return Generate(specification?.ToUri(), generator, outputDirectory, configurator);
@@ -39,9 +38,11 @@ namespace Cake.CodeGen.OpenApi
         /// <summary>
         /// Generates code based on an OpenAPI specification from a file
         /// </summary>
-        /// <param name="specification"></param>
-        /// <param name="generator"></param>
-        /// <param name="outputDirectory"></param>
+        /// <param name="specification">The path to a file containing an OpenAPI specification</param>
+        /// <param name="generator">A generator identifier supported by the OpenAPI generator</param>
+        /// <param name="outputDirectory">The path to a directory where the files should be generated</param>
+        /// <param name="settings">A settings object for configuration</param>
+        /// <returns>The same wrapper for method chaining</returns>
         public OpenApiGenerator Generate(FilePath specification, string generator, DirectoryPath outputDirectory, OpenApiGenerateSettings settings = null)
         {
             return Generate(specification?.ToUri(), generator, outputDirectory, settings);
@@ -50,9 +51,11 @@ namespace Cake.CodeGen.OpenApi
         /// <summary>
         /// Generates code based on an OpenAPI specification from a URI
         /// </summary>
-        /// <param name="specification"></param>
-        /// <param name="generator"></param>
-        /// <param name="outputDirectory"></param>
+        /// <param name="specification">A resource providing an OpenAPI specification</param>
+        /// <param name="generator">A generator identifier supported by the OpenAPI generator</param>
+        /// <param name="outputDirectory">The path to a directory where the files should be generated</param>
+        /// <param name="configurator">An action that can be used to configure the passed settings object</param>
+        /// <returns>The same wrapper for method chaining</returns>
         public OpenApiGenerator Generate(Uri specification, string generator, DirectoryPath outputDirectory, Action<OpenApiGenerateSettings> configurator)
         {
             OpenApiGenerateSettings settings = new OpenApiGenerateSettings();
@@ -63,9 +66,11 @@ namespace Cake.CodeGen.OpenApi
         /// <summary>
         /// Generates code based on an OpenAPI specification from a URI
         /// </summary>
-        /// <param name="specification"></param>
-        /// <param name="generator"></param>
-        /// <param name="outputDirectory"></param>
+        /// <param name="specification">A resource providing an OpenAPI specification</param>
+        /// <param name="generator">A generator identifier supported by the OpenAPI generator</param>
+        /// <param name="outputDirectory">The path to a directory where the files should be generated</param>
+        /// <param name="settings">>A settings object for configuration</param>
+        /// <returns>The same wrapper for method chaining</returns>
         public OpenApiGenerator Generate(Uri specification, string generator, DirectoryPath outputDirectory, OpenApiGenerateSettings settings = null)
         {
             var args = new ProcessArgumentBuilder();
@@ -81,9 +86,9 @@ namespace Cake.CodeGen.OpenApi
         /// <summary>
         /// Validates an OpenAPI specification from a file
         /// </summary>
-        /// <param name="specification"></param>
-        /// <param name="recommend"></param>
-        /// <returns></returns>
+        /// <param name="specification">The path to a file containing an OpenAPI specification</param>
+        /// <param name="recommend">Whether to provide recommendations regarding the specification, defaults to false</param>
+        /// <returns>The same wrapper for method chaining</returns>
         public OpenApiGenerator Validate(FilePath specification, bool recommend = false)
         {
             return Validate(specification.ToUri(), recommend);
@@ -92,9 +97,9 @@ namespace Cake.CodeGen.OpenApi
         /// <summary>
         /// Validates an OpenAPI specification from a URI
         /// </summary>
-        /// <param name="specification"></param>
-        /// <param name="recommend"></param>
-        /// <returns></returns>
+        /// <param name="specification">A resource providing an OpenAPI specification</param>
+        /// <param name="recommend">Whether to provide recommendations regarding the specification, defaults to false</param>
+        /// <returns>The same wrapper for method chaining</returns>
         public OpenApiGenerator Validate(Uri specification, bool recommend = false)
         {
             var args = new ProcessArgumentBuilder();

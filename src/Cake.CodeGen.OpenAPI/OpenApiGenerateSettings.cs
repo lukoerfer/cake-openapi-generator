@@ -1,35 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+
 using Cake.Core;
 using Cake.Core.IO;
 
 namespace Cake.CodeGen.OpenApi
 {
     /// <summary>
-    /// 
+    /// Encapsulates the general code generation options provided by the OpenAPI generator
     /// </summary>
     public class OpenApiGenerateSettings
     {
         /// <summary>
-        /// 
+        /// Gets a store for generator-specific properties
         /// </summary>
+        /// <remarks>If <see cref="ConfigurationFile"/> is defined, this field will be ignored</remarks>
         public Dictionary<string, string> AdditionalProperties { get; private set; } = new Dictionary<string, string>();
 
         /// <summary>
-        /// 
+        /// Gets or sets the path to a configuration file with generator-specific settings
         /// </summary>
+        /// <remarks>If defined, <see cref="AdditionalProperties"/> will be ignored</remarks>
         public FilePath ConfigurationFile { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public Dictionary<string, string> ImportMappings { get; private set; } = new Dictionary<string, string>();
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public Dictionary<string, string> TypeMappings { get; private set; } = new Dictionary<string, string>();
 
         /// <summary>
         /// 
@@ -95,6 +87,11 @@ namespace Cake.CodeGen.OpenApi
         /// 
         /// </summary>
         public FilePath IgnoreFile { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Dictionary<string, string> ImportMappings { get; private set; } = new Dictionary<string, string>();
 
         /// <summary>
         /// 
@@ -184,8 +181,17 @@ namespace Cake.CodeGen.OpenApi
         /// <summary>
         /// 
         /// </summary>
+        public Dictionary<string, string> TypeMappings { get; private set; } = new Dictionary<string, string>();
+
+        /// <summary>
+        /// 
+        /// </summary>
         public bool Verbose { get; set; }
 
+        /// <summary>
+        /// Transforms the settings into command line arguments
+        /// </summary>
+        /// <returns></returns>
         public ProcessArgumentBuilder AsArguments()
         {
             var args = new ProcessArgumentBuilder();
