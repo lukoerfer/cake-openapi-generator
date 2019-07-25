@@ -2,6 +2,7 @@
 Cake Addin for code generation via the [OpenAPI Generator](https://openapi-generator.tech/) (f.k.a. Swagger Codegen)
 
 ## Motivation
+The OpenAPI Generator tool provides a lot of powerful code generators, but since its implemented in Java, the only build tools directly supported are Maven and Gradle. This addin provides a simple wrapper around the command line version of the tool to invoke code generation from Cake.
 
 ## Installation
 Since the addin is available on NuGet, it can simply be registered in your `build.cake` file via the `#addin` preprocessor directive:
@@ -14,7 +15,7 @@ As an additional dependency, Java needs to be installed and available to Cake. T
 
 ``` csharp
 Setup(context => {
-    context.Tools.RegisterFile("/path/to/java/executable");
+    context.Tools.RegisterFile("/path/to/java(.exe)");
 });
 ```
 
