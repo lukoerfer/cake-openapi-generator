@@ -13,7 +13,7 @@ namespace Cake.CodeGen.OpenApi
     {
         private static readonly Uri MAVEN_LOCAL = MavenLocal();
 
-        private static readonly Uri MAVEN_CENTRAL = new Uri("http://central.maven.org/maven2/");
+        private static readonly Uri MAVEN_CENTRAL = new Uri("https://central.maven.org/maven2/");
 
         private readonly ICakeContext Context;
 
