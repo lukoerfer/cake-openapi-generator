@@ -32,7 +32,7 @@ namespace Cake.CodeGen.OpenApi
         /// <returns>The same wrapper for method chaining</returns>
         public OpenApiGenerator Generate(FilePath specification, string generator, DirectoryPath outputDirectory, Action<OpenApiGenerateSettings> configurator)
         {
-            return Generate(specification?.ToUri(), generator, outputDirectory, configurator);
+            return Generate(ConvertFilePathToUri(specification), generator, outputDirectory, configurator);
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Cake.CodeGen.OpenApi
         /// <returns>The same wrapper for method chaining</returns>
         public OpenApiGenerator Generate(FilePath specification, string generator, DirectoryPath outputDirectory, OpenApiGenerateSettings settings = null)
         {
-            return Generate(specification?.ToUri(), generator, outputDirectory, settings);
+            return Generate(ConvertFilePathToUri(specification), generator, outputDirectory, settings);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Cake.CodeGen.OpenApi
         /// <returns>The same wrapper for method chaining</returns>
         public OpenApiGenerator Validate(FilePath specification, bool recommend = false)
         {
-            return Validate(specification.ToUri(), recommend);
+            return Validate(ConvertFilePathToUri(specification), recommend);
         }
 
         /// <summary>
@@ -111,6 +111,11 @@ namespace Cake.CodeGen.OpenApi
             }
             Tool.Run(args);
             return this;
+        }
+
+        private static Uri ConvertFilePathToUri(FilePath filePath)
+        {
+            return filePath != null ? new Uri(filePath.FullPath, UriKind.RelativeOrAbsolute) : null;
         }
 
     }
