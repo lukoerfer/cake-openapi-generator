@@ -171,11 +171,6 @@ namespace Cake.CodeGen.OpenApi
         /// <summary>
         /// 
         /// </summary>
-        public bool StrictMode { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
         public DirectoryPath TemplateDirectory { get; set; }
 
         /// <summary>
@@ -318,10 +313,6 @@ namespace Cake.CodeGen.OpenApi
             if (SkipValidation)
             {
                 args.Append("--skip-validate-spec");
-            }
-            if (StrictMode)
-            {
-
             }
             if (TemplateDirectory != null)
             {

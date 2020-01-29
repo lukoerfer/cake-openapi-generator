@@ -1,4 +1,4 @@
-var target = Argument("target", "Default");
+var target = Argument("target", "Build");
 
 var solution = File("./src/Cake.CodeGen.OpenAPI.sln");
 var project = File("./src/Cake.CodeGen.OpenAPI/Cake.CodeGen.OpenAPI.csproj");

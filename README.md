@@ -8,7 +8,7 @@ The OpenAPI Generator tool provides a lot of powerful code generators, but since
 Since the addin is available on NuGet, it can simply be registered in your `build.cake` file via the `#addin` preprocessor directive:
 
 ``` csharp
-#addin nuget:?package=Cake.CodeGen.OpenAPI&version=1.0.0
+#addin nuget:?package=Cake.CodeGen.OpenAPI
 ```
 
 As an additional dependency, Java needs to be installed and available to Cake. The most common way will be adding Java to the `PATH` environment variable, however it is also possible to register Java as a tool directly in the build script:

@@ -78,7 +78,7 @@ namespace Cake.CodeGen.OpenApi
             args.Append("-i").Append(specification.ToString());
             args.Append("-g").Append(generator);
             args.Append("-o").Append(outputDirectory.FullPath);
-            args.Append(settings?.AsArguments().Render() ?? string.Empty);
+            args.Append(settings?.AsArguments()?.Render() ?? string.Empty);
             Tool.Run(args);
             return this;
         }
