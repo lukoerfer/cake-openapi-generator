@@ -11,7 +11,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>cake code-generation openapi</PackageTags>
     <Description>Cake Addin for code generation via the OpenAPI Generator (f.k.a. Swagger Codegen)</Description>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
