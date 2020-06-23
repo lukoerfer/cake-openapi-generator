@@ -1,27 +1,48 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Cake.Core;
 using Cake.Core.IO;
 
-namespace Cake.CodeGen.OpenApi
+namespace Cake.OpenApiGenerator.Settings
 {
     /// <summary>
-    /// Encapsulates the general code generation options provided by the OpenAPI generator
+    /// Stores settings for the generate command of the OpenAPI generator
     /// </summary>
-    public class OpenApiGenerateSettings
+    public class OpenApiGenerateSettings : OpenApiBaseSettings
     {
+        public override string Command => "generate";
+
         /// <summary>
-        /// Gets a store for generator-specific properties
+        /// 
         /// </summary>
-        /// <remarks>If <see cref="ConfigurationFile"/> is defined, this field will be ignored</remarks>
-        public Dictionary<string, string> AdditionalProperties { get; private set; } = new Dictionary<string, string>();
+        /// <remarks>This parameter is required.</remarks>
+        public FilePath SpecificationFile { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>This parameter is required.</remarks>
+        public string Generator { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>This parameter is required.</remarks>
+        public DirectoryPath OutputDirectory { get; set; }
 
         /// <summary>
         /// Gets or sets the path to a configuration file with generator-specific settings
         /// </summary>
-        /// <remarks>If defined, <see cref="AdditionalProperties"/> will be ignored</remarks>
+        /// <remarks>If this parameter is defined, <see cref="AdditionalProperties"/> will be ignored</remarks>
         public FilePath ConfigurationFile { get; set; }
+
+        /// <summary>
+        /// Gets a store for generator-specific properties
+        /// </summary>
+        /// <remarks>If <see cref="ConfigurationFile"/> is defined, this parameter will be ignored</remarks>
+        public Dictionary<string, string> AdditionalProperties { get; private set; } = new Dictionary<string, string>();
 
         /// <summary>
         /// 
@@ -187,25 +208,28 @@ namespace Cake.CodeGen.OpenApi
         /// Transforms the settings into command line arguments
         /// </summary>
         /// <returns></returns>
-        public ProcessArgumentBuilder AsArguments()
+        protected override void ApplyParameters(ProcessArgumentBuilder args)
         {
-            var args = new ProcessArgumentBuilder();
+            if (SpecificationFile == null)
+                throw new InvalidOperationException();
+            if (Generator == null)
+                throw new InvalidOperationException();
+            if (OutputDirectory == null)
+                throw new InvalidOperationException();
+
+            args.Append("-i").Append(SpecificationFile.FullPath);
+            args.Append("-g").Append(Generator);
+            args.Append("-o").Append(OutputDirectory.FullPath);
+
             if (ConfigurationFile != null)
             {
                 args.Append("-c").Append(ConfigurationFile.FullPath);
             }
             else if (AdditionalProperties.Count > 0)
             {
-                args.Append("--additional-properties=" + string.Join(",", AdditionalProperties.Select(entry => entry.Key + "=" + entry.Value)));
+                args.Append("--additional-properties=" + string.Join(",", AdditionalProperties.Select(e => e.Key + "=" + e.Value)));
             }
-            if (ImportMappings.Count > 0)
-            {
-                args.Append("--import-mappings=" + string.Join(",", ImportMappings.Select(entry => entry.Key + "=" + entry.Value)));
-            }
-            if (TypeMappings.Count > 0)
-            {
-                args.Append("--type-mappings=" + string.Join(",", TypeMappings.Select(entry => entry.Key + "=" + entry.Value)));
-            }
+
             if (Authorization != null)
             {
                 args.Append("-a").Append(Authorization);
@@ -224,7 +248,7 @@ namespace Cake.CodeGen.OpenApi
             }
             if (SystemProperties.Count > 0)
             {
-                args.Append("--type-mappings=" + string.Join(",", SystemProperties.Select(entry => entry.Key + "=" + entry.Value)));
+                args.Append("--type-mappings=" + string.Join(",", SystemProperties.Select(e => e.Key + "=" + e.Value)));
             }
             if (TemplatingEngine != null)
             {
@@ -257,6 +281,10 @@ namespace Cake.CodeGen.OpenApi
             if (IgnoreFile != null)
             {
                 args.Append("--ignore-file-override").Append(IgnoreFile.FullPath);
+            }
+            if (ImportMappings.Count > 0)
+            {
+                args.Append("--import-mappings=" + string.Join(",", ImportMappings.Select(e => e.Key + "=" + e.Value)));
             }
             if (InstantiationTypes.Count > 0)
             {
@@ -301,10 +329,14 @@ namespace Cake.CodeGen.OpenApi
             if (ReleaseNote != null)
             {
                 args.Append("--release-note").Append(ReleaseNote);
-            }
+            }            
             if (RemoveOperationIdPrefix)
             {
-                args.Append("--reserved-words-mappings");
+                args.Append("--remove-operation-id-prefix");
+            }
+            if (ReservedWordsMappings.Count > 0)
+            {
+                args.Append("--reserved-word-mappings=" + string.Join(",", ReservedWordsMappings.Select(e => e.Key + "=" + e.Value)));
             }
             if (SkipOverwrite)
             {
@@ -318,11 +350,14 @@ namespace Cake.CodeGen.OpenApi
             {
                 args.Append("-t").Append(TemplateDirectory.FullPath);
             }
+            if (TypeMappings.Count > 0)
+            {
+                args.Append("--type-mappings=" + string.Join(",", TypeMappings.Select(e => e.Key + "=" + e.Value)));
+            }
             if (Verbose)
             {
                 args.Append("-v");
             }
-            return args;
         }
 
     }

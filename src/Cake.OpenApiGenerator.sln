@@ -1,14 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.438
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EAAC4D8A-66A3-4538-867C-8D6FBF346ED5}"
 	ProjectSection(SolutionItems) = preProject
 		..\build.cake = ..\build.cake
+		..\CHANGELOG.md = ..\CHANGELOG.md
+		..\CONTRIBUTING.md = ..\CONTRIBUTING.md
+		..\docs\docfx.json = ..\docs\docfx.json
+		..\LICENSE = ..\LICENSE
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.CodeGen.OpenAPI", "Cake.CodeGen.OpenAPI\Cake.CodeGen.OpenAPI.csproj", "{7E981A75-C03C-4F1F-BBF6-64D5E997EB83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.OpenApiGenerator", "Cake.OpenApiGenerator\Cake.OpenApiGenerator.csproj", "{7E981A75-C03C-4F1F-BBF6-64D5E997EB83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
