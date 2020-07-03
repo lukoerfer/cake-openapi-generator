@@ -1,5 +1,7 @@
 ﻿using Cake.Core;
 using Cake.Core.Annotations;
+using Cake.OpenApiGenerator;
+using Cake.OpenApiGenerator.Internal;
 
 namespace Cake.CodeGen.OpenApi
 {
@@ -17,7 +19,13 @@ namespace Cake.CodeGen.OpenApi
         [CakePropertyAlias(Cache = true)]
         public static OpenApiGenerator OpenApiGenerator(this ICakeContext context)
         {
-            return new OpenApiGenerator(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools);
+            IWebClient remotePackage = new DefaultWebClient()
+            {
+                BaseAddress = "https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli"
+            };
+
+            MavenPackage package = new MavenPackage(context.FileSystem, remotePackage, )
+            return new OpenApiGenerator(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools, package);
         }
 
     }

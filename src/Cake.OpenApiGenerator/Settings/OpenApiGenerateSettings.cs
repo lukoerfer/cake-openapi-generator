@@ -8,46 +8,51 @@ using Cake.Core.IO;
 namespace Cake.OpenApiGenerator.Settings
 {
     /// <summary>
-    /// Stores settings for the generate command of the OpenAPI generator
+    /// Stores settings for the OpenAPI generator command <c>generate</c>
     /// </summary>
     public class OpenApiGenerateSettings : OpenApiBaseSettings
     {
         public override string Command => "generate";
 
         /// <summary>
-        /// 
+        /// Gets or sets the OpenAPI specification file
         /// </summary>
         /// <remarks>This parameter is required.</remarks>
         public FilePath SpecificationFile { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets the generator
         /// </summary>
         /// <remarks>This parameter is required.</remarks>
         public string Generator { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets the output directory
         /// </summary>
         /// <remarks>This parameter is required.</remarks>
         public DirectoryPath OutputDirectory { get; set; }
 
         /// <summary>
-        /// Gets or sets the path to a configuration file with generator-specific settings
+        /// Gets or sets the path to a configuration file with generator-specific properties
         /// </summary>
         /// <remarks>If this parameter is defined, <see cref="AdditionalProperties"/> will be ignored</remarks>
         public FilePath ConfigurationFile { get; set; }
 
         /// <summary>
-        /// Gets a store for generator-specific properties
+        /// Gets or sets generator-specific properties
         /// </summary>
         /// <remarks>If <see cref="ConfigurationFile"/> is defined, this parameter will be ignored</remarks>
-        public Dictionary<string, string> AdditionalProperties { get; private set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> AdditionalProperties { get; set; } = new Dictionary<string, string>();
 
         /// <summary>
         /// 
         /// </summary>
         public string Authorization { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ApiNameSuffix { get; set; }
 
         /// <summary>
         /// 
@@ -67,7 +72,7 @@ namespace Cake.OpenApiGenerator.Settings
         /// <summary>
         /// 
         /// </summary>
-        public Dictionary<string, string> SystemProperties { get; private set; } = new Dictionary<string, string>();
+        public bool DryRun { get; set; }
 
         /// <summary>
         /// 
@@ -87,12 +92,22 @@ namespace Cake.OpenApiGenerator.Settings
         /// <summary>
         /// 
         /// </summary>
+        public string GitHost { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public string GitRepository { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         public string GitUser { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Dictionary<string, string> GlobalProperties { get; set; } = new Dictionary<string, string>();
 
         /// <summary>
         /// 
@@ -112,12 +127,12 @@ namespace Cake.OpenApiGenerator.Settings
         /// <summary>
         /// 
         /// </summary>
-        public Dictionary<string, string> ImportMappings { get; private set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> ImportMappings { get; set; } = new Dictionary<string, string>();
 
         /// <summary>
         /// 
         /// </summary>
-        public List<string> InstantiationTypes { get; private set; } = new List<string>();
+        public List<string> InstantiationTypes { get; set; } = new List<string>();
 
         /// <summary>
         /// 
@@ -127,7 +142,7 @@ namespace Cake.OpenApiGenerator.Settings
         /// <summary>
         /// 
         /// </summary>
-        public List<string> LanguageSpecificPrimitives { get; private set; } = new List<string>();
+        public List<string> LanguageSpecificPrimitives { get; set; } = new List<string>();
 
         /// <summary>
         /// 
@@ -177,7 +192,12 @@ namespace Cake.OpenApiGenerator.Settings
         /// <summary>
         /// 
         /// </summary>
-        public Dictionary<string, string> ReservedWordsMappings { get; private set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> ReservedWordsMappings { get; set; } = new Dictionary<string, string>();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Dictionary<string, string> ServerVariables { get; set; } = new Dictionary<string, string>();
 
         /// <summary>
         /// 
@@ -192,30 +212,31 @@ namespace Cake.OpenApiGenerator.Settings
         /// <summary>
         /// 
         /// </summary>
+        public bool StrictSpec { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public DirectoryPath TemplateDirectory { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public Dictionary<string, string> TypeMappings { get; private set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> TypeMappings { get; set; } = new Dictionary<string, string>();
 
         /// <summary>
         /// 
         /// </summary>
         public bool Verbose { get; set; }
 
-        /// <summary>
-        /// Transforms the settings into command line arguments
-        /// </summary>
-        /// <returns></returns>
         protected override void ApplyParameters(ProcessArgumentBuilder args)
         {
             if (SpecificationFile == null)
-                throw new InvalidOperationException();
+                throw new ArgumentNullException(nameof(SpecificationFile));
             if (Generator == null)
-                throw new InvalidOperationException();
+                throw new ArgumentNullException(nameof(Generator));
             if (OutputDirectory == null)
-                throw new InvalidOperationException();
+                throw new ArgumentNullException(nameof(OutputDirectory));
 
             args.Append("-i").Append(SpecificationFile.FullPath);
             args.Append("-g").Append(Generator);
@@ -225,7 +246,7 @@ namespace Cake.OpenApiGenerator.Settings
             {
                 args.Append("-c").Append(ConfigurationFile.FullPath);
             }
-            else if (AdditionalProperties.Count > 0)
+            else if (AdditionalProperties != null && AdditionalProperties.Count > 0)
             {
                 args.Append("--additional-properties=" + string.Join(",", AdditionalProperties.Select(e => e.Key + "=" + e.Value)));
             }
@@ -233,6 +254,10 @@ namespace Cake.OpenApiGenerator.Settings
             if (Authorization != null)
             {
                 args.Append("-a").Append(Authorization);
+            }
+            if (ApiNameSuffix != null)
+            {
+                args.Append("--api-name-suffix").Append(ApiNameSuffix);
             }
             if (ApiPackage != null)
             {
@@ -246,9 +271,9 @@ namespace Cake.OpenApiGenerator.Settings
             {
                 args.Append("--artifact-version").Append(ArtifactVersion);
             }
-            if (SystemProperties.Count > 0)
+            if (DryRun)
             {
-                args.Append("--type-mappings=" + string.Join(",", SystemProperties.Select(e => e.Key + "=" + e.Value)));
+                args.Append("--dry-run");
             }
             if (TemplatingEngine != null)
             {
@@ -262,6 +287,10 @@ namespace Cake.OpenApiGenerator.Settings
             {
                 args.Append("--generate-alias-as-model");
             }
+            if (GitHost != null)
+            {
+                args.Append("--git-host").Append(GitHost);
+            }
             if (GitRepository != null)
             {
                 args.Append("--git-repo-id").Append(GitRepository);
@@ -269,6 +298,10 @@ namespace Cake.OpenApiGenerator.Settings
             if (GitUser != null)
             {
                 args.Append("--git-user-id").Append(GitUser);
+            }
+            if (GlobalProperties != null && GlobalProperties.Count > 0)
+            {
+                args.Append("--global-properties").Append(string.Join(",", GlobalProperties.Select(e => e.Key + "=" + e.Value)));
             }
             if (GroupId != null)
             {
@@ -282,11 +315,11 @@ namespace Cake.OpenApiGenerator.Settings
             {
                 args.Append("--ignore-file-override").Append(IgnoreFile.FullPath);
             }
-            if (ImportMappings.Count > 0)
+            if (ImportMappings != null && ImportMappings.Count > 0)
             {
                 args.Append("--import-mappings=" + string.Join(",", ImportMappings.Select(e => e.Key + "=" + e.Value)));
             }
-            if (InstantiationTypes.Count > 0)
+            if (InstantiationTypes != null && InstantiationTypes.Count > 0)
             {
                 args.Append("--instantiation-types").Append(string.Join(",", InstantiationTypes));
             }
@@ -294,7 +327,7 @@ namespace Cake.OpenApiGenerator.Settings
             {
                 args.Append("--invoker-package").Append(InvokerPackage);
             }
-            if (LanguageSpecificPrimitives.Count > 0)
+            if (LanguageSpecificPrimitives != null && LanguageSpecificPrimitives.Count > 0)
             {
                 args.Append("--language-specific-primitives").Append(string.Join(",", LanguageSpecificPrimitives));
             }
@@ -334,7 +367,7 @@ namespace Cake.OpenApiGenerator.Settings
             {
                 args.Append("--remove-operation-id-prefix");
             }
-            if (ReservedWordsMappings.Count > 0)
+            if (ReservedWordsMappings != null && ReservedWordsMappings.Count > 0)
             {
                 args.Append("--reserved-word-mappings=" + string.Join(",", ReservedWordsMappings.Select(e => e.Key + "=" + e.Value)));
             }
@@ -350,7 +383,7 @@ namespace Cake.OpenApiGenerator.Settings
             {
                 args.Append("-t").Append(TemplateDirectory.FullPath);
             }
-            if (TypeMappings.Count > 0)
+            if (TypeMappings != null && TypeMappings.Count > 0)
             {
                 args.Append("--type-mappings=" + string.Join(",", TypeMappings.Select(e => e.Key + "=" + e.Value)));
             }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Cake.Core;
 using Cake.Core.IO;
 using Cake.Core.Tooling;
+using Cake.OpenApiGenerator;
 using Cake.OpenApiGenerator.Settings;
 
 namespace Cake.CodeGen.OpenApi
@@ -14,26 +15,36 @@ namespace Cake.CodeGen.OpenApi
     public class OpenApiGenerator : Tool<OpenApiBaseSettings>
     {
         /// <summary>
+        /// Gets or sets the version of the OpenAPI generator
+        /// </summary>
+        public string Version { get; set; }
+
+        private readonly MavenPackage mavenPackage;
+
+        /// <summary>
         /// Creates a new wrapper around the OpenAPI generator
         /// </summary>
-        public OpenApiGenerator(
-            IFileSystem fileSystem,
-            ICakeEnvironment environment,
-            IProcessRunner processRunner,
-            IToolLocator tools)
+        public OpenApiGenerator(IFileSystem fileSystem, ICakeEnvironment environment, IProcessRunner processRunner, IToolLocator tools, MavenPackage mavenPackage)
             : base(fileSystem, environment, processRunner, tools)
         {
-            
+            this.mavenPackage = mavenPackage;
         }
 
         /// <summary>
-        /// Provides a wrapper around the OpenAPI generator in the specified version
+        /// Sets the <see cref="Version"/> of the wrapper using a shorthand notation
         /// </summary>
         /// <param name="version">A version supported by the OpenAPI generator</param>
-        /// <returns></returns>
-        public OpenApiGenerator this[string version] => this;
+        /// <returns>The same wrapper for method chaining</returns>
+        public OpenApiGenerator this[string version]
+        {
+            get
+            {
+                Version = version;
+                return this;
+            }
+        }
 
-        protected override string GetToolName() => $"OpenAPI Generator ({ "" ?? "latest" })";
+        protected override string GetToolName() => $"OpenAPI Generator ({ Version ?? "latest" })";
 
         protected override IEnumerable<string> GetToolExecutableNames() => new string[] { "java", "java.exe" };
 
@@ -46,88 +57,117 @@ namespace Cake.CodeGen.OpenApi
         /// <returns>The same wrapper for method chaining</returns>
         public OpenApiGenerator Generate(FilePath specificationFile, string generator, DirectoryPath outputDirectory)
         {
-            return Run(new OpenApiGenerateSettings()
+            Run(new OpenApiGenerateSettings()
             {
                 SpecificationFile = specificationFile,
                 Generator = generator,
                 OutputDirectory = outputDirectory
             });
+            return this;
         }
 
 
         /// <summary>
         /// Generates code based on an OpenAPI specification
         /// </summary>
-        /// <param name="settings">>A settings object for configuration</param>
+        /// <param name="settings"></param>
         /// <returns>The same wrapper for method chaining</returns>
         public OpenApiGenerator Generate(OpenApiGenerateSettings settings)
         {
-            return Run(settings);
+            Run(settings);
+            return this;
         }
 
         /// <summary>
         /// Generates code based on an OpenAPI specification
         /// </summary>
-        /// <param name="configurator">An action that can be used to configure the passed settings object</param>
+        /// <param name="configurator">An action that defines the settings</param>
         /// <returns>The same wrapper for method chaining</returns>
         public OpenApiGenerator Generate(Action<OpenApiGenerateSettings> configurator)
         {
-            var settings = new OpenApiGenerateSettings();
-            configurator?.Invoke(settings);
-            return Run(settings);
+            Run(configurator.Evaluate());
+            return this;
         }
 
 
         /// <summary>
-        /// Validates an OpenAPI specification from a file
+        /// Validates an OpenAPI specification
         /// </summary>
         /// <param name="specificationFile">The path to a file containing an OpenAPI specification</param>
         /// <param name="recommend">Whether to provide recommendations regarding the specification, defaults to false</param>
         /// <returns>The same wrapper for method chaining</returns>
         public OpenApiGenerator Validate(FilePath specificationFile, bool recommend = false)
         {
-            return Run(new OpenApiValidateSettings()
+            Run(new OpenApiValidateSettings()
             {
                 SpecificationFile = specificationFile,
                 Recommend = recommend
             });
+            return this;
         }
 
+        /// <summary>
+        /// Validates an OpenAPI specification
+        /// </summary>
+        /// <param name="settings"></param>
+        /// <returns></returns>
         public OpenApiGenerator Validate(OpenApiValidateSettings settings)
         {
-            return Run(settings);
+            Run(settings);
+            return this;
         }
 
+        /// <summary>
+        /// Validates an OpenAPI specification
+        /// </summary>
+        /// <param name="configurator"></param>
+        /// <returns></returns>
         public OpenApiGenerator Validate(Action<OpenApiValidateSettings> configurator)
         {
-            var settings = new OpenApiValidateSettings();
-            configurator?.Invoke(settings);
-            return Run(settings);
+            Run(configurator.Evaluate());
+            return this;
         }
 
+        /// <summary>
+        /// Batch processes OpenAPI configuration files
+        /// </summary>
+        /// <param name="configurationFiles"></param>
+        /// <returns></returns>
         public OpenApiGenerator Batch(params FilePath[] configurationFiles)
         {
-            return Run(new OpenApiBatchSettings()
+            Run(new OpenApiBatchSettings()
             {
                 ConfigurationFiles = new FilePathCollection(configurationFiles)
             });
+            return this;
         }
 
+        /// <summary>
+        /// Batch processes OpenAPI configuration files
+        /// </summary>
+        /// <param name="settings"></param>
+        /// <returns></returns>
         public OpenApiGenerator Batch(OpenApiBatchSettings settings)
         {
+            Run(settings);
             return this;
         }
 
+        /// <summary>
+        /// Batch processes OpenAPI configuration files
+        /// </summary>
+        /// <param name="configurator"></param>
+        /// <returns></returns>
         public OpenApiGenerator Batch(Action<OpenApiBatchSettings> configurator)
         {
+            Run(configurator.Evaluate());
             return this;
         }
 
-        private OpenApiGenerator Run(OpenApiBaseSettings settings)
+        private void Run(OpenApiBaseSettings settings)
         {
-            settings.PackageFile = "";
+            settings.PackageFile = mavenPackage.GetJarFile(Version);
             Run(settings, settings.GetArguments());
-            return this;
         }
 
     }
