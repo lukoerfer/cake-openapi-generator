@@ -1,5 +1,7 @@
 ﻿using NUnit.Framework;
 
+using System;
+
 namespace Cake.OpenApiGenerator.Settings
 {
     [TestFixture]
@@ -8,7 +10,12 @@ namespace Cake.OpenApiGenerator.Settings
         [Test]
         public void ShouldFailWithoutPackage()
         {
+            var settings = new OpenApiBatchSettings();
 
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                settings.GetArguments();
+            });
         }
 
         [Test]

@@ -12,30 +12,29 @@ namespace Cake.OpenApiGenerator.Settings
     public abstract class OpenApiBaseSettings : ToolSettings
     {
         /// <summary>
-        /// Gets the OpenAPI generator command that uses these settings
+        /// 
         /// </summary>
-        public abstract string Command { get; }
-
-        internal FilePath PackageFile { get; set; }
+        public FilePath PackageFile { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public ProcessArgumentBuilder GetArguments()
+        public virtual ProcessArgumentBuilder GetArguments()
         {
             if (PackageFile == null)
-                throw new InvalidOperationException("");
+                throw new ArgumentNullException(nameof(PackageFile));
 
-            ProcessArgumentBuilder args = new ProcessArgumentBuilder()
+            return new ProcessArgumentBuilder()
                 .Append("-jar")
-                .Append(PackageFile.FullPath)
-                .Append(Command);
-
-            ApplyParameters(args);
-            return args;
+                .Append(PackageFile.FullPath);
         }
 
-        protected abstract void ApplyParameters(ProcessArgumentBuilder args);
+        public static T From<T>(Action<T> configuration) where T : OpenApiBaseSettings, new()
+        {
+            T settings = new T();
+            configuration.Invoke(settings);
+            return settings;
+        }
     }
 }

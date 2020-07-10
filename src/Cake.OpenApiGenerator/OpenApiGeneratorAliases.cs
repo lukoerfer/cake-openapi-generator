@@ -1,9 +1,11 @@
 ﻿using Cake.Core;
 using Cake.Core.Annotations;
-using Cake.OpenApiGenerator;
-using Cake.OpenApiGenerator.Internal;
+using Cake.Core.IO;
+using Cake.OpenApiGenerator.Maven;
 
-namespace Cake.CodeGen.OpenApi
+using System;
+
+namespace Cake.OpenApiGenerator
 {
     /// <summary>
     /// Provides the functionality of the OpenAPI generator in Cake
@@ -19,13 +21,15 @@ namespace Cake.CodeGen.OpenApi
         [CakePropertyAlias(Cache = true)]
         public static OpenApiGenerator OpenApiGenerator(this ICakeContext context)
         {
-            IWebClient remotePackage = new DefaultWebClient()
+            var mavenCentral = new DefaultWebClient()
             {
-                BaseAddress = "https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli"
+                BaseAddress = "https://repo1.maven.org/maven2/"
             };
+            var profile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            var mavenLocal = new DirectoryPath(profile).Combine(".m2/repository");
 
-            MavenPackage package = new MavenPackage(context.FileSystem, remotePackage, )
-            return new OpenApiGenerator(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools, package);
+            var mavenClient = new MavenClient(context.FileSystem, mavenLocal, mavenCentral);
+            return new OpenApiGenerator(context, mavenClient);
         }
 
     }

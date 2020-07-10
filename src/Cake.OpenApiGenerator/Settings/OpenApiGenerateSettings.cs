@@ -12,7 +12,6 @@ namespace Cake.OpenApiGenerator.Settings
     /// </summary>
     public class OpenApiGenerateSettings : OpenApiBaseSettings
     {
-        public override string Command => "generate";
 
         /// <summary>
         /// Gets or sets the OpenAPI specification file
@@ -229,8 +228,10 @@ namespace Cake.OpenApiGenerator.Settings
         /// </summary>
         public bool Verbose { get; set; }
 
-        protected override void ApplyParameters(ProcessArgumentBuilder args)
+        public override ProcessArgumentBuilder GetArguments()
         {
+            var arguments = base.GetArguments();
+
             if (SpecificationFile == null)
                 throw new ArgumentNullException(nameof(SpecificationFile));
             if (Generator == null)
@@ -238,159 +239,163 @@ namespace Cake.OpenApiGenerator.Settings
             if (OutputDirectory == null)
                 throw new ArgumentNullException(nameof(OutputDirectory));
 
-            args.Append("-i").Append(SpecificationFile.FullPath);
-            args.Append("-g").Append(Generator);
-            args.Append("-o").Append(OutputDirectory.FullPath);
+            arguments.Append("generate");
+
+            arguments.Append("-i").Append(SpecificationFile.FullPath);
+            arguments.Append("-g").Append(Generator);
+            arguments.Append("-o").Append(OutputDirectory.FullPath);
 
             if (ConfigurationFile != null)
             {
-                args.Append("-c").Append(ConfigurationFile.FullPath);
+                arguments.Append("-c").Append(ConfigurationFile.FullPath);
             }
             else if (AdditionalProperties != null && AdditionalProperties.Count > 0)
             {
-                args.Append("--additional-properties=" + string.Join(",", AdditionalProperties.Select(e => e.Key + "=" + e.Value)));
+                arguments.Append("--additional-properties=" + string.Join(",", AdditionalProperties.Select(e => e.Key + "=" + e.Value)));
             }
 
             if (Authorization != null)
             {
-                args.Append("-a").Append(Authorization);
+                arguments.Append("-a").Append(Authorization);
             }
             if (ApiNameSuffix != null)
             {
-                args.Append("--api-name-suffix").Append(ApiNameSuffix);
+                arguments.Append("--api-name-suffix").Append(ApiNameSuffix);
             }
             if (ApiPackage != null)
             {
-                args.Append("--api-package").Append(ApiPackage);
+                arguments.Append("--api-package").Append(ApiPackage);
             }
             if (ArtifactId != null)
             {
-                args.Append("--artifact-id").Append(ArtifactId);
+                arguments.Append("--artifact-id").Append(ArtifactId);
             }
             if (ArtifactVersion != null)
             {
-                args.Append("--artifact-version").Append(ArtifactVersion);
+                arguments.Append("--artifact-version").Append(ArtifactVersion);
             }
             if (DryRun)
             {
-                args.Append("--dry-run");
+                arguments.Append("--dry-run");
             }
             if (TemplatingEngine != null)
             {
-                args.Append("-e").Append(TemplatingEngine);
+                arguments.Append("-e").Append(TemplatingEngine);
             }
             if (EnablePostProcessFile)
             {
-                args.Append("--enable-post-process-file");
+                arguments.Append("--enable-post-process-file");
             }
             if (GenerateAliasAsModel)
             {
-                args.Append("--generate-alias-as-model");
+                arguments.Append("--generate-alias-as-model");
             }
             if (GitHost != null)
             {
-                args.Append("--git-host").Append(GitHost);
+                arguments.Append("--git-host").Append(GitHost);
             }
             if (GitRepository != null)
             {
-                args.Append("--git-repo-id").Append(GitRepository);
+                arguments.Append("--git-repo-id").Append(GitRepository);
             }
             if (GitUser != null)
             {
-                args.Append("--git-user-id").Append(GitUser);
+                arguments.Append("--git-user-id").Append(GitUser);
             }
             if (GlobalProperties != null && GlobalProperties.Count > 0)
             {
-                args.Append("--global-properties").Append(string.Join(",", GlobalProperties.Select(e => e.Key + "=" + e.Value)));
+                arguments.Append("--global-properties").Append(string.Join(",", GlobalProperties.Select(e => e.Key + "=" + e.Value)));
             }
             if (GroupId != null)
             {
-                args.Append("--group-id").Append(GroupId);
+                arguments.Append("--group-id").Append(GroupId);
             }
             if (HttpUserAgent != null)
             {
-                args.Append("--http-user-agent").Append(HttpUserAgent);
+                arguments.Append("--http-user-agent").Append(HttpUserAgent);
             }
             if (IgnoreFile != null)
             {
-                args.Append("--ignore-file-override").Append(IgnoreFile.FullPath);
+                arguments.Append("--ignore-file-override").Append(IgnoreFile.FullPath);
             }
             if (ImportMappings != null && ImportMappings.Count > 0)
             {
-                args.Append("--import-mappings=" + string.Join(",", ImportMappings.Select(e => e.Key + "=" + e.Value)));
+                arguments.Append("--import-mappings=" + string.Join(",", ImportMappings.Select(e => e.Key + "=" + e.Value)));
             }
             if (InstantiationTypes != null && InstantiationTypes.Count > 0)
             {
-                args.Append("--instantiation-types").Append(string.Join(",", InstantiationTypes));
+                arguments.Append("--instantiation-types").Append(string.Join(",", InstantiationTypes));
             }
             if (InvokerPackage != null)
             {
-                args.Append("--invoker-package").Append(InvokerPackage);
+                arguments.Append("--invoker-package").Append(InvokerPackage);
             }
             if (LanguageSpecificPrimitives != null && LanguageSpecificPrimitives.Count > 0)
             {
-                args.Append("--language-specific-primitives").Append(string.Join(",", LanguageSpecificPrimitives));
+                arguments.Append("--language-specific-primitives").Append(string.Join(",", LanguageSpecificPrimitives));
             }
             if (Library != null)
             {
-                args.Append("--library").Append(Library);
+                arguments.Append("--library").Append(Library);
             }
             if (LogToStandardError)
             {
-                args.Append("--log-to-stderr");
+                arguments.Append("--log-to-stderr");
             }
             if (MinimalUpdate)
             {
-                args.Append("--minimal-update");
+                arguments.Append("--minimal-update");
             }
             if (ModelNamePrefix != null)
             {
-                args.Append("--model-name-prefix").Append(ModelNamePrefix);
+                arguments.Append("--model-name-prefix").Append(ModelNamePrefix);
             }
             if (ModelNameSuffix != null)
             {
-                args.Append("--model-name-suffix").Append(ModelNameSuffix);
+                arguments.Append("--model-name-suffix").Append(ModelNameSuffix);
             }
             if (ModelPackage != null)
             {
-                args.Append("--model-package").Append(ModelPackage);
+                arguments.Append("--model-package").Append(ModelPackage);
             }
             if (PackageName != null)
             {
-                args.Append("--package-name").Append(PackageName);
+                arguments.Append("--package-name").Append(PackageName);
             }
             if (ReleaseNote != null)
             {
-                args.Append("--release-note").Append(ReleaseNote);
+                arguments.Append("--release-note").Append(ReleaseNote);
             }            
             if (RemoveOperationIdPrefix)
             {
-                args.Append("--remove-operation-id-prefix");
+                arguments.Append("--remove-operation-id-prefix");
             }
             if (ReservedWordsMappings != null && ReservedWordsMappings.Count > 0)
             {
-                args.Append("--reserved-word-mappings=" + string.Join(",", ReservedWordsMappings.Select(e => e.Key + "=" + e.Value)));
+                arguments.Append("--reserved-word-mappings=" + string.Join(",", ReservedWordsMappings.Select(e => e.Key + "=" + e.Value)));
             }
             if (SkipOverwrite)
             {
-                args.Append("-s");
+                arguments.Append("-s");
             }
             if (SkipValidation)
             {
-                args.Append("--skip-validate-spec");
+                arguments.Append("--skip-validate-spec");
             }
             if (TemplateDirectory != null)
             {
-                args.Append("-t").Append(TemplateDirectory.FullPath);
+                arguments.Append("-t").Append(TemplateDirectory.FullPath);
             }
             if (TypeMappings != null && TypeMappings.Count > 0)
             {
-                args.Append("--type-mappings=" + string.Join(",", TypeMappings.Select(e => e.Key + "=" + e.Value)));
+                arguments.Append("--type-mappings=" + string.Join(",", TypeMappings.Select(e => e.Key + "=" + e.Value)));
             }
             if (Verbose)
             {
-                args.Append("-v");
+                arguments.Append("-v");
             }
+
+            return arguments;
         }
 
     }

@@ -10,8 +10,6 @@ namespace Cake.OpenApiGenerator.Settings
     /// </summary>
     public class OpenApiValidateSettings : OpenApiBaseSettings
     {
-        public override string Command => "validate";
-
         /// <summary>
         /// Gets or sets the OpenAPI specification file
         /// </summary>
@@ -19,21 +17,27 @@ namespace Cake.OpenApiGenerator.Settings
         public FilePath SpecificationFile { get; set; }
 
         /// <summary>
-        /// Gets or sets whether recommendations should by provided 
+        /// Gets or sets whether recommendations should by provided
         /// </summary>
         public bool Recommend { get; set; }
 
-        protected override void ApplyParameters(ProcessArgumentBuilder args)
+        public override ProcessArgumentBuilder GetArguments()
         {
+            var arguments = base.GetArguments();
+
             if (SpecificationFile == null)
                 throw new ArgumentNullException(nameof(SpecificationFile));
 
-            args.Append("-i").Append(SpecificationFile.FullPath);
+            arguments.Append("validate");
+
+            arguments.Append("-i").Append(SpecificationFile.FullPath);
 
             if (Recommend)
             {
-                args.Append("--recommend");
+                arguments.Append("--recommend");
             }
+
+            return arguments;
         }
     }
 }

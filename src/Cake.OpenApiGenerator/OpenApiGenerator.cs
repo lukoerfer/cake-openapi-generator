@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using Cake.Core;
 using Cake.Core.IO;
 using Cake.Core.Tooling;
-using Cake.OpenApiGenerator;
+using Cake.OpenApiGenerator.Maven;
 using Cake.OpenApiGenerator.Settings;
 
-namespace Cake.CodeGen.OpenApi
+namespace Cake.OpenApiGenerator
 {
     /// <summary>
     /// Wraps the functionality of the OpenAPI generator
@@ -15,19 +15,34 @@ namespace Cake.CodeGen.OpenApi
     public class OpenApiGenerator : Tool<OpenApiBaseSettings>
     {
         /// <summary>
+        /// 
+        /// </summary>
+        public FilePath PackageFile { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Group { get; set; } = "org.openapitools";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Artifact { get; set; } = "openapi-generator-cli";
+
+        /// <summary>
         /// Gets or sets the version of the OpenAPI generator
         /// </summary>
         public string Version { get; set; }
 
-        private readonly MavenPackage mavenPackage;
+        private readonly IMavenClient mavenClient;
 
         /// <summary>
         /// Creates a new wrapper around the OpenAPI generator
         /// </summary>
-        public OpenApiGenerator(IFileSystem fileSystem, ICakeEnvironment environment, IProcessRunner processRunner, IToolLocator tools, MavenPackage mavenPackage)
-            : base(fileSystem, environment, processRunner, tools)
+        public OpenApiGenerator(ICakeContext context, IMavenClient mavenClient)
+            : base(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools)
         {
-            this.mavenPackage = mavenPackage;
+            this.mavenClient = mavenClient;
         }
 
         /// <summary>
@@ -85,7 +100,7 @@ namespace Cake.CodeGen.OpenApi
         /// <returns>The same wrapper for method chaining</returns>
         public OpenApiGenerator Generate(Action<OpenApiGenerateSettings> configurator)
         {
-            Run(configurator.Evaluate());
+            Run(OpenApiBaseSettings.From(configurator));
             return this;
         }
 
@@ -124,7 +139,7 @@ namespace Cake.CodeGen.OpenApi
         /// <returns></returns>
         public OpenApiGenerator Validate(Action<OpenApiValidateSettings> configurator)
         {
-            Run(configurator.Evaluate());
+            Run(OpenApiBaseSettings.From(configurator));
             return this;
         }
 
@@ -160,13 +175,16 @@ namespace Cake.CodeGen.OpenApi
         /// <returns></returns>
         public OpenApiGenerator Batch(Action<OpenApiBatchSettings> configurator)
         {
-            Run(configurator.Evaluate());
+            Run(OpenApiBaseSettings.From(configurator));
             return this;
         }
 
         private void Run(OpenApiBaseSettings settings)
         {
-            settings.PackageFile = mavenPackage.GetJarFile(Version);
+            if (settings.PackageFile == null)
+            {
+                settings.PackageFile = mavenClient.GetJarFile(Group, Artifact, Version);
+            }
             Run(settings, settings.GetArguments());
         }
 

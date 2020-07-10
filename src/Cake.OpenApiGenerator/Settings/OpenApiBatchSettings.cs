@@ -11,7 +11,6 @@ namespace Cake.OpenApiGenerator.Settings
     /// </summary>
     public class OpenApiBatchSettings : OpenApiBaseSettings
     {
-        public override string Command => "batch";
 
         /// <summary>
         /// Gets or sets the configuration files used for batch processing
@@ -40,7 +39,7 @@ namespace Cake.OpenApiGenerator.Settings
         /// Gets or sets the root directory for output and includes
         /// </summary>
         /// <remarks>
-        /// The base directory for includes may be overridden using <see cref="IncludesBaseDirectory"/>.
+        /// The root directory for includes may be overridden using <see cref="IncludesBaseDirectory"/>.
         /// </remarks>
         public DirectoryPath RootDirectory { get; set; }
 
@@ -58,43 +57,49 @@ namespace Cake.OpenApiGenerator.Settings
         /// </summary>
         public bool Verbose { get; set; }
 
-        protected override void ApplyParameters(ProcessArgumentBuilder args)
+        public override ProcessArgumentBuilder GetArguments()
         {
+            var arguments = base.GetArguments();
+
             if (ConfigurationFiles == null)
                 throw new ArgumentNullException(nameof(ConfigurationFiles));
             if (ConfigurationFiles.Count < 1)
                 throw new ArgumentException(null, nameof(ConfigurationFiles));
 
+            arguments.Append("batch");
+
             if (FailFast)
             {
-                args.Append("--fail-fast");
+                arguments.Append("--fail-fast");
             }
             if (IncludesBaseDirectory != null)
             {
-                args.Append("--includes-base-dir", IncludesBaseDirectory.FullPath);
+                arguments.Append("--includes-base-dir", IncludesBaseDirectory.FullPath);
             }
             if (ThreadCount.HasValue)
             {
-                args.Append("-r").Append(ThreadCount.ToString());
+                arguments.Append("-r").Append(ThreadCount.ToString());
             }
             if (RootDirectory != null)
             {
-                args.Append("--root-dir").Append(RootDirectory.FullPath);
+                arguments.Append("--root-dir").Append(RootDirectory.FullPath);
             }
             if (Timeout.HasValue)
             {
                 int minutes = (int)Timeout.Value.TotalMinutes;
-                args.Append("--timeout").Append(minutes.ToString());
+                arguments.Append("--timeout").Append(minutes.ToString());
             }
             if (Verbose)
             {
-                args.Append("--verbose");
+                arguments.Append("--verbose");
             }
 
             foreach (var configurationFile in ConfigurationFiles)
             {
-                args.Append(configurationFile.FullPath);
+                arguments.Append(configurationFile.FullPath);
             }
+
+            return arguments;
         }
     }
 }

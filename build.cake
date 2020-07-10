@@ -1,7 +1,7 @@
 #addin nuget:?package=Cake.Coverlet&version=2.3.4
 
 #addin nuget:?package=Cake.DocFx&version=0.13.0
-#tool nuget:?package=docfx.console&version=2.43.1
+#tool nuget:?package=docfx.console&version=2.56
 
 var target = Argument("target", "Build");
 
@@ -81,7 +81,7 @@ Task("Push")
     });
 });
 
-Task("Documentation")
+Task("Docs")
     .Does(() =>
 {
     DocFxMetadata(new DocFxMetadataSettings()
@@ -89,10 +89,12 @@ Task("Documentation")
         Projects = GetFiles("./docs/docfx.json"),
         LogLevel = DocFxLogLevel.Warning
     });
+    /*
     DocFxBuild("./docs/docfx.json", new DocFxBuildSettings()
     {
         LogLevel = DocFxLogLevel.Warning
     });
+    */
 });
 
 RunTarget(target);
