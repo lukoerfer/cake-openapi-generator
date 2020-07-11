@@ -1,8 +1,5 @@
 #addin nuget:?package=Cake.Coverlet&version=2.3.4
 
-#addin nuget:?package=Cake.DocFx&version=0.13.0
-#tool nuget:?package=docfx.console&version=2.56
-
 var target = Argument("target", "Build");
 
 var solution = File("./src/Cake.OpenApiGenerator.sln");
@@ -84,17 +81,8 @@ Task("Push")
 Task("Docs")
     .Does(() =>
 {
-    DocFxMetadata(new DocFxMetadataSettings()
-    {
-        Projects = GetFiles("./docs/docfx.json"),
-        LogLevel = DocFxLogLevel.Warning
-    });
-    /*
-    DocFxBuild("./docs/docfx.json", new DocFxBuildSettings()
-    {
-        LogLevel = DocFxLogLevel.Warning
-    });
-    */
+    var doxygen = Context.Tools.Resolve("doxygen.exe");
+    StartProcess(doxygen, new ProcessSettings());
 });
 
 RunTarget(target);

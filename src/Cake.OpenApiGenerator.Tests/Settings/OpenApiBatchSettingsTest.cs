@@ -12,10 +12,7 @@ namespace Cake.OpenApiGenerator.Settings
         {
             var settings = new OpenApiBatchSettings();
 
-            Assert.Throws<InvalidOperationException>(() =>
-            {
-                settings.GetArguments();
-            });
+            
         }
 
         [Test]
