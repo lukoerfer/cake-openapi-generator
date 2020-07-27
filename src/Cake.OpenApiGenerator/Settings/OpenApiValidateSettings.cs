@@ -8,7 +8,7 @@ namespace Cake.OpenApiGenerator.Settings
     /// <summary>
     /// Stores settings for the OpenAPI generator command <c>validate</c>
     /// </summary>
-    public class OpenApiValidateSettings : OpenApiBaseSettings
+    public class OpenApiValidateSettings : OpenApiSettings
     {
         /// <summary>
         /// Gets or sets the OpenAPI specification file
@@ -21,9 +21,9 @@ namespace Cake.OpenApiGenerator.Settings
         /// </summary>
         public bool Recommend { get; set; }
 
-        public override ProcessArgumentBuilder GetArguments()
+        public override ProcessArgumentBuilder AsArguments()
         {
-            var arguments = base.GetArguments();
+            var arguments = base.AsArguments();
 
             if (SpecificationFile == null)
                 throw new ArgumentNullException(nameof(SpecificationFile));

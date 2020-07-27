@@ -10,7 +10,7 @@ namespace Cake.OpenApiGenerator.Settings
     /// <summary>
     /// Base for classes that store settings for OpenAPI generator commands
     /// </summary>
-    public abstract class OpenApiBaseSettings : ToolSettings
+    public abstract class OpenApiSettings : ToolSettings
     {
         /// <summary>
         /// 
@@ -26,7 +26,7 @@ namespace Cake.OpenApiGenerator.Settings
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual ProcessArgumentBuilder GetArguments()
+        public virtual ProcessArgumentBuilder AsArguments()
         {
             if (PackageFile == null)
                 throw new ArgumentNullException(nameof(PackageFile));
@@ -36,7 +36,7 @@ namespace Cake.OpenApiGenerator.Settings
                 .Append(PackageFile.FullPath);
         }
 
-        public static T From<T>(Action<T> configuration) where T : OpenApiBaseSettings, new()
+        public static T From<T>(Action<T> configuration) where T : OpenApiSettings, new()
         {
             T settings = new T();
             configuration.Invoke(settings);
