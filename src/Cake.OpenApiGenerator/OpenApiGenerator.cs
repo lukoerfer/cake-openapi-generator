@@ -17,22 +17,12 @@ namespace Cake.OpenApiGenerator
         /// <summary>
         /// 
         /// </summary>
+        public MavenPackage Package { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public FilePath PackageFile { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Group { get; set; } = "org.openapitools";
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public string Artifact { get; set; } = "openapi-generator-cli";
-
-        /// <summary>
-        /// Gets or sets the version of the OpenAPI generator
-        /// </summary>
-        public string Version { get; set; }
 
         private readonly IMavenClient mavenClient;
 
@@ -46,7 +36,7 @@ namespace Cake.OpenApiGenerator
         }
 
         /// <summary>
-        /// Sets the <see cref="Version"/> of the wrapper using a shorthand notation
+        /// Sets the <see cref="MavenPackage.Version"/> of this wrapper using a shorthand notation
         /// </summary>
         /// <param name="version">A version supported by the OpenAPI generator</param>
         /// <returns>The same wrapper for method chaining</returns>
@@ -54,12 +44,15 @@ namespace Cake.OpenApiGenerator
         {
             get
             {
-                Version = version;
+                if (Package != null)
+                {
+                    Package.Version = version;
+                }
                 return this;
             }
         }
 
-        protected override string GetToolName() => $"OpenAPI Generator ({ Version ?? "latest" })";
+        protected override string GetToolName() => "OpenAPI Generator";
 
         protected override IEnumerable<string> GetToolExecutableNames() => new string[] { "java", "java.exe" };
 
@@ -183,7 +176,7 @@ namespace Cake.OpenApiGenerator
         {
             if (settings.PackageFile == null)
             {
-                settings.PackageFile = mavenClient.GetJarFile(Group, Artifact, Version);
+                
             }
             Run(settings, settings.GetArguments());
         }

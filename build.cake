@@ -1,5 +1,7 @@
 #addin nuget:?package=Cake.Coverlet&version=2.3.4
 
+#tool nuget:?package=Doxygen&version=1.8.14
+
 var target = Argument("target", "Build");
 
 var solution = File("./src/Cake.OpenApiGenerator.sln");
@@ -81,8 +83,9 @@ Task("Push")
 Task("Docs")
     .Does(() =>
 {
+    EnsureDirectoryExists("artifacts/apidoc");
     var doxygen = Context.Tools.Resolve("doxygen.exe");
-    StartProcess(doxygen, new ProcessSettings());
+    StartProcess(doxygen, "docs/Doxyfile");
 });
 
 RunTarget(target);

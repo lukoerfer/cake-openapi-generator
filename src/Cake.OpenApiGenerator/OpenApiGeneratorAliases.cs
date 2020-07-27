@@ -29,7 +29,10 @@ namespace Cake.OpenApiGenerator
             var mavenLocal = new DirectoryPath(profile).Combine(".m2/repository");
 
             var mavenClient = new MavenClient(context.FileSystem, mavenLocal, mavenCentral);
-            return new OpenApiGenerator(context, mavenClient);
+            return new OpenApiGenerator(context, mavenClient)
+            {
+                Package = new MavenPackage("", "")
+            };
         }
 
     }

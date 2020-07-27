@@ -1,6 +1,7 @@
 ﻿using Cake.Core;
 using Cake.Core.IO;
 using Cake.Core.Tooling;
+using Cake.OpenApiGenerator.Maven;
 
 using System;
 
@@ -11,6 +12,11 @@ namespace Cake.OpenApiGenerator.Settings
     /// </summary>
     public abstract class OpenApiBaseSettings : ToolSettings
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public MavenPackage Package { get; set; }
+
         /// <summary>
         /// 
         /// </summary>

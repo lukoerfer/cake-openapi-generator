@@ -9,21 +9,23 @@ namespace Cake.OpenApiGenerator.Maven
     [TestFixture]
     class MavenClientTest
     {
-        private IFileSystem fileSystem;
-        private IWebClient mavenCentral;
+        private FakeFileSystem fileSystem;
+        private Mock<IWebClient> mavenCentral;
 
         [SetUp]
         public void Setup()
         {
             var environment = FakeEnvironment.CreateWindowsEnvironment();
             fileSystem = new FakeFileSystem(environment);
-            mavenCentral = Mock.Of<IWebClient>();
+            mavenCentral = new Mock<IWebClient>();
         }
 
         [Test]
-        public void ShouldQueryMetadataForMissingVersion()
+        public void ShouldJustReturnJarIfExists()
         {
-            
+
+            var mavenClient = new MavenClient(fileSystem, null, mavenCentral.Object);
+
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Cake.OpenApiGenerator.Maven
 {
-    public class MavenPackage
+    public sealed class MavenPackage
     {
         /// <summary>
         /// 
@@ -16,5 +16,18 @@
         /// 
         /// </summary>
         public string Version { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="group"></param>
+        /// <param name="artifact"></param>
+        /// <param name="version"></param>
+        public MavenPackage(string group, string artifact, string version = null)
+        {
+            Group = group;
+            Artifact = artifact;
+            Version = version;
+        }
     }
 }

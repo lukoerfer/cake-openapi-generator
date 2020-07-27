@@ -26,7 +26,7 @@ Once the installation is complete, the `OpenApiGenerator` property and its `Gene
 Task("Generate")
     .Does(() =>
 {
-    OpenApiGenerator.Generate("./specification.yaml", "csharp", "./output");
+    OpenApiGenerator.Generate("specification.yaml", "csharp", "output");
 }
 ```
 
@@ -40,11 +40,9 @@ Task("Generate")
     OpenApiGenerator
     	.Generate(new OpenApiGenerateSettings()
         {
+            SpecificationFile = "specification.yaml",
+            Generator = "csharp",
     		Verbose = true
-    	});
-    	.Generate(settings =>
-        {
-    		settings.Verbose = true
     	});
 }
 ```
@@ -60,7 +58,7 @@ It is recommended to define the tool version as shown in the example below:
 Task("Generate")
     .Does(() =>
 {
-    OpenApiGenerator["3.3.4"].Generate("./specification.yaml", "csharp", "./output");
+    OpenApiGenerator["3.3.4"].Generate("specification.yaml", "csharp", "./output");
 }
 ```
 

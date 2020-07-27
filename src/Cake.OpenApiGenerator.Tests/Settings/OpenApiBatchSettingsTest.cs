@@ -1,7 +1,5 @@
 ﻿using NUnit.Framework;
 
-using System;
-
 namespace Cake.OpenApiGenerator.Settings
 {
     [TestFixture]

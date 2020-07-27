@@ -2,8 +2,11 @@
 
 namespace Cake.OpenApiGenerator.Maven
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public interface IMavenClient
     {
-        FilePath GetJarFile(string group, string artifact, string version);
+        FilePath Resolve(MavenPackage package);
     }
 }

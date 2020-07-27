@@ -8,14 +8,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\build.cake = ..\build.cake
 		..\CHANGELOG.md = ..\CHANGELOG.md
 		..\CONTRIBUTING.md = ..\CONTRIBUTING.md
-		..\docs\docfx.json = ..\docs\docfx.json
+		..\docs\Doxyfile = ..\docs\Doxyfile
 		..\LICENSE = ..\LICENSE
 		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.OpenApiGenerator", "Cake.OpenApiGenerator\Cake.OpenApiGenerator.csproj", "{7E981A75-C03C-4F1F-BBF6-64D5E997EB83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.OpenApiGenerator.Tests", "Cake.OpenApiGenerator.Tests\Cake.OpenApiGenerator.Tests.csproj", "{7F24B3F2-E9E5-45CD-9FC3-9E30C7E56F9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.OpenApiGenerator.Tests", "Cake.OpenApiGenerator.Tests\Cake.OpenApiGenerator.Tests.csproj", "{7F24B3F2-E9E5-45CD-9FC3-9E30C7E56F9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

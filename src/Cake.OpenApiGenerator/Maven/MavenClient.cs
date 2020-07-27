@@ -4,6 +4,9 @@ using System.Xml;
 
 namespace Cake.OpenApiGenerator.Maven
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class MavenClient : IMavenClient
     {
         private readonly IFileSystem fileSystem;
@@ -17,10 +20,10 @@ namespace Cake.OpenApiGenerator.Maven
             this.mavenCentral = mavenCentral;
         }
 
-        public FilePath GetJarFile(string group, string artifact, string version)
+        public FilePath Resolve(MavenPackage package)
         {
-            version = version ?? GetLatestVersion(group, artifact);
-            var path = $"{group.Replace('.', '/')}/{artifact}/{version}/openapi-generator-cli-{version}.jar";
+            var version = package.Version ?? GetLatestVersion(package.Group, package.Artifact);
+            var path = $"{package.Group.Replace('.', '/')}/{package.Artifact}/{version}/{package.Artifact}-{version}.jar";
             var localJarFile = fileSystem.GetFile(mavenLocal.CombineWithFilePath(path));
 
             if (!localJarFile.Exists)
@@ -44,5 +47,6 @@ namespace Cake.OpenApiGenerator.Maven
                 return document.SelectSingleNode("/metadata/versioning/latest").InnerText;
             }
         }
+
     }
 }
