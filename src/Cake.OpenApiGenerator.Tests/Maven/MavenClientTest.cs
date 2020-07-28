@@ -1,6 +1,6 @@
 ﻿using Cake.Core.IO;
 using Cake.Testing;
-using Moq;
+using FakeItEasy;
 using NUnit.Framework;
 
 namespace Cake.OpenApiGenerator.Maven
@@ -17,14 +17,19 @@ namespace Cake.OpenApiGenerator.Maven
         {
             fileSystem = new FakeFileSystem(FakeEnvironment.CreateWindowsEnvironment());
             mavenLocal = new DirectoryPath(".m2");
-            mavenCentral = Mock.Of<IWebClient>();
+            mavenCentral = A.Fake<IWebClient>();
         }
 
         [Test]
         public void ShouldJustReturnJarIfExists()
         {
-
+            // Given
             var mavenClient = new MavenClient(fileSystem, mavenLocal, mavenCentral);
+
+            // When
+            var file = mavenClient.Resolve(new MavenPackage("", "", ""));
+
+            // Then
 
         }
     }
