@@ -34,13 +34,16 @@ namespace Cake.OpenApiGenerator
         }
 
         [Test]
-        public void Test()
+        public void ShouldRunProcessOnValidate()
         {
+            // Given
             var generator = new OpenApiGenerator(fileSystem, environment, runner, tools, mavenClient);
 
+            // When
             generator.Validate("specification.yaml");
 
-            A.CallTo(() => runner.Start(A<FilePath>._, A<ProcessSettings>._)).MustHaveHappenedOnceExactly();
+            // Then
+            A.CallTo(runner).MustHaveHappenedOnceExactly();
         }
     }
 }

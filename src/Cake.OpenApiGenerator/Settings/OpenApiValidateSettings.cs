@@ -31,7 +31,6 @@ namespace Cake.OpenApiGenerator.Settings
             arguments.Append("validate");
 
             arguments.Append("-i").Append(SpecificationFile.FullPath);
-
             if (Recommend)
             {
                 arguments.Append("--recommend");

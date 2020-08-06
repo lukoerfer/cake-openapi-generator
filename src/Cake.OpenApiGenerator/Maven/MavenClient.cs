@@ -22,8 +22,11 @@ namespace Cake.OpenApiGenerator.Maven
 
         public FilePath Resolve(MavenPackage package)
         {
-            var version = package.Version ?? GetLatestVersion(package.Group, package.Artifact);
-            var path = $"{package.Group.Replace('.', '/')}/{package.Artifact}/{version}/{package.Artifact}-{version}.jar";
+            var group = package.Group;
+            var artifact = package.Artifact;
+            var version = package.Version ?? GetLatestVersion(group, artifact);
+
+            var path = $"{group.Replace('.', '/')}/{artifact}/{version}/{artifact}-{version}.jar";
             var localJarFile = fileSystem.GetFile(mavenLocal.CombineWithFilePath(path));
 
             if (!localJarFile.Exists)

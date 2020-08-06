@@ -21,16 +21,16 @@ namespace Cake.OpenApiGenerator.Maven
         }
 
         [Test]
-        public void ShouldJustReturnJarIfExists()
+        public void ShouldNotReadMavenCentralWhenPackageExists()
         {
             // Given
             var mavenClient = new MavenClient(fileSystem, mavenLocal, mavenCentral);
 
             // When
-            var file = mavenClient.Resolve(new MavenPackage("", "", ""));
+            var file = mavenClient.Resolve(new MavenPackage("artifact", "group", "1.0.0"));
 
             // Then
-
+            A.CallTo(mavenCentral).MustNotHaveHappened();
         }
     }
 }
