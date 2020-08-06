@@ -1,22 +1,73 @@
-﻿using NUnit.Framework;
+﻿using Cake.Core.IO;
+
+using NUnit.Framework;
+
+using System;
 
 namespace Cake.OpenApiGenerator.Settings
 {
     [TestFixture]
     class OpenApiBatchSettingsTest
     {
-        [Test]
-        public void ShouldFailWithoutPackage()
-        {
-            var settings = new OpenApiBatchSettings();
+        private OpenApiBatchSettings settings;
 
-            
+        [SetUp]
+        public void Setup()
+        {
+            settings = new OpenApiBatchSettings()
+            {
+                PackageFile = new FilePath("/path/to/package.jar")
+            };
+            settings.ConfigurationFiles.Add("configuration.json");
         }
 
         [Test]
-        public void ShouldFailWithoutConfigurationFile()
+        public void ShouldFailIfPackageFileNull()
         {
-            
+            settings.PackageFile = null;
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                settings.AsArguments();
+            });
+        }
+
+        [Test]
+        public void ShouldFailIfConfigurationFilesNull()
+        {
+            settings.ConfigurationFiles = null;
+
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                settings.AsArguments();
+            });
+        }
+
+        [Test]
+        public void ShouldFailIfConfigurationFilesIsEmpty()
+        {
+            settings.ConfigurationFiles = new FilePathCollection();
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                settings.AsArguments();
+            });
+        }
+
+        [Test]
+        public void ShouldHaveConfigurationFileInArguments()
+        {
+            var arguments = settings.AsArguments();
+
+
+        }
+
+        [Test]
+        public void ShouldHaveConfigurationFilesInArguments()
+        {
+            settings.ConfigurationFiles.Add("secondConfig.json");
+
+            var arguments = settings.AsArguments();
         }
     }
 }

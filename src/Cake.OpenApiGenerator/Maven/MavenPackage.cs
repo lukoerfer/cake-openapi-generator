@@ -1,5 +1,8 @@
 ﻿namespace Cake.OpenApiGenerator.Maven
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public sealed class MavenPackage
     {
         /// <summary>

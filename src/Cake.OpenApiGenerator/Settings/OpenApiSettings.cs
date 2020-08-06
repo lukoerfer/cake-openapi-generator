@@ -10,7 +10,7 @@ namespace Cake.OpenApiGenerator.Settings
     /// <summary>
     /// Stores settings common to all OpenAPI generator commands
     /// </summary>
-    public abstract class OpenApiBaseSettings : ToolSettings
+    public abstract class OpenApiSettings : ToolSettings
     {
         /// <summary>
         /// Gets or sets the Maven package used to run this command
@@ -28,7 +28,7 @@ namespace Cake.OpenApiGenerator.Settings
         /// 
         /// </summary>
         /// <returns></returns>
-        public virtual ProcessArgumentBuilder GetArguments()
+        public virtual ProcessArgumentBuilder AsArguments()
         {
             if (PackageFile == null)
                 throw new ArgumentNullException(nameof(PackageFile));
