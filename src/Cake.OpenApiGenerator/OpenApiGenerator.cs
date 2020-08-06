@@ -15,12 +15,12 @@ namespace Cake.OpenApiGenerator
     public class OpenApiGenerator : Tool<OpenApiBaseSettings>
     {
         /// <summary>
-        /// 
+        /// Gets or sets the Maven package used to run the commands
         /// </summary>
         public MavenPackage Package { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets the package file used to run the commands
         /// </summary>
         public FilePath PackageFile { get; set; }
 

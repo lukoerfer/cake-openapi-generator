@@ -30,7 +30,7 @@ Task("Generate")
 }
 ```
 
-The three mandatory parameters of the `Generate` method are the specification source (either a `FilePath` or an `Uri`), the generator to use (a list can be found [here](https://openapi-generator.tech/docs/generators.html)) and the destination directory.
+The three mandatory parameters of the `Generate` method are the specification source (either a `FilePath` or an `Uri`), the generator to use (a list can be found [here](https://openapi-generator.tech/docs/generators)) and the destination directory.
 Additional options can either be passed directly via a `OpenApiGenerateSettings` object or using an `Action` that configures such an object:
 
 ``` csharp

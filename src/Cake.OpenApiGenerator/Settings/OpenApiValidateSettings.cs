@@ -21,6 +21,10 @@ namespace Cake.OpenApiGenerator.Settings
         /// </summary>
         public bool Recommend { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override ProcessArgumentBuilder GetArguments()
         {
             var arguments = base.GetArguments();

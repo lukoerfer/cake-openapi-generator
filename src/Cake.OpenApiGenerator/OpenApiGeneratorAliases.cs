@@ -8,7 +8,7 @@ using System;
 namespace Cake.OpenApiGenerator
 {
     /// <summary>
-    /// Provides the functionality of the OpenAPI generator in Cake
+    /// Provides a wrapper of the OpenAPI generator to Cake
     /// </summary>
     [CakeAliasCategory("OpenAPI")]
     public static class OpenApiGeneratorAliases

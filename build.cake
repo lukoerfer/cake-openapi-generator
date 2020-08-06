@@ -16,22 +16,11 @@ Task("Clean")
     CleanDirectories("./src/**/obj");
 });
 
-Task("Restore")
-    .Does(() =>
-{
-    DotNetCoreRestore(solution, new DotNetCoreRestoreSettings()
-    {
-        Verbosity = DotNetCoreVerbosity.Quiet
-    });
-});
-
 Task("Build")
-    .IsDependentOn("Restore")
     .Does(() =>
 {
     DotNetCoreBuild(solution, new DotNetCoreBuildSettings()
     {
-        NoRestore = true,
         Verbosity = DotNetCoreVerbosity.Quiet
     });
 });
@@ -52,6 +41,16 @@ Task("Test")
         CoverletOutputDirectory = "./artifacts/coverage/coverage",
         CoverletOutputFormat = CoverletOutputFormat.opencover
     });
+});
+
+Task("Samples")
+    .IsDependentOn("Build")
+    .Does(() =>
+{
+    foreach (var sample in GetFiles("samples/*/build.cake"))
+    {
+        CakeExecuteScript(sample);
+    }
 });
 
 Task("Pack")

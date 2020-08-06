@@ -8,18 +8,20 @@ using System;
 namespace Cake.OpenApiGenerator.Settings
 {
     /// <summary>
-    /// Base for classes that store settings for OpenAPI generator commands
+    /// Stores settings common to all OpenAPI generator commands
     /// </summary>
     public abstract class OpenApiBaseSettings : ToolSettings
     {
         /// <summary>
-        /// 
+        /// Gets or sets the Maven package used to run this command
         /// </summary>
+        /// 
         public MavenPackage Package { get; set; }
 
         /// <summary>
-        /// 
+        /// Gets or sets the package file used to run this command
         /// </summary>
+        /// <remarks></remarks>
         public FilePath PackageFile { get; set; }
 
         /// <summary>
@@ -36,7 +38,14 @@ namespace Cake.OpenApiGenerator.Settings
                 .Append(PackageFile.FullPath);
         }
 
-        public static T From<T>(Action<T> configuration) where T : OpenApiBaseSettings, new()
+        /// <summary>
+        /// Creates settings from a configuration action
+        /// </summary>
+        /// <typeparam name="T">A specific OpenAPI generator settings class</typeparam>
+        /// <param name="configuration">An action that configures the settings</param>
+        /// <returns>The settings configured by the action</returns>
+        public static T From<T>(Action<T> configuration)
+            where T : OpenApiBaseSettings, new()
         {
             T settings = new T();
             configuration.Invoke(settings);

@@ -1,4 +1,6 @@
-#addin nuget:?package=Cake.OpenApiGenerator
+#r "../../src/Cake.OpenApiGenerator/bin/Debug/netstandard2.0/Cake.OpenApiGenerator.dll"
+
+var target = Argument("target", "Test");
 
 Task("Generate")
 	.Does(() =>
@@ -6,4 +8,14 @@ Task("Generate")
 	OpenApiGenerator.Generate("petstore.json", "csharp", "src");
 });
 
-RunTarget("Generate");
+Task("Clean")
+	.Does(() =>
+{
+	DeleteDirectory("src", true);
+});
+
+Task("Test")
+	.IsDependentOn("Generate")
+	.IsDependentOn("Clean");
+
+RunTarget(target);

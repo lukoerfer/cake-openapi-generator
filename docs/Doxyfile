@@ -2,7 +2,7 @@
 PROJECT_NAME           = "Cake OpenAPI Generator Addin"
 PROJECT_NUMBER         = 2.0.0
 PROJECT_BRIEF          = "Cake Addin for code generation via the OpenAPI Generator (f.k.a. Swagger Codegen)"
-PROJECT_LOGO           = 
+PROJECT_LOGO           = docs/images/cake-contrib.png
 
 # Input
 INPUT                  = src README.md
