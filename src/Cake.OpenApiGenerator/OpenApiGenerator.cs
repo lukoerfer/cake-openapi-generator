@@ -10,9 +10,9 @@ using Cake.OpenApiGenerator.Settings;
 namespace Cake.OpenApiGenerator
 {
     /// <summary>
-    /// Wraps the functionality of the OpenAPI generator
+    /// Wraps the functionality of the OpenAPI generator command line tool
     /// </summary>
-    public class OpenApiGenerator : Tool<OpenApiSettings>
+    public class OpenApiGenerator : Tool<OpenApiGeneratorSettings>
     {
         /// <summary>
         /// Gets or sets the Maven package used to run the commands
@@ -62,28 +62,9 @@ namespace Cake.OpenApiGenerator
         /// <summary>
         /// Generates code based on an OpenAPI specification
         /// </summary>
-        /// <param name="specificationFile">The path to a file containing an OpenAPI specification</param>
-        /// <param name="generator">A generator identifier supported by the OpenAPI generator</param>
-        /// <param name="outputDirectory">The path to a directory where the files should be generated</param>
-        /// <returns>The same wrapper for method chaining</returns>
-        public OpenApiGenerator Generate(FilePath specificationFile, string generator, DirectoryPath outputDirectory)
-        {
-            Run(new OpenApiGenerateSettings()
-            {
-                SpecificationFile = specificationFile,
-                Generator = generator,
-                OutputDirectory = outputDirectory
-            });
-            return this;
-        }
-
-
-        /// <summary>
-        /// Generates code based on an OpenAPI specification
-        /// </summary>
         /// <param name="settings"></param>
         /// <returns>The same wrapper for method chaining</returns>
-        public OpenApiGenerator Generate(OpenApiGenerateSettings settings)
+        public OpenApiGenerator Generate(OpenApiGeneratorGenerateSettings settings)
         {
             Run(settings);
             return this;
@@ -94,9 +75,9 @@ namespace Cake.OpenApiGenerator
         /// </summary>
         /// <param name="configurator">An action that defines the settings</param>
         /// <returns>The same wrapper for method chaining</returns>
-        public OpenApiGenerator Generate(Action<OpenApiGenerateSettings> configurator)
+        public OpenApiGenerator Generate(Action<OpenApiGeneratorGenerateSettings> configurator)
         {
-            Run(OpenApiSettings.From(configurator));
+            Run(OpenApiGeneratorSettings.From(configurator));
             return this;
         }
 
@@ -107,11 +88,11 @@ namespace Cake.OpenApiGenerator
         /// <param name="specificationFile">The path to a file containing an OpenAPI specification</param>
         /// <param name="recommend">Whether to provide recommendations regarding the specification, defaults to false</param>
         /// <returns>The same wrapper for method chaining</returns>
-        public OpenApiGenerator Validate(FilePath specificationFile, bool recommend = false)
+        public OpenApiGenerator Validate(string specification, bool recommend = false)
         {
-            Run(new OpenApiValidateSettings()
+            Run(new OpenApiGeneratorValidateSettings()
             {
-                SpecificationFile = specificationFile,
+                Specification = specification,
                 Recommend = recommend
             });
             return this;
@@ -122,7 +103,7 @@ namespace Cake.OpenApiGenerator
         /// </summary>
         /// <param name="settings"></param>
         /// <returns></returns>
-        public OpenApiGenerator Validate(OpenApiValidateSettings settings)
+        public OpenApiGenerator Validate(OpenApiGeneratorValidateSettings settings)
         {
             Run(settings);
             return this;
@@ -133,9 +114,9 @@ namespace Cake.OpenApiGenerator
         /// </summary>
         /// <param name="configurator"></param>
         /// <returns></returns>
-        public OpenApiGenerator Validate(Action<OpenApiValidateSettings> configurator)
+        public OpenApiGenerator Validate(Action<OpenApiGeneratorValidateSettings> configurator)
         {
-            Run(OpenApiSettings.From(configurator));
+            Run(OpenApiGeneratorSettings.From(configurator));
             return this;
         }
 
@@ -146,7 +127,7 @@ namespace Cake.OpenApiGenerator
         /// <returns></returns>
         public OpenApiGenerator Batch(params FilePath[] configurationFiles)
         {
-            Run(new OpenApiBatchSettings()
+            Run(new OpenApiGeneratorBatchSettings()
             {
                 ConfigurationFiles = new FilePathCollection(configurationFiles)
             });
@@ -158,7 +139,7 @@ namespace Cake.OpenApiGenerator
         /// </summary>
         /// <param name="settings"></param>
         /// <returns></returns>
-        public OpenApiGenerator Batch(OpenApiBatchSettings settings)
+        public OpenApiGenerator Batch(OpenApiGeneratorBatchSettings settings)
         {
             Run(settings);
             return this;
@@ -169,13 +150,13 @@ namespace Cake.OpenApiGenerator
         /// </summary>
         /// <param name="configurator"></param>
         /// <returns></returns>
-        public OpenApiGenerator Batch(Action<OpenApiBatchSettings> configurator)
+        public OpenApiGenerator Batch(Action<OpenApiGeneratorBatchSettings> configurator)
         {
-            Run(OpenApiSettings.From(configurator));
+            Run(OpenApiGeneratorSettings.From(configurator));
             return this;
         }
 
-        private void Run(OpenApiSettings settings)
+        private void Run(OpenApiGeneratorSettings settings)
         {
             settings.PackageFile = settings.PackageFile ?? PackageFile ?? mavenClient.Resolve(settings.Package ?? Package);
             Run(settings, settings.AsArguments());

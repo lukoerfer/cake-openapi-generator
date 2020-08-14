@@ -11,7 +11,7 @@ Since the addin is available on [NuGet](), it can simply be registered in your `
 #addin nuget:?package=Cake.OpenApiGenerator
 ```
 
-As an additional dependency, Java needs to be installed and available to Cake. The most common way will be adding Java to the `PATH` environment variable, however it is also possible to register Java as a tool directly in the build script:
+As an additional dependency, Java needs to be installed and available for Cake. The most common way will be adding Java to the `PATH` environment variable, however it is also possible to register Java as a tool directly in the build script:
 
 ``` csharp
 Setup(context => {
@@ -20,7 +20,7 @@ Setup(context => {
 ```
 
 ## Usage
-Once the installation is complete, the `OpenApiGenerator` property and its `Generate` method can be used to generate code from OpenAPI specifications:
+Once the addin is registered, the `OpenApiGenerator` property and its `Generate` method can be used to generate code from OpenAPI specifications:
 
 ``` csharp
 Task("Generate")
@@ -37,13 +37,12 @@ Additional options can either be passed directly via a `OpenApiGenerateSettings`
 Task("Generate")
     .Does(() =>
 {
-    OpenApiGenerator
-    	.Generate(new OpenApiGenerateSettings()
-        {
-            SpecificationFile = "specification.yaml",
-            Generator = "csharp",
-    		Verbose = true
-    	});
+    OpenApiGenerator.Generate(new OpenApiGenerateSettings()
+    {
+        SpecificationFile = "specification.yaml",
+        Generator = "csharp",
+    	Verbose = true
+    });
 }
 ```
 
@@ -62,7 +61,7 @@ Task("Generate")
 }
 ```
 
-### Validation
+### Supported commands
 In addition to code generation, the addin can be used to validate OpenAPI specifications via the `Validate` method.
 It only takes a specification `FilePath` or `Uri` as mandatory parameter and a `bool` whether to provide recommendations as an optional second parameter (defaults to `false`):
 

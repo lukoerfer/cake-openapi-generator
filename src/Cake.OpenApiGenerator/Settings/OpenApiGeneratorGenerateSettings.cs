@@ -10,14 +10,14 @@ namespace Cake.OpenApiGenerator.Settings
     /// <summary>
     /// Stores settings for the OpenAPI generator command <c>generate</c>
     /// </summary>
-    public class OpenApiGenerateSettings : OpenApiSettings
+    public class OpenApiGeneratorGenerateSettings : OpenApiGeneratorSettings
     {
 
         /// <summary>
         /// Gets or sets the file with the OpenAPI specification
         /// </summary>
         /// <remarks>This parameter is required.</remarks>
-        public FilePath SpecificationFile { get; set; }
+        public string Specification { get; set; }
 
         /// <summary>
         /// Gets or sets the generator
@@ -228,12 +228,12 @@ namespace Cake.OpenApiGenerator.Settings
         /// </summary>
         public bool Verbose { get; set; }
 
-        public override ProcessArgumentBuilder AsArguments()
+        internal override ProcessArgumentBuilder AsArguments()
         {
             var arguments = base.AsArguments();
 
-            if (SpecificationFile == null)
-                throw new ArgumentNullException(nameof(SpecificationFile));
+            if (Specification == null)
+                throw new ArgumentNullException(nameof(Specification));
             if (Generator == null)
                 throw new ArgumentNullException(nameof(Generator));
             if (OutputDirectory == null)
@@ -241,7 +241,7 @@ namespace Cake.OpenApiGenerator.Settings
 
             arguments.Append("generate");
 
-            arguments.Append("-i").Append(SpecificationFile.FullPath);
+            arguments.Append("-i").Append(Specification);
             arguments.Append("-g").Append(Generator);
             arguments.Append("-o").Append(OutputDirectory.FullPath);
 

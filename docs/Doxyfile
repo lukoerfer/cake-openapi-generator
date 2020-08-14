@@ -5,17 +5,18 @@ PROJECT_BRIEF          = "Cake Addin for code generation via the OpenAPI Generat
 PROJECT_LOGO           = docs/images/cake-contrib.png
 
 # Input
-INPUT                  = src README.md
+INPUT                  = src docs README.md
 USE_MDFILE_AS_MAINPAGE = README.md
-FILE_PATTERNS          = *.cs
+FILE_PATTERNS          = *.cs *.md
 RECURSIVE              = YES
 EXCLUDE_PATTERNS       = *.Tests
 
 # Output
-OUTPUT_DIRECTORY       = artifacts/apidoc
-OUTPUT_LANGUAGE        = English
 GENERATE_HTML          = YES
 GENERATE_LATEX         = NO
+OUTPUT_LANGUAGE        = English
+OUTPUT_DIRECTORY       = artifacts/docs
+HTML_OUTPUT            = .
 
 # Settings
 EXTRACT_STATIC         = YES

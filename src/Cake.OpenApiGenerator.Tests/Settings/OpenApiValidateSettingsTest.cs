@@ -8,8 +8,6 @@ namespace Cake.OpenApiGenerator.Settings
     [TestFixture]
     class OpenApiValidateSettingsTest
     {
-        
-
         [SetUp]
         public void Setup()
         {
@@ -17,11 +15,11 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldFailIfSpecificationFileNull()
+        public void ShouldFailIfSpecificationNull()
         {
-            var settings = new OpenApiValidateSettings()
+            var settings = new OpenApiGeneratorValidateSettings()
             {
-                SpecificationFile = null
+                Specification = null
             };
 
             Assert.Throws<ArgumentNullException>(() =>
@@ -31,16 +29,9 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldHaveSpecificationFileInArguments()
+        public void ShouldHaveSpecificationInArguments()
         {
-            var settings = new OpenApiValidateSettings()
-            {
-                SpecificationFile = specificationFile
-            };
 
-            var arguments = settings.AsArguments();
-
-            
         }
     }
 }

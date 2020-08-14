@@ -9,12 +9,12 @@ namespace Cake.OpenApiGenerator.Settings
     [TestFixture]
     class OpenApiBatchSettingsTest
     {
-        private OpenApiBatchSettings settings;
+        private OpenApiGeneratorBatchSettings settings;
 
         [SetUp]
         public void Setup()
         {
-            settings = new OpenApiBatchSettings()
+            settings = new OpenApiGeneratorBatchSettings()
             {
                 PackageFile = new FilePath("/path/to/package.jar")
             };

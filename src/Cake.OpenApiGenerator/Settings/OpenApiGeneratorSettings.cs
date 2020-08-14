@@ -10,7 +10,7 @@ namespace Cake.OpenApiGenerator.Settings
     /// <summary>
     /// Stores settings common to all OpenAPI generator commands
     /// </summary>
-    public abstract class OpenApiSettings : ToolSettings
+    public abstract class OpenApiGeneratorSettings : ToolSettings
     {
         /// <summary>
         /// Gets or sets the Maven package used to run this command
@@ -24,11 +24,7 @@ namespace Cake.OpenApiGenerator.Settings
         /// <remarks></remarks>
         public FilePath PackageFile { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public virtual ProcessArgumentBuilder AsArguments()
+        internal virtual ProcessArgumentBuilder AsArguments()
         {
             if (PackageFile == null)
                 throw new ArgumentNullException(nameof(PackageFile));
@@ -38,14 +34,8 @@ namespace Cake.OpenApiGenerator.Settings
                 .Append(PackageFile.FullPath);
         }
 
-        /// <summary>
-        /// Creates settings from a configuration action
-        /// </summary>
-        /// <typeparam name="T">A specific OpenAPI generator settings class</typeparam>
-        /// <param name="configuration">An action that configures the settings</param>
-        /// <returns>The settings configured by the action</returns>
-        public static T From<T>(Action<T> configuration)
-            where T : OpenApiBaseSettings, new()
+        internal static T From<T>(Action<T> configuration)
+            where T : OpenApiGeneratorSettings, new()
         {
             T settings = new T();
             configuration.Invoke(settings);

@@ -1,5 +1,7 @@
 ﻿using Cake.Core.IO;
 
+using System;
+using System.IO;
 using System.Xml;
 
 namespace Cake.OpenApiGenerator.Maven
@@ -37,8 +39,10 @@ namespace Cake.OpenApiGenerator.Maven
 
             if (!localJarFile.Exists)
             {
+                fileSystem.GetDirectory(localJarFile.Path.GetDirectory()).Create();
+
                 using (var source = remoteRepository.OpenRead(path))
-                using (var target = localJarFile.OpenWrite())
+                using (var target = localJarFile.Open(FileMode.CreateNew))
                 {
                     source.CopyTo(target);
                 }

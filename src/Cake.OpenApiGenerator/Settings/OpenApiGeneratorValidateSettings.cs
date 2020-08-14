@@ -8,13 +8,13 @@ namespace Cake.OpenApiGenerator.Settings
     /// <summary>
     /// Stores settings for the OpenAPI generator command <c>validate</c>
     /// </summary>
-    public class OpenApiValidateSettings : OpenApiSettings
+    public class OpenApiGeneratorValidateSettings : OpenApiGeneratorSettings
     {
         /// <summary>
         /// Gets or sets the OpenAPI specification file
         /// </summary>
         /// <remarks>This parameter is required.</remarks>
-        public FilePath SpecificationFile { get; set; }
+        public string Specification { get; set; }
 
         /// <summary>
         /// Gets or sets whether recommendations should by provided
@@ -25,16 +25,16 @@ namespace Cake.OpenApiGenerator.Settings
         /// 
         /// </summary>
         /// <returns></returns>
-        public override ProcessArgumentBuilder AsArguments()
+        internal override ProcessArgumentBuilder AsArguments()
         {
             var arguments = base.AsArguments();
 
-            if (SpecificationFile == null)
-                throw new ArgumentNullException(nameof(SpecificationFile));
+            if (Specification == null)
+                throw new ArgumentNullException(nameof(Specification));
 
             arguments.Append("validate");
 
-            arguments.Append("-i").Append(SpecificationFile.FullPath);
+            arguments.Append("-i").Append(Specification);
             if (Recommend)
             {
                 arguments.Append("--recommend");

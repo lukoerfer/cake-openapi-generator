@@ -9,7 +9,7 @@ namespace Cake.OpenApiGenerator.Settings
     /// <summary>
     /// Stores settings for the OpenAPI generator command <c>batch</c>
     /// </summary>
-    public class OpenApiBatchSettings : OpenApiSettings
+    public class OpenApiGeneratorBatchSettings : OpenApiGeneratorSettings
     {
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Cake.OpenApiGenerator.Settings
         /// </summary>
         public bool Verbose { get; set; }
 
-        public override ProcessArgumentBuilder AsArguments()
+        internal override ProcessArgumentBuilder AsArguments()
         {
             var arguments = base.AsArguments();
 

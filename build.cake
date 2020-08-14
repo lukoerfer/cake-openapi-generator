@@ -1,4 +1,5 @@
 #addin nuget:?package=Cake.Coverlet&version=2.3.4
+#addin nuget:?package=Cake.Git&version=0.22.0
 
 #tool nuget:?package=Doxygen&version=1.8.14
 
@@ -25,50 +26,45 @@ Task("Build")
     });
 });
 
-Task("Test")
-    .IsDependentOn("Build")
+Task("Unit-Tests")
     .Does(() =>
 {
-    DotNetCoreTest(testProject, new DotNetCoreTestSettings()
+	var testSettings = new DotNetCoreTestSettings()
     {
-        NoBuild = true,
-        NoRestore = true,
         Verbosity = DotNetCoreVerbosity.Minimal
-    },
-    new CoverletSettings()
+    };
+    var coverletSettings = new CoverletSettings()
     {
-        CollectCoverage = true,
+    	CollectCoverage = true,
         CoverletOutputDirectory = "./artifacts/coverage/coverage",
         CoverletOutputFormat = CoverletOutputFormat.opencover
-    });
+    };
+    DotNetCoreTest(testProject, testSettings, coverletSettings);
 });
 
-Task("Samples")
+Task("Functional-Tests")
     .IsDependentOn("Build")
     .Does(() =>
 {
-    foreach (var sample in GetFiles("samples/*/build.cake"))
-    {
-        CakeExecuteScript(sample);
-    }
+    CakeExecuteScript("./samples/build.cake");
 });
 
-Task("Pack")
-    .IsDependentOn("Clean")
-    .IsDependentOn("Build")
+Task("Check")
+    .IsDependentOn("Unit-Tests")
+    .IsDependentOn("Functional-Tests");
+
+Task("Nuget-Pack")
     .Does(() =>
 {
     DotNetCorePack(project, new DotNetCorePackSettings()
     {
-        NoRestore = true,
-        NoBuild = true,
         OutputDirectory = "./artifacts/nuget",
         Verbosity = DotNetCoreVerbosity.Quiet
     });
 });
 
-Task("Push")
-    .IsDependentOn("Pack")
+Task("Nuget-Push")
+    .IsDependentOn("Nuget-Pack")
     .Does(() =>
 {
     var packages = GetFiles("./artifacts/nuget/*.nupkg");
@@ -79,10 +75,10 @@ Task("Push")
     });
 });
 
-Task("Docs")
+Task("Build-Docs")
     .Does(() =>
 {
-    EnsureDirectoryExists("artifacts/apidoc");
+    EnsureDirectoryExists("artifacts/docs");
     var doxygen = Context.Tools.Resolve("doxygen.exe");
     StartProcess(doxygen, "docs/Doxyfile");
 });
