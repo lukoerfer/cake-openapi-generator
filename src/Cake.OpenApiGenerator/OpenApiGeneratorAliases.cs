@@ -11,6 +11,7 @@ namespace Cake.OpenApiGenerator
     /// Provides a wrapper of the OpenAPI generator to Cake
     /// </summary>
     [CakeAliasCategory("OpenAPI")]
+    [CakeNamespaceImport("Cake.OpenApiGenerator.Settings")]
     public static class OpenApiGeneratorAliases
     {
         /// <summary>
@@ -31,7 +32,7 @@ namespace Cake.OpenApiGenerator
             var mavenClient = new MavenClient(context.FileSystem, mavenLocal, mavenCentral);
             return new OpenApiGenerator(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools, mavenClient)
             {
-                Package = new MavenPackage("org.openapitools", "openapi-generator-cli")
+                ToolPackage = new MavenCoordinates("org.openapitools", "openapi-generator-cli")
             };
         }
 

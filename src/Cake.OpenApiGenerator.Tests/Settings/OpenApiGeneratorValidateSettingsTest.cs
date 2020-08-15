@@ -1,12 +1,10 @@
-﻿using Cake.Core.IO;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
-using System.Linq;
 
 namespace Cake.OpenApiGenerator.Settings
 {
     [TestFixture]
-    class OpenApiValidateSettingsTest
+    class OpenApiGeneratorValidateSettingsTest
     {
         [SetUp]
         public void Setup()

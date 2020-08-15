@@ -19,6 +19,10 @@ OUTPUT_DIRECTORY       = artifacts/docs
 HTML_OUTPUT            = .
 
 # Settings
+QUIET                  = YES
 EXTRACT_STATIC         = YES
+MACRO_EXPANSION        = YES
+EXPAND_ONLY_PREDEF     = YES
+PREDEFINED             = protected:=private
 AUTOLINK_SUPPORT       = NO
 SHOW_NAMESPACES        = NO

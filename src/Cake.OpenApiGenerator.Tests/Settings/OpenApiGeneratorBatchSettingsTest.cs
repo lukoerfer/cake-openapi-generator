@@ -16,7 +16,7 @@ namespace Cake.OpenApiGenerator.Settings
         {
             settings = new OpenApiGeneratorBatchSettings()
             {
-                PackageFile = new FilePath("/path/to/package.jar")
+                ToolPackageFile = new FilePath("/path/to/package.jar")
             };
             settings.ConfigurationFiles.Add("configuration.json");
         }
@@ -24,7 +24,7 @@ namespace Cake.OpenApiGenerator.Settings
         [Test]
         public void ShouldFailIfPackageFileNull()
         {
-            settings.PackageFile = null;
+            settings.ToolPackageFile = null;
 
             Assert.Throws<ArgumentNullException>(() =>
             {

@@ -12,6 +12,6 @@ namespace Cake.OpenApiGenerator.Maven
         /// </summary>
         /// <param name="package">A Maven package descriptor</param>
         /// <returns>A path to a local file that contains the Maven package</returns>
-        FilePath Resolve(MavenPackage package);
+        FilePath Resolve(MavenCoordinates package);
     }
 }

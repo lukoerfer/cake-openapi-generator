@@ -11,7 +11,7 @@ namespace Cake.OpenApiGenerator.Settings
     public class OpenApiGeneratorValidateSettings : OpenApiGeneratorSettings
     {
         /// <summary>
-        /// Gets or sets the OpenAPI specification file
+        /// Gets or sets the location of the OpenAPI specification, as URL or file
         /// </summary>
         /// <remarks>This parameter is required.</remarks>
         public string Specification { get; set; }

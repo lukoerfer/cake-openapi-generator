@@ -3,7 +3,7 @@
 namespace Cake.OpenApiGenerator.Settings
 {
     [TestFixture]
-    class OpenApiGenerateSettingsTest
+    class OpenApiGeneratorGenerateSettingsTest
     {
 
     }

@@ -15,23 +15,21 @@ namespace Cake.OpenApiGenerator.Settings
         /// <summary>
         /// Gets or sets the Maven package used to run this command
         /// </summary>
-        /// 
-        public MavenPackage Package { get; set; }
+        public MavenCoordinates ToolPackage { get; set; }
 
         /// <summary>
         /// Gets or sets the package file used to run this command
         /// </summary>
-        /// <remarks></remarks>
-        public FilePath PackageFile { get; set; }
+        public FilePath ToolPackageFile { get; set; }
 
         internal virtual ProcessArgumentBuilder AsArguments()
         {
-            if (PackageFile == null)
-                throw new ArgumentNullException(nameof(PackageFile));
+            if (ToolPackageFile == null)
+                throw new ArgumentNullException(nameof(ToolPackageFile));
 
             return new ProcessArgumentBuilder()
                 .Append("-jar")
-                .Append(PackageFile.FullPath);
+                .Append(ToolPackageFile.FullPath);
         }
 
         internal static T From<T>(Action<T> configuration)

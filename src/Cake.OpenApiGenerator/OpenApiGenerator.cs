@@ -18,12 +18,12 @@ namespace Cake.OpenApiGenerator
         /// Gets or sets the Maven package used to run the commands
         /// </summary>
         /// <remarks></remarks>
-        public MavenPackage Package { get; set; }
+        public MavenCoordinates ToolPackage { get; set; }
 
         /// <summary>
         /// Gets or sets the package file used to run the commands
         /// </summary>
-        public FilePath PackageFile { get; set; }
+        public FilePath ToolPackageFile { get; set; }
 
         private readonly IMavenClient mavenClient;
 
@@ -42,7 +42,7 @@ namespace Cake.OpenApiGenerator
         }
 
         /// <summary>
-        /// Sets the <see cref="MavenPackage.Version"/> of this wrapper using a shorthand notation
+        /// Sets the <see cref="MavenCoordinates.Version"/> of this wrapper using a shorthand notation
         /// </summary>
         /// <param name="version">A version supported by the OpenAPI generator</param>
         /// <returns>The same wrapper for method chaining</returns>
@@ -50,7 +50,7 @@ namespace Cake.OpenApiGenerator
         {
             get
             {
-                Package.Version = version;
+                ToolPackage.Version = version;
                 return this;
             }
         }
@@ -85,7 +85,7 @@ namespace Cake.OpenApiGenerator
         /// <summary>
         /// Validates an OpenAPI specification
         /// </summary>
-        /// <param name="specificationFile">The path to a file containing an OpenAPI specification</param>
+        /// <param name="specification">The path to a file containing an OpenAPI specification</param>
         /// <param name="recommend">Whether to provide recommendations regarding the specification, defaults to false</param>
         /// <returns>The same wrapper for method chaining</returns>
         public OpenApiGenerator Validate(string specification, bool recommend = false)
@@ -158,7 +158,7 @@ namespace Cake.OpenApiGenerator
 
         private void Run(OpenApiGeneratorSettings settings)
         {
-            settings.PackageFile = settings.PackageFile ?? PackageFile ?? mavenClient.Resolve(settings.Package ?? Package);
+            settings.ToolPackageFile = settings.ToolPackageFile ?? ToolPackageFile ?? mavenClient.Resolve(settings.ToolPackage ?? ToolPackage);
             Run(settings, settings.AsArguments());
         }
 

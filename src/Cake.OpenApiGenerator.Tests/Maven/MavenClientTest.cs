@@ -27,7 +27,7 @@ namespace Cake.OpenApiGenerator.Maven
             var mavenClient = new MavenClient(fileSystem, mavenLocal, mavenCentral);
 
             // When
-            var file = mavenClient.Resolve(new MavenPackage("artifact", "group", "1.0.0"));
+            mavenClient.Resolve(new MavenCoordinates("artifact", "group", "1.0.0"));
 
             // Then
             A.CallTo(mavenCentral).MustNotHaveHappened();

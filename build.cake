@@ -1,4 +1,4 @@
-#addin nuget:?package=Cake.Coverlet&version=2.3.4
+#addin nuget:?package=Cake.Coverlet&version=2.4.2
 #addin nuget:?package=Cake.Git&version=0.22.0
 
 #tool nuget:?package=Doxygen&version=1.8.14

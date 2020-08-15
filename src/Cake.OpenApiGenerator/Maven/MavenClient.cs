@@ -28,13 +28,13 @@ namespace Cake.OpenApiGenerator.Maven
             this.remoteRepository = remoteRepository;
         }
 
-        public FilePath Resolve(MavenPackage package)
+        public FilePath Resolve(MavenCoordinates package)
         {
-            var group = package.Group;
-            var artifact = package.Artifact;
-            var version = package.Version ?? GetLatestVersion(group, artifact);
+            var groupId = package.GroupId;
+            var artifactId = package.ArtifactId;
+            var version = package.Version ?? GetLatestVersion(groupId, artifactId);
 
-            var path = $"{group.Replace('.', '/')}/{artifact}/{version}/{artifact}-{version}.jar";
+            var path = $"{groupId.Replace('.', '/')}/{artifactId}/{version}/{artifactId}-{version}.jar";
             var localJarFile = fileSystem.GetFile(localRepository.CombineWithFilePath(path));
 
             if (!localJarFile.Exists)
@@ -50,9 +50,9 @@ namespace Cake.OpenApiGenerator.Maven
             return localJarFile.Path;
         }
 
-        private string GetLatestVersion(string group, string artifact)
+        private string GetLatestVersion(string groupId, string artifactId)
         {
-            var path = $"{group.Replace('.', '/')}/{artifact}/maven-metadata.xml";
+            var path = $"{groupId.Replace('.', '/')}/{artifactId}/maven-metadata.xml";
             using (var stream = remoteRepository.OpenRead(path))
             {
                 var document = new XmlDocument();
