@@ -99,28 +99,6 @@ namespace Cake.OpenApiGenerator
         }
 
         /// <summary>
-        /// Validates an OpenAPI specification
-        /// </summary>
-        /// <param name="settings"></param>
-        /// <returns></returns>
-        public OpenApiGenerator Validate(OpenApiGeneratorValidateSettings settings)
-        {
-            Run(settings);
-            return this;
-        }
-
-        /// <summary>
-        /// Validates an OpenAPI specification
-        /// </summary>
-        /// <param name="configurator"></param>
-        /// <returns></returns>
-        public OpenApiGenerator Validate(Action<OpenApiGeneratorValidateSettings> configurator)
-        {
-            Run(OpenApiGeneratorSettings.From(configurator));
-            return this;
-        }
-
-        /// <summary>
         /// Batch processes OpenAPI configuration files
         /// </summary>
         /// <param name="configurationFiles"></param>
