@@ -13,7 +13,7 @@ namespace Cake.OpenApiGenerator.Settings
     {
 
         /// <summary>
-        /// Gets or sets the configuration files used for batch processing
+        /// Gets or sets the generator configuration files
         /// </summary>
         /// <remarks>
         /// At least one file is required.
@@ -21,12 +21,12 @@ namespace Cake.OpenApiGenerator.Settings
         public FilePathCollection ConfigurationFiles { get; set; } = new FilePathCollection();
 
         /// <summary>
-        /// Gets or sets whether the batch command should fail on the first error
+        /// Gets or sets whether to fail fast on any errors
         /// </summary>
         public bool FailFast { get; set; }
 
         /// <summary>
-        /// Gets or sets the base directory for includes
+        /// Gets or sets the base directory used for includes
         /// </summary>
         public DirectoryPath IncludesBaseDirectory { get; set; }
 
@@ -36,7 +36,7 @@ namespace Cake.OpenApiGenerator.Settings
         public int? ThreadCount { get; set; }
 
         /// <summary>
-        /// Gets or sets the root directory for output and includes
+        /// Gets or sets the root directory used for output and includes
         /// </summary>
         /// <remarks>
         /// The root directory for includes may be overridden using <see cref="IncludesBaseDirectory"/>.
@@ -44,16 +44,16 @@ namespace Cake.OpenApiGenerator.Settings
         public DirectoryPath RootDirectory { get; set; }
 
         /// <summary>
-        /// Gets or sets a timeout evaluated by the OpenAPI generator
+        /// Gets or sets a execution timeout evaluated by the OpenAPI generator
         /// </summary>
         /// <remarks>
         /// The duration will be rounded to full minutes.
-        /// Do not confuse with <see cref="ToolSettings.ToolTimeout"/> evaluated by Cake.
+        /// Do not confuse with <see cref="ToolSettings.ToolTimeout"/>, which provides the same functionality but is evaluated by Cake.
         /// </remarks>
         public TimeSpan? Timeout { get; set; }
 
         /// <summary>
-        /// Gets or sets whether all log messages should be printed
+        /// Gets or sets whether verbose mode should be enabled
         /// </summary>
         public bool Verbose { get; set; }
 
@@ -86,7 +86,7 @@ namespace Cake.OpenApiGenerator.Settings
             }
             if (Timeout.HasValue)
             {
-                int minutes = (int)Timeout.Value.TotalMinutes;
+                int minutes = (int) Timeout.Value.TotalMinutes;
                 arguments.Append("--timeout").Append(minutes.ToString());
             }
             if (Verbose)

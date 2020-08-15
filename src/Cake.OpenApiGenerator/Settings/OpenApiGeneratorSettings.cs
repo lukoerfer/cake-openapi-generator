@@ -32,7 +32,7 @@ namespace Cake.OpenApiGenerator.Settings
                 .Append(ToolPackageFile.FullPath);
         }
 
-        internal static T From<T>(Action<T> configuration)
+        internal static T ConfiguredBy<T>(Action<T> configuration)
             where T : OpenApiGeneratorSettings, new()
         {
             T settings = new T();

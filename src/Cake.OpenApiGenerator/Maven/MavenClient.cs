@@ -18,9 +18,9 @@ namespace Cake.OpenApiGenerator.Maven
         /// <summary>
         /// Creates a new Maven client
         /// </summary>
-        /// <param name="fileSystem"></param>
-        /// <param name="localRepository"></param>
-        /// <param name="remoteRepository"></param>
+        /// <param name="fileSystem">A file system</param>
+        /// <param name="localRepository">A local repository base path</param>
+        /// <param name="remoteRepository">A remote repository client</param>
         public MavenClient(IFileSystem fileSystem, DirectoryPath localRepository, IWebClient remoteRepository)
         {
             this.fileSystem = fileSystem;

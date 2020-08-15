@@ -11,8 +11,8 @@ namespace Cake.OpenApiGenerator.Maven
         /// <summary>
         /// Opens a stream that reads from a resource
         /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
+        /// <param name="path">A resource path</param>
+        /// <returns>The resource content as stream</returns>
         Stream OpenRead(string path);
     }
 

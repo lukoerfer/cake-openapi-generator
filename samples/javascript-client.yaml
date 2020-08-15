@@ -1,0 +1,3 @@
+inputSpec: petstore.json
+generatorName: javascript
+outputDir: src/client

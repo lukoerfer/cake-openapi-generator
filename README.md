@@ -5,13 +5,13 @@ Cake Addin for code generation via the [OpenAPI Generator](https://openapi-gener
 The OpenAPI Generator tool provides a lot of powerful code generators, but since its implemented in Java, the only build tools directly supported are Maven and Gradle. This addin provides a simple wrapper around the command line version of the tool to invoke code generation from Cake.
 
 ## Installation
-Since the addin is available on [NuGet](), it can simply be registered in your `build.cake` file via the `#addin` preprocessor directive:
+Since the addin is available on [NuGet](), it can simply be registered in your `build.cake` file using the `#addin` preprocessor directive:
 
 ``` csharp
-#addin nuget:?package=Cake.OpenApiGenerator
+#addin nuget:?package=Cake.OpenApiGenerator&version=<version>
 ```
 
-As an additional dependency, Java needs to be installed and available for Cake. The most common way will be adding Java to the `PATH` environment variable, however it is also possible to register Java as a tool directly in the build script:
+As an additional dependency, Java needs to be installed and available to Cake. It may be either added to the `PATH` environment variable or registered manually in the build script:
 
 ``` csharp
 Setup(context => {
@@ -20,58 +20,52 @@ Setup(context => {
 ```
 
 ## Usage
-Once the addin is registered, the `OpenApiGenerator` property and its `Generate` method can be used to generate code from OpenAPI specifications:
+Once the addin is registered, the alias `OpenApiGenerator` provides a wrapper around the OpenAPI Generator.
+The first example shows a minimal configuration for the method `Generate`, as `Specification`, `Generator` and `OutputDirectory` are mandatory parameters.
 
 ``` csharp
-Task("Generate")
+Task("Generate-Api")
     .Does(() =>
 {
-    OpenApiGenerator.Generate("specification.yaml", "csharp", "output");
-}
-```
-
-The three mandatory parameters of the `Generate` method are the specification source (either a `FilePath` or an `Uri`), the generator to use (a list can be found [here](https://openapi-generator.tech/docs/generators)) and the destination directory.
-Additional options can either be passed directly via a `OpenApiGenerateSettings` object or using an `Action` that configures such an object:
-
-``` csharp
-Task("Generate")
-    .Does(() =>
-{
-    OpenApiGenerator.Generate(new OpenApiGenerateSettings()
+    OpenApiGenerator.Generate(new OpenApiGeneratorGenerateSettings()
     {
-        SpecificationFile = "specification.yaml",
+        Specification = "specification.yaml",
         Generator = "csharp",
-    	Verbose = true
+        OutputDirectory = "./src"
     });
 }
 ```
 
-By chaining calls to `Generate` it is possible to generate multiple clients (or servers), as long as different destination directories are defined.
-
-### Tool version
 By default, the latest version of the OpenAPI generator will be resolved and used.
 Of course, this requires access to the Internet and may break builds that worked with previous tool versions.
 It is recommended to define the tool version as shown in the example below:
 
 ``` csharp
-Task("Generate")
+Task("Generate-Api")
     .Does(() =>
 {
-    OpenApiGenerator["3.3.4"].Generate("specification.yaml", "csharp", "./output");
+    OpenApiGenerator["3.3.4"].Generate(settings =>
+    {
+        
+	});
 }
 ```
 
-### Supported commands
-In addition to code generation, the addin can be used to validate OpenAPI specifications via the `Validate` method.
-It only takes a specification `FilePath` or `Uri` as mandatory parameter and a `bool` whether to provide recommendations as an optional second parameter (defaults to `false`):
-
 ``` csharp
-Task("Validate")
+Task("Validate-Api")
     .Does(() =>
 {
-    OpenApiGenerator.Validate("./specification.yaml", true);
-}
+    OpenApiGenerator.Validate("specification.yaml", recommend: true);
+})
+```
+
+``` csharp
+Task("Run-OpenApi-Batch")
+    .Does(() =>
+{
+    OpenApiGenerator.Batch("csharp-server.yaml", "javascript-client.yaml");
+})
 ```
 
 ## License
-The software is licensed under the [MIT license](LICENSE).
+The software is licensed under the [MIT license](https://github.com/lukoerfer/cake-openapi-generator/blob/master/LICENSE).
