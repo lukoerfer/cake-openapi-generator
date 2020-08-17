@@ -44,7 +44,7 @@ namespace Cake.OpenApiGenerator.Settings
 
             var arguments = settings.AsArguments().Render();
 
-            Assert.IsTrue(arguments.Contains(" --recommend"));
+            Assert.That(arguments.Contains(" --recommend"));
         }
     }
 }

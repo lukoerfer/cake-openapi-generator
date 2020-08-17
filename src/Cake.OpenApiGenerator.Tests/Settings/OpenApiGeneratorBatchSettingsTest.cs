@@ -69,7 +69,7 @@ namespace Cake.OpenApiGenerator.Settings
 
             var arguments = settings.AsArguments().Render();
 
-            Assert.IsTrue(arguments.Contains(" javascript-client.yaml"));
+            Assert.That(arguments.Contains(" javascript-client.yaml"));
         }
 
         [Test]
@@ -79,7 +79,7 @@ namespace Cake.OpenApiGenerator.Settings
 
             var arguments = settings.AsArguments().Render();
 
-            Assert.IsTrue(arguments.Contains(" --fail-fast "));
+            Assert.That(arguments.Contains(" --fail-fast "));
         }
 
         [Test]
@@ -89,7 +89,7 @@ namespace Cake.OpenApiGenerator.Settings
 
             var arguments = settings.AsArguments().Render();
 
-            Assert.IsTrue(arguments.Contains(" --includes-base-dir baseDir "));
+            Assert.That(arguments.Contains(" --includes-base-dir baseDir "));
         }
 
         [Test]
@@ -99,7 +99,7 @@ namespace Cake.OpenApiGenerator.Settings
 
             var arguments = settings.AsArguments().Render();
 
-            Assert.IsTrue(arguments.Contains(" -r 4 "));
+            Assert.That(arguments.Contains(" -r 4 "));
         }
 
         [Test]
@@ -109,7 +109,7 @@ namespace Cake.OpenApiGenerator.Settings
 
             var arguments = settings.AsArguments().Render();
 
-            Assert.IsTrue(arguments.Contains(" --root-dir rootDir "));
+            Assert.That(arguments.Contains(" --root-dir rootDir "));
         }
 
         [Test]
@@ -119,7 +119,7 @@ namespace Cake.OpenApiGenerator.Settings
 
             var arguments = settings.AsArguments().Render();
 
-            Assert.IsTrue(arguments.Contains(" --timeout 3 "));
+            Assert.That(arguments.Contains(" --timeout 3 "));
         }
 
         [Test]
@@ -129,7 +129,7 @@ namespace Cake.OpenApiGenerator.Settings
 
             var arguments = settings.AsArguments().Render();
 
-            Assert.IsTrue(arguments.Contains(" -v "));
+            Assert.That(arguments.Contains(" -v "));
         }
     }
 }

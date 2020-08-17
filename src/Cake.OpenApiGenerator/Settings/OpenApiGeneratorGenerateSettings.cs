@@ -133,7 +133,7 @@ namespace Cake.OpenApiGenerator.Settings
         /// <summary>
         /// Gets or sets instantiation type mappings
         /// </summary>
-        public List<string> InstantiationTypes { get; set; } = new List<string>();
+        public Dictionary<string, string> InstantiationTypes { get; set; } = new Dictionary<string, string>();
 
         /// <summary>
         /// Gets or sets the root package for generated code
@@ -148,7 +148,7 @@ namespace Cake.OpenApiGenerator.Settings
         /// <summary>
         /// Gets or sets the library template (sub-template)
         /// </summary>
-        public string Library { get; set; }
+        public string LibraryTemplate { get; set; }
 
         /// <summary>
         /// Gets or sets whether to write all log messages (not just errors) to <c>STDOUT</c>
@@ -215,7 +215,7 @@ namespace Cake.OpenApiGenerator.Settings
         /// Gets or sets whether <c>'MUST'</c> and <c>'SHALL'</c> wording in OpenAPI spec is strictly adhered to
         /// </summary>
         /// <remarks>When false, no fixes will be applied to documents which pass validation but don't follow the spec</remarks>
-        public bool StrictSpec { get; set; }
+        public bool? StrictSpec { get; set; }
 
         /// <summary>
         /// Gets or sets the folder containing the template files
@@ -255,7 +255,7 @@ namespace Cake.OpenApiGenerator.Settings
             }
             else if (AdditionalProperties != null && AdditionalProperties.Count > 0)
             {
-                arguments.Append("--additional-properties=" + string.Join(",", AdditionalProperties.Select(e => e.Key + "=" + e.Value)));
+                arguments.Append("-p").Append(string.Join(",", AdditionalProperties.Select(e => e.Key + "=" + e.Value)));
             }
 
             if (Authorization != null)
@@ -324,11 +324,11 @@ namespace Cake.OpenApiGenerator.Settings
             }
             if (ImportMappings != null && ImportMappings.Count > 0)
             {
-                arguments.Append("--import-mappings=" + string.Join(",", ImportMappings.Select(e => e.Key + "=" + e.Value)));
+                arguments.Append("--import-mappings").Append(string.Join(",", ImportMappings.Select(e => e.Key + "=" + e.Value)));
             }
             if (InstantiationTypes != null && InstantiationTypes.Count > 0)
             {
-                arguments.Append("--instantiation-types").Append(string.Join(",", InstantiationTypes));
+                arguments.Append("--instantiation-types").Append(string.Join(",", InstantiationTypes.Select(e => e.Key + "=" + e.Value)));
             }
             if (InvokerPackage != null)
             {
@@ -338,9 +338,9 @@ namespace Cake.OpenApiGenerator.Settings
             {
                 arguments.Append("--language-specific-primitives").Append(string.Join(",", LanguageSpecificPrimitives));
             }
-            if (Library != null)
+            if (LibraryTemplate != null)
             {
-                arguments.Append("--library").Append(Library);
+                arguments.Append("--library").Append(LibraryTemplate);
             }
             if (LogToStandardError)
             {
@@ -376,15 +376,23 @@ namespace Cake.OpenApiGenerator.Settings
             }
             if (ReservedWordsMappings != null && ReservedWordsMappings.Count > 0)
             {
-                arguments.Append("--reserved-word-mappings=" + string.Join(",", ReservedWordsMappings.Select(e => e.Key + "=" + e.Value)));
+                arguments.Append("--reserved-words-mappings").Append(string.Join(",", ReservedWordsMappings.Select(e => e.Key + "=" + e.Value)));
             }
             if (SkipOverwrite)
             {
                 arguments.Append("-s");
             }
+            if (ServerVariables != null && ServerVariables.Count > 0)
+            {
+                arguments.Append("--server-variables").Append(string.Join(",", ServerVariables.Select(e => e.Key + "=" + e.Value)));
+            }
             if (SkipValidation)
             {
                 arguments.Append("--skip-validate-spec");
+            }
+            if (StrictSpec.HasValue)
+            {
+                arguments.Append("--strict-spec").Append(StrictSpec.Value.ToString().ToLower());
             }
             if (TemplateDirectory != null)
             {
@@ -392,7 +400,7 @@ namespace Cake.OpenApiGenerator.Settings
             }
             if (TypeMappings != null && TypeMappings.Count > 0)
             {
-                arguments.Append("--type-mappings=" + string.Join(",", TypeMappings.Select(e => e.Key + "=" + e.Value)));
+                arguments.Append("--type-mappings").Append(string.Join(",", TypeMappings.Select(e => e.Key + "=" + e.Value)));
             }
             if (Verbose)
             {
