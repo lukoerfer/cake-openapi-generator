@@ -74,7 +74,7 @@ namespace Cake.OpenApiGenerator.Settings
             }
             if (IncludesBaseDirectory != null)
             {
-                arguments.Append("--includes-base-dir", IncludesBaseDirectory.FullPath);
+                arguments.Append("--includes-base-dir").Append(IncludesBaseDirectory.FullPath);
             }
             if (ThreadCount.HasValue)
             {
@@ -91,7 +91,7 @@ namespace Cake.OpenApiGenerator.Settings
             }
             if (Verbose)
             {
-                arguments.Append("--verbose");
+                arguments.Append("-v");
             }
 
             foreach (var configurationFile in ConfigurationFiles)

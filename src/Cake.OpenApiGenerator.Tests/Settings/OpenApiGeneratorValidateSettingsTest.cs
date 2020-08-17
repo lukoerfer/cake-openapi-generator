@@ -6,19 +6,30 @@ namespace Cake.OpenApiGenerator.Settings
     [TestFixture]
     class OpenApiGeneratorValidateSettingsTest
     {
+        private OpenApiGeneratorValidateSettings settings;
+
         [SetUp]
         public void Setup()
         {
-
+            settings = new OpenApiGeneratorValidateSettings()
+            {
+                ToolPackageFile = "package.jar",
+                Specification = "petstore.yaml"
+            };
         }
 
         [Test]
-        public void ShouldFailIfSpecificationNull()
+        public void ShouldRenderArgumentsFromRequiredParameters()
         {
-            var settings = new OpenApiGeneratorValidateSettings()
-            {
-                Specification = null
-            };
+            var arguments = settings.AsArguments().Render();
+
+            Assert.AreEqual("-jar package.jar validate -i petstore.yaml", arguments);
+        }
+
+        [Test]
+        public void ShouldFailIfSpecificationIsNull()
+        {
+            settings.Specification = null;
 
             Assert.Throws<ArgumentNullException>(() =>
             {
@@ -27,9 +38,13 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldHaveSpecificationInArguments()
+        public void ShouldRenderRecommendInArguments()
         {
+            settings.Recommend = true;
 
+            var arguments = settings.AsArguments().Render();
+
+            Assert.IsTrue(arguments.Contains(" --recommend"));
         }
     }
 }
