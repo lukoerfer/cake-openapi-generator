@@ -2,9 +2,10 @@ name: check
 on:
   workflow_dispatch:
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  check:
+    runs-on: windows-latest
     steps:
+      - uses: actions/checkout@v1
       - uses: cake-build/cake-action@v1.1.1
         with:
           target: Check
