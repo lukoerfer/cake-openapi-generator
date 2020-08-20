@@ -1,5 +1,9 @@
-#addin nuget:?package=Cake.Coverlet&version=2.4.2
 #addin nuget:?package=Cake.Git&version=0.22.0
+
+#addin nuget:?package=Cake.Coverlet&version=2.4.2
+
+#addin nuget:?package=Cake.Coveralls&version=0.10.2
+#tool nuget:?package=coveralls.net&version=0.7.0
 
 #tool nuget:?package=Doxygen&version=1.8.14
 
@@ -27,10 +31,12 @@ Task("Build")
 });
 
 Task("Unit-Tests")
+    .IsDependentOn("Build")
     .Does(() =>
 {
 	var testSettings = new DotNetCoreTestSettings()
     {
+        NoBuild = true,
         Verbosity = DotNetCoreVerbosity.Minimal
     };
     var coverletSettings = new CoverletSettings()
@@ -40,6 +46,16 @@ Task("Unit-Tests")
         CoverletOutputFormat = CoverletOutputFormat.opencover
     };
     DotNetCoreTest(testProject, testSettings, coverletSettings);
+
+    if (HasEnvironmentVariable("COVERALLS_TOKEN"))
+    {
+        CoverallsNet("./artifacts/coverage/coverage.opencover.xml", CoverallsNetReportType.OpenCover, new CoverallsNetSettings()
+        {
+            RepoTokenVariable = "COVERALLS_TOKEN",
+            UseRelativePaths = true,
+            TreatUploadErrorsAsWarnings = true
+        });
+    }
 });
 
 Task("Functional-Tests")
@@ -53,25 +69,32 @@ Task("Check")
     .IsDependentOn("Unit-Tests")
     .IsDependentOn("Functional-Tests");
 
-Task("Nuget-Pack")
+Task("Create-Package")
     .Does(() =>
 {
     DotNetCorePack(project, new DotNetCorePackSettings()
     {
+        NoBuild = true,
         OutputDirectory = "./artifacts/nuget",
         Verbosity = DotNetCoreVerbosity.Quiet
     });
 });
 
-Task("Nuget-Push")
-    .IsDependentOn("Nuget-Pack")
+Task("Publish-Package")
+    .IsDependentOn("Create-Package")
     .Does(() =>
 {
     var packages = GetFiles("./artifacts/nuget/*.nupkg");
 
     NuGetPush(packages, new NuGetPushSettings()
     {
-        Source = "https://api.nuget.org/v3/index.json"
+        Source = "https://api.nuget.org/v3/index.json",
+        ApiKey = EnvironmentVariable("NUGET_TOKEN")
+    });
+    NuGetPush(packages, new NuGetPushSettings()
+    {
+        Source = "https://nuget.pkg.github.com/lukoerfer/index.json",
+        ApiKey = EnvironmentVariable("GITHUB_TOKEN")
     });
 });
 
@@ -82,5 +105,10 @@ Task("Build-Docs")
     var doxygen = Context.Tools.Resolve("doxygen.exe");
     StartProcess(doxygen, "docs/Doxyfile");
 });
+
+Task("Publish")
+    .IsDependentOn("Clean")
+    .IsDependentOn("Check")
+    .IsDependentOn("Publish-Package");
 
 RunTarget(target);

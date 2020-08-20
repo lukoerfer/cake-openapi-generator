@@ -1,0 +1,16 @@
+name: Check
+on:
+  - workflow_dispatch
+jobs:
+  default:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v1
+      - name: Build and run checks
+        uses: cake-build/cake-action@v1.1.1
+        with:
+          target: Publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}

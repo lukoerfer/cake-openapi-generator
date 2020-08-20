@@ -1,4 +1,5 @@
 ﻿using Cake.Core.IO;
+using Cake.OpenApiGenerator.Util;
 using Cake.Testing;
 using FakeItEasy;
 using NUnit.Framework;
@@ -18,7 +19,8 @@ namespace Cake.OpenApiGenerator.Maven
         [SetUp]
         public void Setup()
         {
-            fileSystem = new FakeFileSystem(FakeEnvironment.CreateWindowsEnvironment());
+            var environment = FakeEnvironmentHelper.CreateFromRuntime();
+            fileSystem = new FakeFileSystem(environment);
             localRepository = new DirectoryPath(".m2");
             remoteRepository = A.Fake<IWebClient>();
 

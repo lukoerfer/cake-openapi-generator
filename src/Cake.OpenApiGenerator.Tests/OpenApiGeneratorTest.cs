@@ -2,10 +2,12 @@
 using Cake.Core.Tooling;
 using Cake.OpenApiGenerator.Maven;
 using Cake.OpenApiGenerator.Settings;
+using Cake.OpenApiGenerator.Util;
 using Cake.Testing;
 using FakeItEasy;
 using NUnit.Framework;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace Cake.OpenApiGenerator
 {
@@ -23,7 +25,7 @@ namespace Cake.OpenApiGenerator
         [SetUp]
         public void Setup()
         {
-            environment = FakeEnvironment.CreateWindowsEnvironment();
+            environment = FakeEnvironmentHelper.CreateFromRuntime();
             fileSystem = new FakeFileSystem(environment);
             runner = A.Fake<IProcessRunner>();
             tools = A.Fake<IToolLocator>();

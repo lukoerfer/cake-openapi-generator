@@ -1,11 +1,21 @@
-name: check
+name: Check
 on:
-  workflow_dispatch:
+  - push
+  - pull_request
 jobs:
-  check:
-    runs-on: windows-latest
+  default:
+    strategy:
+      matrix:
+        os:
+          - windows-latest
+          - ubuntu-latest
+    runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v1
-      - uses: cake-build/cake-action@v1.1.1
+      - name: Checkout repository
+        uses: actions/checkout@v1
+      - name: Build and run checks
+        uses: cake-build/cake-action@v1.1.1
         with:
           target: Check
+        env:
+          COVERALLS_TOKEN: ${{ secrets.COVERALLS_TOKEN }}

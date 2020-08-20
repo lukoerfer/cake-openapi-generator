@@ -33,7 +33,7 @@ Task("Generate-Api")
         Generator = "csharp",
         OutputDirectory = "./src"
     });
-}
+});
 ```
 
 By default, the latest version of the OpenAPI generator will be resolved and used.
@@ -47,8 +47,8 @@ Task("Generate-Api")
     OpenApiGenerator["3.3.4"].Generate(settings =>
     {
         
-	});
-}
+    });
+});
 ```
 
 ``` csharp
@@ -56,7 +56,7 @@ Task("Validate-Api")
     .Does(() =>
 {
     OpenApiGenerator.Validate("specification.yaml", recommend: true);
-})
+});
 ```
 
 ``` csharp
@@ -64,7 +64,7 @@ Task("Run-OpenApi-Batch")
     .Does(() =>
 {
     OpenApiGenerator.Batch("csharp-server.yaml", "javascript-client.yaml");
-})
+});
 ```
 
 ## License
