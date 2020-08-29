@@ -1,8 +1,5 @@
-﻿using FakeItEasy;
-
+﻿
 using NUnit.Framework;
-
-using System;
 
 namespace Cake.OpenApiGenerator.Settings
 {
@@ -16,7 +13,7 @@ namespace Cake.OpenApiGenerator.Settings
         {
             settings = new OpenApiGeneratorGenerateSettings()
             {
-                ToolPackageFile = "package.jar",
+                ToolPackagePath = "package.jar",
                 Specification = "petstore.yaml",
                 Generator = "csharp",
                 OutputDirectory = "./src"
@@ -24,7 +21,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderArgumentsFromRequiredParameters()
+        public void AsArguments_ShouldEqualDefaultCommand_OnDefaultSetup()
         {
             var arguments = settings.AsArguments().Render();
 
@@ -32,51 +29,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldFailIfToolPackageFileIsNull()
-        {
-            settings.ToolPackageFile = null;
-
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                settings.AsArguments();
-            });
-        }
-
-        [Test]
-        public void ShouldFailIfSpecificationIsNull()
-        {
-            settings.Specification = null;
-
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                settings.AsArguments();
-            });
-        }
-
-        [Test]
-        public void ShouldFailIfGeneratorIsNull()
-        {
-            settings.Generator = null;
-
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                settings.AsArguments();
-            });
-        }
-
-        [Test]
-        public void ShouldFailIfOutputDirectoryIsNull()
-        {
-            settings.OutputDirectory = null;
-
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                settings.AsArguments();
-            });
-        }
-
-        [Test]
-        public void ShouldRenderAuthorizationInArguments()
+        public void AsArguments_ShouldContainAuthorization_IfAuthorizationDefined()
         {
             settings.Authorization = "Authorization%3A%20Basic%20QWxhZGRpbjpPcGVuU2VzYW1l";
 
@@ -217,6 +170,17 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
+        public void ShouldNotFailIfGlobalPropertiesIsNull()
+        {
+            settings.GlobalProperties = null;
+
+            Assert.DoesNotThrow(() =>
+            {
+                settings.AsArguments();
+            });
+        }
+
+        [Test]
         public void ShouldRenderGroupIdInArguments()
         {
             settings.GroupId = "com.example";
@@ -254,6 +218,17 @@ namespace Cake.OpenApiGenerator.Settings
             var arguments = settings.AsArguments().Render();
 
             Assert.That(arguments.Contains(" --import-mappings DateTime=java.time.LocalDateTime"));
+        }
+
+        [Test]
+        public void ShouldNotFailIfImportMappingsIsNull()
+        {
+            settings.ImportMappings = null;
+
+            Assert.DoesNotThrow(() =>
+            {
+                settings.AsArguments();
+            });
         }
 
         [Test]

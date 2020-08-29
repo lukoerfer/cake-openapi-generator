@@ -5,6 +5,9 @@
 #addin nuget:?package=Cake.Coveralls&version=0.10.2
 #tool nuget:?package=coveralls.net&version=0.7.0
 
+#addin nuget:?package=Cake.Sonar&version=1.1.25
+#tool nuget:?package=MSBuild.SonarQube.Runner.Tool&version=4.8.0
+
 #tool nuget:?package=Doxygen&version=1.8.14
 
 var target = Argument("target", "Build");
@@ -12,6 +15,13 @@ var target = Argument("target", "Build");
 var solution = File("./src/Cake.OpenApiGenerator.sln");
 var project = File("./src/Cake.OpenApiGenerator/Cake.OpenApiGenerator.csproj");
 var testProject = File("./src/Cake.OpenApiGenerator.Tests/Cake.OpenApiGenerator.Tests.csproj");
+
+var sonarSettings = new SonarBeginSettings()
+{
+    Key = "Cake.OpenApiGenerator",
+    VsTestReportsPath = "./artifacts/reports/tests/results.xml",
+    OpenCoverReportsPath = "./artifacts/reports/coverage/coverage.opencover.xml"
+};
 
 Task("Clean")
     .Does(() =>
@@ -24,6 +34,8 @@ Task("Clean")
 Task("Build")
     .Does(() =>
 {
+    SonarBegin(sonarSettings);
+
     DotNetCoreBuild(solution, new DotNetCoreBuildSettings()
     {
         Verbosity = DotNetCoreVerbosity.Quiet
@@ -34,35 +46,39 @@ Task("Unit-Tests")
     .IsDependentOn("Build")
     .Does(() =>
 {
-	var testSettings = new DotNetCoreTestSettings()
+    DotNetCoreTest(testProject, new DotNetCoreTestSettings()
     {
         NoBuild = true,
+        VSTestReportPath = "./artifacts/reports/tests/results.xml",
         Verbosity = DotNetCoreVerbosity.Minimal
-    };
-    var coverletSettings = new CoverletSettings()
+    }, 
+    new CoverletSettings()
     {
     	CollectCoverage = true,
-        CoverletOutputDirectory = "./artifacts/coverage/coverage",
+        CoverletOutputDirectory = "./artifacts/reports/coverage/coverage",
         CoverletOutputFormat = CoverletOutputFormat.opencover
-    };
-    DotNetCoreTest(testProject, testSettings, coverletSettings);
-
-    if (HasEnvironmentVariable("COVERALLS_TOKEN"))
-    {
-        CoverallsNet("./artifacts/coverage/coverage.opencover.xml", CoverallsNetReportType.OpenCover, new CoverallsNetSettings()
-        {
-            RepoTokenVariable = "COVERALLS_TOKEN",
-            UseRelativePaths = true,
-            TreatUploadErrorsAsWarnings = true
-        });
-    }
+    });
 });
 
 Task("Functional-Tests")
     .IsDependentOn("Build")
     .Does(() =>
 {
-    CakeExecuteScript("./samples/build.cake");
+    var samples = GetFiles("./samples/*.cake");
+
+    foreach (var sample in samples)
+    {
+        CakeExecuteScript(sample);
+        CleanDirectory("./samples/src");
+    }
+});
+
+Task("Sonar-Analysis")
+    .IsDependentOn("Build")
+    .IsDependentOn("Unit-Tests")
+    .Does(() =>
+{
+    SonarEnd(sonarSettings.GetEndSettings());
 });
 
 Task("Check")
@@ -74,13 +90,13 @@ Task("Create-Package")
 {
     DotNetCorePack(project, new DotNetCorePackSettings()
     {
-        NoBuild = true,
         OutputDirectory = "./artifacts/nuget",
         Verbosity = DotNetCoreVerbosity.Quiet
     });
 });
 
-Task("Publish-Package")
+Task("Publish-Package-To-Nuget")
+    .WithCriteria(HasEnvironmentVariable("NUGET_TOKEN"))
     .IsDependentOn("Create-Package")
     .Does(() =>
 {
@@ -91,6 +107,15 @@ Task("Publish-Package")
         Source = "https://api.nuget.org/v3/index.json",
         ApiKey = EnvironmentVariable("NUGET_TOKEN")
     });
+});
+
+Task("Publish-Package-To-GitHub")
+    .WithCriteria(HasEnvironmentVariable("GITHUB_TOKEN"))
+    .IsDependentOn("Create-Package")
+    .Does(() =>
+{
+    var packages = GetFiles("./artifacts/nuget/*.nupkg");
+
     NuGetPush(packages, new NuGetPushSettings()
     {
         Source = "https://nuget.pkg.github.com/lukoerfer/index.json",
@@ -109,6 +134,7 @@ Task("Build-Docs")
 Task("Publish")
     .IsDependentOn("Clean")
     .IsDependentOn("Check")
-    .IsDependentOn("Publish-Package");
+    .IsDependentOn("Publish-Package-To-Nuget")
+    .IsDependentOn("Publish-Package-To-GitHub");
 
 RunTarget(target);

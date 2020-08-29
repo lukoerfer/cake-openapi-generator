@@ -15,14 +15,20 @@ namespace Cake.OpenApiGenerator
     public class OpenApiGenerator : Tool<OpenApiGeneratorSettings>
     {
         /// <summary>
+        /// Gets or sets the tool path
+        /// </summary>
+        /// <remarks></remarks>
+        public FilePath ToolPath { get; set; }
+
+        /// <summary>
         /// Gets or sets the Maven package used to run the commands
         /// </summary>
-        public MavenCoordinates ToolPackage { get; set; }
+        public MavenCoordinates ToolJavaPackage { get; set; }
 
         /// <summary>
         /// Gets or sets the package file used to run the commands
         /// </summary>
-        public FilePath ToolPackageFile { get; set; }
+        public FilePath ToolJavaPackagePath { get; set; }
 
         private readonly IMavenClient mavenClient;
 
@@ -41,15 +47,18 @@ namespace Cake.OpenApiGenerator
         }
 
         /// <summary>
-        /// Sets the <see cref="MavenCoordinates.Version"/> of this wrapper using a shorthand notation
+        /// Sets the <see cref="MavenCoordinates.Version"/> of the <see cref="ToolJavaPackage"/> using a shortcut notation
         /// </summary>
-        /// <param name="version">A version supported by the OpenAPI generator</param>
-        /// <returns>The same wrapper for method chaining</returns>
+        /// <param name="version"></param>
+        /// <returns></returns>
         public OpenApiGenerator this[string version]
         {
             get
             {
-                ToolPackage.Version = version;
+                if (ToolJavaPackage != null)
+                {
+                    ToolJavaPackage.Version = version;
+                }
                 return this;
             }
         }
@@ -135,7 +144,7 @@ namespace Cake.OpenApiGenerator
 
         private void Run(OpenApiGeneratorSettings settings)
         {
-            settings.ToolPackageFile = settings.ToolPackageFile ?? ToolPackageFile ?? mavenClient.Resolve(settings.ToolPackage ?? ToolPackage);
+            settings.ToolPackagePath = settings.ToolPackagePath ?? ToolJavaPackagePath ?? mavenClient.Resolve(settings.ToolPackage ?? ToolJavaPackage);
             Run(settings, settings.AsArguments());
         }
 

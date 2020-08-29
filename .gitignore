@@ -2,7 +2,9 @@ artifacts/
 
 [Bb]in/
 [Oo]bj/
-.vs
 
 tools/**
 !tools/packages.config
+
+.vs
+.sonarqube

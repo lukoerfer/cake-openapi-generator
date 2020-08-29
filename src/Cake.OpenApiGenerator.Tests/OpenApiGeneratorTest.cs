@@ -4,10 +4,12 @@ using Cake.OpenApiGenerator.Maven;
 using Cake.OpenApiGenerator.Settings;
 using Cake.OpenApiGenerator.Util;
 using Cake.Testing;
+
 using FakeItEasy;
+
 using NUnit.Framework;
+
 using System.IO;
-using System.Runtime.InteropServices;
 
 namespace Cake.OpenApiGenerator
 {

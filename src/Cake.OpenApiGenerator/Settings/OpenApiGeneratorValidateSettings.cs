@@ -1,7 +1,6 @@
 ﻿using Cake.Core;
 using Cake.Core.IO;
-
-using System;
+using Cake.OpenApiGenerator.Extensions;
 
 namespace Cake.OpenApiGenerator.Settings
 {
@@ -21,26 +20,12 @@ namespace Cake.OpenApiGenerator.Settings
         /// </summary>
         public bool Recommend { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         internal override ProcessArgumentBuilder AsArguments()
         {
-            var arguments = base.AsArguments();
-
-            if (Specification == null)
-                throw new ArgumentNullException(nameof(Specification));
-
-            arguments.Append("validate");
-
-            arguments.Append("-i").Append(Specification);
-            if (Recommend)
-            {
-                arguments.Append("--recommend");
-            }
-
-            return arguments;
+            return base.AsArguments()
+                .Append("validate")
+                .AppendOptionalSwitch("-i", Specification)
+                .AppendOptionalSwitch("--recommend", Recommend);
         }
     }
 }

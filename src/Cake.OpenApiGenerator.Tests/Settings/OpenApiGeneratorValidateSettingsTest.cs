@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using System;
 
 namespace Cake.OpenApiGenerator.Settings
 {
@@ -13,7 +12,7 @@ namespace Cake.OpenApiGenerator.Settings
         {
             settings = new OpenApiGeneratorValidateSettings()
             {
-                ToolPackageFile = "package.jar",
+                ToolPackagePath = "package.jar",
                 Specification = "petstore.yaml"
             };
         }
@@ -24,17 +23,6 @@ namespace Cake.OpenApiGenerator.Settings
             var arguments = settings.AsArguments().Render();
 
             Assert.AreEqual("-jar package.jar validate -i petstore.yaml", arguments);
-        }
-
-        [Test]
-        public void ShouldFailIfSpecificationIsNull()
-        {
-            settings.Specification = null;
-
-            Assert.Throws<ArgumentNullException>(() =>
-            {
-                settings.AsArguments();
-            });
         }
 
         [Test]

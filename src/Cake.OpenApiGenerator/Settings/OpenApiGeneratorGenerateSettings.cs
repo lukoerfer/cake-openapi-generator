@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 using Cake.Core;
 using Cake.Core.IO;
+using Cake.OpenApiGenerator.Extensions;
 
 namespace Cake.OpenApiGenerator.Settings
 {
@@ -23,6 +22,12 @@ namespace Cake.OpenApiGenerator.Settings
         /// </summary>
         /// <remarks>This parameter is required.</remarks>
         public string Generator { get; set; }
+
+        /// <summary>
+        /// Gets or sets the language
+        /// </summary>
+        /// <remarks>Use this parameter when running <c>swagger-codegen</c></remarks>
+        public string Language { get; set; }
 
         /// <summary>
         /// Gets or sets the output directory
@@ -218,6 +223,12 @@ namespace Cake.OpenApiGenerator.Settings
         public bool? StrictSpec { get; set; }
 
         /// <summary>
+        /// Gets or sets system properties
+        /// </summary>
+        /// <remarks>For version 5.0+ use <see cref="GlobalProperties"/></remarks>
+        public Dictionary<string, string> SystemProperties { get; set; } = new Dictionary<string, string>();
+
+        /// <summary>
         /// Gets or sets the folder containing the template files
         /// </summary>
         public DirectoryPath TemplateDirectory { get; set; }
@@ -234,180 +245,51 @@ namespace Cake.OpenApiGenerator.Settings
 
         internal override ProcessArgumentBuilder AsArguments()
         {
-            var arguments = base.AsArguments();
-
-            if (Specification == null)
-                throw new ArgumentNullException(nameof(Specification));
-            if (Generator == null)
-                throw new ArgumentNullException(nameof(Generator));
-            if (OutputDirectory == null)
-                throw new ArgumentNullException(nameof(OutputDirectory));
-
-            arguments.Append("generate");
-
-            arguments.Append("-i").Append(Specification);
-            arguments.Append("-g").Append(Generator);
-            arguments.Append("-o").Append(OutputDirectory.FullPath);
-
-            if (ConfigurationFile != null)
-            {
-                arguments.Append("-c").Append(ConfigurationFile.FullPath);
-            }
-            else if (AdditionalProperties != null && AdditionalProperties.Count > 0)
-            {
-                arguments.Append("-p").Append(string.Join(",", AdditionalProperties.Select(e => e.Key + "=" + e.Value)));
-            }
-
-            if (Authorization != null)
-            {
-                arguments.Append("-a").Append(Authorization);
-            }
-            if (ApiNameSuffix != null)
-            {
-                arguments.Append("--api-name-suffix").Append(ApiNameSuffix);
-            }
-            if (ApiPackage != null)
-            {
-                arguments.Append("--api-package").Append(ApiPackage);
-            }
-            if (ArtifactId != null)
-            {
-                arguments.Append("--artifact-id").Append(ArtifactId);
-            }
-            if (ArtifactVersion != null)
-            {
-                arguments.Append("--artifact-version").Append(ArtifactVersion);
-            }
-            if (DryRun)
-            {
-                arguments.Append("--dry-run");
-            }
-            if (TemplatingEngine != null)
-            {
-                arguments.Append("-e").Append(TemplatingEngine);
-            }
-            if (EnablePostProcessFile)
-            {
-                arguments.Append("--enable-post-process-file");
-            }
-            if (GenerateAliasAsModel)
-            {
-                arguments.Append("--generate-alias-as-model");
-            }
-            if (GitHost != null)
-            {
-                arguments.Append("--git-host").Append(GitHost);
-            }
-            if (GitRepository != null)
-            {
-                arguments.Append("--git-repo-id").Append(GitRepository);
-            }
-            if (GitUser != null)
-            {
-                arguments.Append("--git-user-id").Append(GitUser);
-            }
-            if (GlobalProperties != null && GlobalProperties.Count > 0)
-            {
-                arguments.Append("--global-property").Append(string.Join(",", GlobalProperties.Select(e => e.Key + "=" + e.Value)));
-            }
-            if (GroupId != null)
-            {
-                arguments.Append("--group-id").Append(GroupId);
-            }
-            if (HttpUserAgent != null)
-            {
-                arguments.Append("--http-user-agent").Append(HttpUserAgent);
-            }
-            if (IgnoreFile != null)
-            {
-                arguments.Append("--ignore-file-override").Append(IgnoreFile.FullPath);
-            }
-            if (ImportMappings != null && ImportMappings.Count > 0)
-            {
-                arguments.Append("--import-mappings").Append(string.Join(",", ImportMappings.Select(e => e.Key + "=" + e.Value)));
-            }
-            if (InstantiationTypes != null && InstantiationTypes.Count > 0)
-            {
-                arguments.Append("--instantiation-types").Append(string.Join(",", InstantiationTypes.Select(e => e.Key + "=" + e.Value)));
-            }
-            if (InvokerPackage != null)
-            {
-                arguments.Append("--invoker-package").Append(InvokerPackage);
-            }
-            if (LanguageSpecificPrimitives != null && LanguageSpecificPrimitives.Count > 0)
-            {
-                arguments.Append("--language-specific-primitives").Append(string.Join(",", LanguageSpecificPrimitives));
-            }
-            if (LibraryTemplate != null)
-            {
-                arguments.Append("--library").Append(LibraryTemplate);
-            }
-            if (LogToStandardError)
-            {
-                arguments.Append("--log-to-stderr");
-            }
-            if (MinimalUpdate)
-            {
-                arguments.Append("--minimal-update");
-            }
-            if (ModelNamePrefix != null)
-            {
-                arguments.Append("--model-name-prefix").Append(ModelNamePrefix);
-            }
-            if (ModelNameSuffix != null)
-            {
-                arguments.Append("--model-name-suffix").Append(ModelNameSuffix);
-            }
-            if (ModelPackage != null)
-            {
-                arguments.Append("--model-package").Append(ModelPackage);
-            }
-            if (PackageName != null)
-            {
-                arguments.Append("--package-name").Append(PackageName);
-            }
-            if (ReleaseNote != null)
-            {
-                arguments.Append("--release-note").Append(ReleaseNote);
-            }            
-            if (RemoveOperationIdPrefix)
-            {
-                arguments.Append("--remove-operation-id-prefix");
-            }
-            if (ReservedWordsMappings != null && ReservedWordsMappings.Count > 0)
-            {
-                arguments.Append("--reserved-words-mappings").Append(string.Join(",", ReservedWordsMappings.Select(e => e.Key + "=" + e.Value)));
-            }
-            if (SkipOverwrite)
-            {
-                arguments.Append("-s");
-            }
-            if (ServerVariables != null && ServerVariables.Count > 0)
-            {
-                arguments.Append("--server-variables").Append(string.Join(",", ServerVariables.Select(e => e.Key + "=" + e.Value)));
-            }
-            if (SkipValidation)
-            {
-                arguments.Append("--skip-validate-spec");
-            }
-            if (StrictSpec.HasValue)
-            {
-                arguments.Append("--strict-spec").Append(StrictSpec.Value.ToString().ToLower());
-            }
-            if (TemplateDirectory != null)
-            {
-                arguments.Append("-t").Append(TemplateDirectory.FullPath);
-            }
-            if (TypeMappings != null && TypeMappings.Count > 0)
-            {
-                arguments.Append("--type-mappings").Append(string.Join(",", TypeMappings.Select(e => e.Key + "=" + e.Value)));
-            }
-            if (Verbose)
-            {
-                arguments.Append("-v");
-            }
-
-            return arguments;
+            return base.AsArguments()
+                .Append("generate")
+                .AppendOptionalSwitch("-i", Specification)
+                .AppendOptionalSwitch("-g", Generator)
+                .AppendOptionalSwitch("-l", Language)
+                .AppendOptionalSwitch("-o", OutputDirectory)
+                .AppendOptionalSwitch("-c", ConfigurationFile)
+                .AppendOptionalSwitch("-p", AdditionalProperties, dict => AsArguments(dict))
+                .AppendOptionalSwitch("-a", Authorization)
+                .AppendOptionalSwitch("--api-name-suffix", ApiNameSuffix)
+                .AppendOptionalSwitch("--api-package", ApiPackage)
+                .AppendOptionalSwitch("--artifact-id", ArtifactId)
+                .AppendOptionalSwitch("--artifact-version", ArtifactVersion)
+                .AppendOptionalSwitch("--dry-run", DryRun)
+                .AppendOptionalSwitch("-e", TemplatingEngine)
+                .AppendOptionalSwitch("--enable-post-process-file", EnablePostProcessFile)
+                .AppendOptionalSwitch("--generate-alias-as-model", GenerateAliasAsModel)
+                .AppendOptionalSwitch("--git-host", GitHost)
+                .AppendOptionalSwitch("--git-repo-id", GitRepository)
+                .AppendOptionalSwitch("--git-user-id", GitUser)
+                .AppendOptionalSwitch("--global-property", GlobalProperties, dict => AsArguments(dict))
+                .AppendOptionalSwitch("--group-id", GroupId)
+                .AppendOptionalSwitch("--http-user-agent", HttpUserAgent)
+                .AppendOptionalSwitch("--ignore-file-override", IgnoreFile)
+                .AppendOptionalSwitch("--import-mappings", ImportMappings, dict => AsArguments(dict))
+                .AppendOptionalSwitch("--instantiation-types", InstantiationTypes, dict => AsArguments(dict))
+                .AppendOptionalSwitch("--invoker-package", InvokerPackage)
+                .AppendOptionalSwitch("--language-specific-primitives", LanguageSpecificPrimitives, list => AsArguments(list))
+                .AppendOptionalSwitch("--library", LibraryTemplate)
+                .AppendOptionalSwitch("--log-to-stderr", LogToStandardError)
+                .AppendOptionalSwitch("--minimal-update", MinimalUpdate)
+                .AppendOptionalSwitch("--model-name-prefix", ModelNamePrefix)
+                .AppendOptionalSwitch("--model-name-suffix", ModelNameSuffix)
+                .AppendOptionalSwitch("--model-package", ModelPackage)
+                .AppendOptionalSwitch("--package-name", PackageName)
+                .AppendOptionalSwitch("--release-note", ReleaseNote)
+                .AppendOptionalSwitch("--remove-operation-id-prefix", RemoveOperationIdPrefix)
+                .AppendOptionalSwitch("--reserved-words-mappings", ReservedWordsMappings, dict => AsArguments(dict))
+                .AppendOptionalSwitch("-s", SkipOverwrite)
+                .AppendOptionalSwitch("--server-variables", ServerVariables, dict => AsArguments(dict))
+                .AppendOptionalSwitch("--skip-validate-spec", SkipValidation)
+                .AppendOptionalSwitch("--strict-spec", StrictSpec, value => value.ToString().ToLower())
+                .AppendOptionalSwitch("-t", TemplateDirectory)
+                .AppendOptionalSwitch("--type-mappings", TypeMappings, dict => AsArguments(dict))
+                .AppendOptionalSwitch("-v", Verbose);
         }
 
     }

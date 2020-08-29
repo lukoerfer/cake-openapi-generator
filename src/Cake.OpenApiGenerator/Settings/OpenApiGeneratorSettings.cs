@@ -1,9 +1,11 @@
-﻿using Cake.Core;
-using Cake.Core.IO;
+﻿using Cake.Core.IO;
 using Cake.Core.Tooling;
+using Cake.OpenApiGenerator.Extensions;
 using Cake.OpenApiGenerator.Maven;
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Cake.OpenApiGenerator.Settings
 {
@@ -18,18 +20,14 @@ namespace Cake.OpenApiGenerator.Settings
         public MavenCoordinates ToolPackage { get; set; }
 
         /// <summary>
-        /// Gets or sets the package file used to run this command
+        /// Gets or sets the path to the package file used to run this command
         /// </summary>
-        public FilePath ToolPackageFile { get; set; }
+        public FilePath ToolPackagePath { get; set; }
 
         internal virtual ProcessArgumentBuilder AsArguments()
         {
-            if (ToolPackageFile == null)
-                throw new ArgumentNullException(nameof(ToolPackageFile));
-
             return new ProcessArgumentBuilder()
-                .Append("-jar")
-                .Append(ToolPackageFile.FullPath);
+                .AppendOptionalSwitch("-jar", ToolPackagePath);
         }
 
         internal static T ConfiguredBy<T>(Action<T> configuration)
@@ -39,5 +37,9 @@ namespace Cake.OpenApiGenerator.Settings
             configuration.Invoke(settings);
             return settings;
         }
+
+        internal static string AsArguments<T>(List<T> values) => string.Join(",", values);
+
+        internal static string AsArguments<T1, T2>(Dictionary<T1, T2> values) => string.Join(",", values.Select(kvp => kvp.Key + "=" + kvp.Value));
     }
 }

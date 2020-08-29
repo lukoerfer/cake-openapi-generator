@@ -1,6 +1,6 @@
 ﻿using Cake.Core;
 using Cake.Core.IO;
-using Cake.Core.Tooling;
+using Cake.OpenApiGenerator.Extensions;
 
 using System;
 
@@ -59,47 +59,15 @@ namespace Cake.OpenApiGenerator.Settings
 
         internal override ProcessArgumentBuilder AsArguments()
         {
-            var arguments = base.AsArguments();
-
-            if (ConfigurationFiles == null)
-                throw new ArgumentNullException(nameof(ConfigurationFiles));
-            if (ConfigurationFiles.Count < 1)
-                throw new ArgumentException(null, nameof(ConfigurationFiles));
-
-            arguments.Append("batch");
-
-            if (FailFast)
-            {
-                arguments.Append("--fail-fast");
-            }
-            if (IncludesBaseDirectory != null)
-            {
-                arguments.Append("--includes-base-dir").Append(IncludesBaseDirectory.FullPath);
-            }
-            if (ThreadCount.HasValue)
-            {
-                arguments.Append("-r").Append(ThreadCount.ToString());
-            }
-            if (RootDirectory != null)
-            {
-                arguments.Append("--root-dir").Append(RootDirectory.FullPath);
-            }
-            if (Timeout.HasValue)
-            {
-                int minutes = (int) Timeout.Value.TotalMinutes;
-                arguments.Append("--timeout").Append(minutes.ToString());
-            }
-            if (Verbose)
-            {
-                arguments.Append("-v");
-            }
-
-            foreach (var configurationFile in ConfigurationFiles)
-            {
-                arguments.Append(configurationFile.FullPath);
-            }
-
-            return arguments;
+            return base.AsArguments()
+                .Append("batch")
+                .AppendOptionalSwitch("--fail-fast", FailFast)
+                .AppendOptionalSwitch("--includes-base-dir", IncludesBaseDirectory)
+                .AppendOptionalSwitch("-r", ThreadCount)
+                .AppendOptionalSwitch("--root-dir", RootDirectory)
+                .AppendOptionalSwitch("--timeout", Timeout, value => Convert.ToInt32(value.TotalMinutes).ToString())
+                .AppendOptionalSwitch("-v", Verbose)
+                .AppendRange(ConfigurationFiles);
         }
     }
 }

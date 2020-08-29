@@ -32,7 +32,7 @@ namespace Cake.OpenApiGenerator
             var mavenClient = new MavenClient(context.FileSystem, mavenLocal, mavenCentral);
             return new OpenApiGenerator(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools, mavenClient)
             {
-                ToolPackage = new MavenCoordinates("org.openapitools", "openapi-generator-cli")
+                ToolJavaPackage = new MavenCoordinates("org.openapitools", "openapi-generator-cli")
             };
         }
 
