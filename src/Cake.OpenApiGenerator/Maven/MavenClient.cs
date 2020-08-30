@@ -27,7 +27,7 @@ namespace Cake.OpenApiGenerator.Maven
             this.remoteRepository = remoteRepository;
         }
 
-        public FilePath Resolve(MavenCoordinates package)
+        public FilePath Resolve(MavenPackage package)
         {
             var groupId = package.GroupId;
             var artifactId = package.ArtifactId;

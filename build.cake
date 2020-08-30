@@ -34,8 +34,6 @@ Task("Clean")
 Task("Build")
     .Does(() =>
 {
-    SonarBegin(sonarSettings);
-
     DotNetCoreBuild(solution, new DotNetCoreBuildSettings()
     {
         Verbosity = DotNetCoreVerbosity.Quiet
@@ -73,7 +71,14 @@ Task("Functional-Tests")
     }
 });
 
+Task("Sonar-Setup")
+    .Does(() =>
+{
+    SonarBegin(sonarSettings);
+});
+
 Task("Sonar-Analysis")
+    .IsDependentOn("Sonar-Setup")
     .IsDependentOn("Build")
     .IsDependentOn("Unit-Tests")
     .Does(() =>

@@ -36,7 +36,7 @@ namespace Cake.OpenApiGenerator
             fileSystem.CreateFile(javaExecutable, FileAttributes.Normal);
             A.CallTo(() => runner.Start(A<FilePath>._, A<ProcessSettings>._)).Returns(A.Fake<IProcess>());
             A.CallTo(() => tools.Resolve(A<string>._)).Returns(javaExecutable);
-            A.CallTo(() => mavenClient.Resolve(A<MavenCoordinates>._)).Returns("/path/to/package.jar");
+            A.CallTo(() => mavenClient.Resolve(A<MavenPackage>._)).Returns("/path/to/package.jar");
         }
 
         [Test]

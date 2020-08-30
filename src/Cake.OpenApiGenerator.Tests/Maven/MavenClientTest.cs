@@ -33,7 +33,7 @@ namespace Cake.OpenApiGenerator.Maven
         {
             var mavenClient = new MavenClient(fileSystem, localRepository, remoteRepository);
 
-            mavenClient.Resolve(new MavenCoordinates("group", "artifact", "1.0.0"));
+            mavenClient.Resolve(new MavenPackage("group", "artifact", "1.0.0"));
 
             A.CallTo(() => remoteRepository.OpenRead(A<string>.That.EndsWith(".jar"))).MustHaveHappenedOnceExactly();
         }
@@ -45,7 +45,7 @@ namespace Cake.OpenApiGenerator.Maven
             fileSystem.CreateFile(localRepository.CombineWithFilePath(localPackage));
             var mavenClient = new MavenClient(fileSystem, localRepository, remoteRepository);
 
-            mavenClient.Resolve(new MavenCoordinates("group", "artifact", "1.0.0"));
+            mavenClient.Resolve(new MavenPackage("group", "artifact", "1.0.0"));
 
             A.CallTo(() => remoteRepository.OpenRead(A<string>._)).MustNotHaveHappened();
         }
@@ -55,7 +55,7 @@ namespace Cake.OpenApiGenerator.Maven
         {
             var mavenClient = new MavenClient(fileSystem, localRepository, remoteRepository);
 
-            mavenClient.Resolve(new MavenCoordinates("group", "artifact", version: null));
+            mavenClient.Resolve(new MavenPackage("group", "artifact", version: null));
 
             A.CallTo(() => remoteRepository.OpenRead(A<string>.That.EndsWith(".xml"))).MustHaveHappenedOnceExactly();
         }

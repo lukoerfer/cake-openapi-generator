@@ -1,9 +1,9 @@
-﻿namespace Cake.OpenApiGenerator.Maven
+﻿namespace Cake.OpenApiGenerator
 {
     /// <summary>
     /// Represents a Maven package descriptor
     /// </summary>
-    public sealed class MavenCoordinates
+    public sealed class MavenPackage
     {
         /// <summary>
         /// Gets or sets the package group identifier
@@ -26,7 +26,7 @@
         /// <param name="groupId">The package group identifier</param>
         /// <param name="artifactId">The package artifact identifier</param>
         /// <param name="version">The package version (optional)</param>
-        public MavenCoordinates(string groupId, string artifactId, string version = null)
+        public MavenPackage(string groupId, string artifactId, string version = null)
         {
             GroupId = groupId;
             ArtifactId = artifactId;

@@ -17,7 +17,7 @@ namespace Cake.OpenApiGenerator.Settings
         /// <summary>
         /// Gets or sets the Maven package used to run this command
         /// </summary>
-        public MavenCoordinates ToolPackage { get; set; }
+        public MavenPackage ToolPackage { get; set; }
 
         /// <summary>
         /// Gets or sets the path to the package file used to run this command

@@ -1,6 +1,6 @@
 #r "../src/Cake.OpenApiGenerator/bin/Debug/netstandard2.0/Cake.OpenApiGenerator.dll"
 
-Task("Generate")
+Task("Batch-Settings")
 	.Does(() =>
 {
 	OpenApiGenerator.Batch(new OpenApiGeneratorBatchSettings()
@@ -9,4 +9,4 @@ Task("Generate")
 	});
 });
 
-RunTarget("Generate");
+RunTarget("Batch-Settings");

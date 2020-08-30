@@ -1,6 +1,6 @@
 #r "../src/Cake.OpenApiGenerator/bin/Debug/netstandard2.0/Cake.OpenApiGenerator.dll"
 
-Task("Generate")
+Task("Generate-Settings")
 	.Does(() =>
 {
 	OpenApiGenerator.Generate(new OpenApiGeneratorGenerateSettings()
@@ -11,4 +11,4 @@ Task("Generate")
 	});
 });
 
-RunTarget("Generate");
+RunTarget("Generate-Settings");

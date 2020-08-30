@@ -26,13 +26,13 @@ namespace Cake.OpenApiGenerator
             var mavenLocal = new DirectoryPath(userProfile).Combine(".m2/repository");
             var mavenCentral = new DefaultWebClient()
             {
-                BaseAddress = "https://repo1.maven.org/maven2/"
+                BaseAddress = "https://jcenter.bintray.com/"
             };
 
             var mavenClient = new MavenClient(context.FileSystem, mavenLocal, mavenCentral);
             return new OpenApiGenerator(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools, mavenClient)
             {
-                ToolJavaPackage = new MavenCoordinates("org.openapitools", "openapi-generator-cli")
+                ToolPackage = new MavenPackage("org.openapitools", "openapi-generator-cli")
             };
         }
 
