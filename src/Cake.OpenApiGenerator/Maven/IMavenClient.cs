@@ -11,7 +11,7 @@ namespace Cake.OpenApiGenerator.Maven
         /// Resolves a Maven package file
         /// </summary>
         /// <param name="package">A Maven package descriptor</param>
-        /// <returns>A path to a local file that contains the Maven package</returns>
+        /// <returns>A path to a local file that contains the Maven package file</returns>
         FilePath Resolve(MavenPackage package);
     }
 }

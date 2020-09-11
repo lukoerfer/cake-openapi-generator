@@ -1,6 +1,5 @@
 ﻿using Cake.Core;
 using Cake.Core.IO;
-using Cake.OpenApiGenerator.Extensions;
 
 using System;
 
@@ -65,7 +64,8 @@ namespace Cake.OpenApiGenerator.Settings
                 .AppendOptionalSwitch("--includes-base-dir", IncludesBaseDirectory)
                 .AppendOptionalSwitch("-r", ThreadCount)
                 .AppendOptionalSwitch("--root-dir", RootDirectory)
-                .AppendOptionalSwitch("--timeout", Timeout, value => Convert.ToInt32(value.TotalMinutes).ToString())
+                .AppendOptionalSwitch("--timeout", Timeout,
+                    converter: value => Convert.ToInt32(value.TotalMinutes).ToString())
                 .AppendOptionalSwitch("-v", Verbose)
                 .AppendRange(ConfigurationFiles);
         }

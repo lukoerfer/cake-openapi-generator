@@ -21,7 +21,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void AsArguments_ShouldEqualDefaultCommand_OnDefaultSetup()
+        public void AsArguments_DefaultSettings_EqualsDefaultCommand()
         {
             var arguments = settings.AsArguments().Render();
 
@@ -29,7 +29,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void AsArguments_ShouldContainAuthorization_IfAuthorizationDefined()
+        public void AsArguments_AuthorizationDefined_ContainsAuthorization()
         {
             settings.Authorization = "Authorization%3A%20Basic%20QWxhZGRpbjpPcGVuU2VzYW1l";
 
@@ -39,7 +39,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderApiNameSuffixInArguments()
+        public void AsArguments_ApiNameSuffixDefined_ContainsApiNameSuffix()
         {
             settings.ApiNameSuffix = "Api";
 
@@ -49,7 +49,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderApiPackageInArguments()
+        public void AsArguments_ApiPackageDefined_ContainsApiPackage()
         {
             settings.ApiPackage = "petstore";
 
@@ -59,7 +59,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderArtifactIdInArguments()
+        public void AsArguments_ArtifactIdDefined_ContainsArtifactId()
         {
             settings.ArtifactId = "petstore";
 
@@ -69,7 +69,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderArtifactVersionInArguments()
+        public void AsArguments_ArtifactVersionDefined_ContainsArtifactVersion()
         {
             settings.ArtifactVersion = "1.2.3";
 
@@ -79,7 +79,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderConfigurationFileInArguments()
+        public void AsArguments_ConfigurationFileDefined_ContainsConfigurationFile()
         {
             settings.ConfigurationFile = "config.json";
 
@@ -89,7 +89,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderDryRunInArguments()
+        public void AsArguments_DryRunTrue_ContainsDryRun()
         {
             settings.DryRun = true;
 
@@ -99,7 +99,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderTemplatingEngineInArguments()
+        public void AsArguments_TemplatingEngineDefined_ContainsTemplatingEngine()
         {
             settings.TemplatingEngine = "handlebars";
 
@@ -109,7 +109,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderEnablePostProcessFileInArguments()
+        public void AsArguments_EnablePostProcessFileDefined_ContainsEnablePostProcessFile()
         {
             settings.EnablePostProcessFile = true;
 
@@ -119,7 +119,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderGenerateAliasAsModelInArguments()
+        public void AsArguments_GenerateAliasAsModelTrue_ContainsGenerateAliasAsModel()
         {
             settings.GenerateAliasAsModel = true;
 
@@ -129,7 +129,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderGitHostInArguments()
+        public void AsArguments_GitHostDefined_ContainsGitHost()
         {
             settings.GitHost = "gitlab.com";
 
@@ -139,7 +139,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderGitRepositoryInArguments()
+        public void AsArguments_GitRepositoryDefined_ContainsGitRepository()
         {
             settings.GitRepository = "openapi-generator";
 
@@ -149,7 +149,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderGitUserInArguments()
+        public void AsArguments_GitUserDefined_ContainsGitUser()
         {
             settings.GitUser = "openapitools";
 
@@ -159,7 +159,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderGlobalPropertiesInArguments()
+        public void AsArguments_GlobalPropertiesDefined_ContainsGlobalProperties()
         {
             settings.GlobalProperties.Add("name", "value");
             settings.GlobalProperties.Add("name2", "value2");
@@ -170,7 +170,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldNotFailIfGlobalPropertiesIsNull()
+        public void AsArguments_GlobalPropertiesNull_DoesNotFail()
         {
             settings.GlobalProperties = null;
 
@@ -181,7 +181,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderGroupIdInArguments()
+        public void AsArguments_GroupIdDefined_ContainsGroupId()
         {
             settings.GroupId = "com.example";
 
@@ -191,7 +191,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderHttpUserAgentInArguments()
+        public void AsArguments_HttpUserAgentDefined_ContainsHttpUserAgent()
         {
             settings.HttpUserAgent = "codegen_csharp_api_client";
 
@@ -201,7 +201,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderIgnoreFileInArguments()
+        public void AsArguments_IgnoreFileDefined_ContainsIgnoreFile()
         {
             settings.IgnoreFile = ".generator-ignore";
 
@@ -211,7 +211,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderImportMappingsInArguments()
+        public void AsArguments_ImportMappingsDefined_ContainsImportMappings()
         {
             settings.ImportMappings.Add("DateTime", "java.time.LocalDateTime");
 
@@ -221,7 +221,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldNotFailIfImportMappingsIsNull()
+        public void AsArguments_ImportMappingsNull_DoesNotFail()
         {
             settings.ImportMappings = null;
 
@@ -232,7 +232,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderInstantiationTypesInArguments()
+        public void AsArguments_InstantiationTypesDefined_ContainsInstantiationTypes()
         {
             settings.InstantiationTypes.Add("array", "ArrayList");
             settings.InstantiationTypes.Add("map", "HashMap");
@@ -243,7 +243,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderInvokerPackageInArguments()
+        public void AsArguments_InvokerPackageDefined_ContainsInvokerPackage()
         {
             settings.InvokerPackage = "petstore";
 
@@ -253,7 +253,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderLanguageSpecificPrimitivesInArguments()
+        public void AsArguments_LanguageSpecificPrimitivesDefined_ContainsLanguageSpecificPrimitives()
         {
             settings.LanguageSpecificPrimitives.Add("String");
             settings.LanguageSpecificPrimitives.Add("boolean");
@@ -264,7 +264,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderLibraryTemplate()
+        public void AsArguments_LibraryTemplateDefined_ContainsLibraryTemplate()
         {
             settings.LibraryTemplate = "petstore";
 
@@ -274,7 +274,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderLogToStandardErrorInArguments()
+        public void AsArguments_LogToStandardErrorTrue_ContainsLogToStandardError()
         {
             settings.LogToStandardError = true;
 
@@ -284,7 +284,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderMinimalUpdateInArguments()
+        public void AsArguments_MinimalUpdateTrue_ContainsMinimalUpdate()
         {
             settings.MinimalUpdate = true;
 
@@ -294,7 +294,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderModelNamePrefixInArguments()
+        public void AsArguments_ModelNamePrefixDefined_ContainsModelNamePrefix()
         {
             settings.ModelNamePrefix = "T_";
 
@@ -304,7 +304,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderModelNameSuffixInArguments()
+        public void AsArguments_ModelNameSuffixDefined_ContainsModelNameSuffix()
         {
             settings.ModelNameSuffix = "Model";
 
@@ -314,7 +314,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderModelPackageInArguments()
+        public void AsArguments_ModelPackageDefined_ContainsModelPackage()
         {
             settings.ModelPackage = "petstore";
 
@@ -324,7 +324,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderAdditionalPropertiesInArguments()
+        public void AsArguments_AdditionalPropertiesDefined_ContainsAdditionalProperties()
         {
             settings.AdditionalProperties.Add("name", "value");
             settings.AdditionalProperties.Add("name2", "value2");
@@ -335,7 +335,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderPackageNameInArguments()
+        public void AsArguments_PackageNameDefined_ContainsPackageName()
         {
             settings.PackageName = "petstore";
 
@@ -345,7 +345,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderReleaseNoteInArguments()
+        public void AsArguments_ReleaseNoteDefined_ContainsReleaseNote()
         {
             settings.ReleaseNote = "'Minor update'";
 
@@ -355,7 +355,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderRemoveOperationIdPrefixInArguments()
+        public void AsArguments_RemoveOperationIdPrefixTrue_ContainsRemoveOperationIdPrefix()
         {
             settings.RemoveOperationIdPrefix = true;
 
@@ -365,7 +365,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderReservedWordsMappingsInArguments()
+        public void AsArguments_ReservedWordsMappingsDefined_ContainsReservedWordsMappings()
         {
             settings.ReservedWordsMappings.Add("id", "identifier");
 
@@ -375,7 +375,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderSkipOverwriteInArguments()
+        public void AsArguments_SkipOverwriteTrue_ContainsSkipOverwrite()
         {
             settings.SkipOverwrite = true;
 
@@ -385,7 +385,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderServerVariablesAsArguments()
+        public void AsArguments_ServerVariablesDefined_ContainsServerVariables()
         {
             settings.ServerVariables.Add("name", "value");
             settings.ServerVariables.Add("name2", "value2");
@@ -396,7 +396,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderSkipValidationAsArguments()
+        public void AsArguments_SkipValidationTrue_ContainsSkipValidation()
         {
             settings.SkipValidation = true;
 
@@ -406,7 +406,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderStrictSpecAsArguments()
+        public void AsArguments_StrictSpecDefined_ContainsStrictSpec()
         {
             settings.StrictSpec = false;
 
@@ -416,7 +416,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderTemplateDirectoryAsArguments()
+        public void AsArguments_TemplateDirectoryDefined_ContainsTemplateDirectory()
         {
             settings.TemplateDirectory = "./template";
 
@@ -426,7 +426,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderTypeMappingsAsArguments()
+        public void AsArguments_TypeMappingsDefined_ContainsTypeMappings()
         {
             settings.TypeMappings.Add("array", "List");
             settings.TypeMappings.Add("map", "Map");
@@ -437,7 +437,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderVerboseAsArguments()
+        public void AsArguments_VerboseTrue_ContainsVerbose()
         {
             settings.Verbose = true;
 

@@ -2,7 +2,6 @@
 
 using Cake.Core;
 using Cake.Core.IO;
-using Cake.OpenApiGenerator.Extensions;
 
 namespace Cake.OpenApiGenerator.Settings
 {
@@ -252,7 +251,8 @@ namespace Cake.OpenApiGenerator.Settings
                 .AppendOptionalSwitch("-l", Language)
                 .AppendOptionalSwitch("-o", OutputDirectory)
                 .AppendOptionalSwitch("-c", ConfigurationFile)
-                .AppendOptionalSwitch("-p", AdditionalProperties, dict => AsArguments(dict))
+                .AppendOptionalSwitch("-p", AdditionalProperties,
+                    condition: dict => dict.Count > 0 , converter: dict => AsArguments(dict))
                 .AppendOptionalSwitch("-a", Authorization)
                 .AppendOptionalSwitch("--api-name-suffix", ApiNameSuffix)
                 .AppendOptionalSwitch("--api-package", ApiPackage)
@@ -265,14 +265,18 @@ namespace Cake.OpenApiGenerator.Settings
                 .AppendOptionalSwitch("--git-host", GitHost)
                 .AppendOptionalSwitch("--git-repo-id", GitRepository)
                 .AppendOptionalSwitch("--git-user-id", GitUser)
-                .AppendOptionalSwitch("--global-property", GlobalProperties, dict => AsArguments(dict))
+                .AppendOptionalSwitch("--global-property", GlobalProperties,
+                    condition: dict => dict.Count > 0, converter: dict => AsArguments(dict))
                 .AppendOptionalSwitch("--group-id", GroupId)
                 .AppendOptionalSwitch("--http-user-agent", HttpUserAgent)
                 .AppendOptionalSwitch("--ignore-file-override", IgnoreFile)
-                .AppendOptionalSwitch("--import-mappings", ImportMappings, dict => AsArguments(dict))
-                .AppendOptionalSwitch("--instantiation-types", InstantiationTypes, dict => AsArguments(dict))
+                .AppendOptionalSwitch("--import-mappings", ImportMappings,
+                    condition: dict => dict.Count > 0, converter: dict => AsArguments(dict))
+                .AppendOptionalSwitch("--instantiation-types", InstantiationTypes,
+                    condition: dict => dict.Count > 0, converter: dict => AsArguments(dict))
                 .AppendOptionalSwitch("--invoker-package", InvokerPackage)
-                .AppendOptionalSwitch("--language-specific-primitives", LanguageSpecificPrimitives, list => AsArguments(list))
+                .AppendOptionalSwitch("--language-specific-primitives", LanguageSpecificPrimitives,
+                    condition: list => list.Count > 0, converter: list => AsArguments(list))
                 .AppendOptionalSwitch("--library", LibraryTemplate)
                 .AppendOptionalSwitch("--log-to-stderr", LogToStandardError)
                 .AppendOptionalSwitch("--minimal-update", MinimalUpdate)
@@ -282,13 +286,17 @@ namespace Cake.OpenApiGenerator.Settings
                 .AppendOptionalSwitch("--package-name", PackageName)
                 .AppendOptionalSwitch("--release-note", ReleaseNote)
                 .AppendOptionalSwitch("--remove-operation-id-prefix", RemoveOperationIdPrefix)
-                .AppendOptionalSwitch("--reserved-words-mappings", ReservedWordsMappings, dict => AsArguments(dict))
+                .AppendOptionalSwitch("--reserved-words-mappings", ReservedWordsMappings,
+                    condition: dict => dict.Count > 0, converter: dict => AsArguments(dict))
                 .AppendOptionalSwitch("-s", SkipOverwrite)
-                .AppendOptionalSwitch("--server-variables", ServerVariables, dict => AsArguments(dict))
+                .AppendOptionalSwitch("--server-variables", ServerVariables,
+                    condition: dict => dict.Count > 0, converter: dict => AsArguments(dict))
                 .AppendOptionalSwitch("--skip-validate-spec", SkipValidation)
-                .AppendOptionalSwitch("--strict-spec", StrictSpec, value => value.ToString().ToLower())
+                .AppendOptionalSwitch("--strict-spec", StrictSpec,
+                    converter: value => value.ToString().ToLower())
                 .AppendOptionalSwitch("-t", TemplateDirectory)
-                .AppendOptionalSwitch("--type-mappings", TypeMappings, dict => AsArguments(dict))
+                .AppendOptionalSwitch("--type-mappings", TypeMappings,
+                    condition: dict => dict.Count > 0, converter: dict => AsArguments(dict))
                 .AppendOptionalSwitch("-v", Verbose);
         }
 

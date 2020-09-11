@@ -47,7 +47,6 @@ OpenApiGenerator.Generate(settings =>
 ```
 
 ### Reproducible builds
-
 By default, the latest version of the OpenAPI generator will be resolved and used.
 Of course, this requires access to the Internet and may break builds that worked with previous tool versions.
 It is recommended to pin the tool version as shown in the example below:
@@ -85,19 +84,20 @@ OpenApiGenerator.Batch("csharp-server.yaml", "javascript-client.yaml");
 
 OpenApiGenerator.Batch(new OpenApiBatchSettings()
 {
-    ConfigurationFiles = new FilePathCollection()
+    ConfigurationFiles = new FilePathCollection(new FilePath[] { "csharp-server.yaml", "javascript-client.yaml" })
     // ...
 });
 
 OpenApiGenerator.Batch(settings =>
 {
-    settings.ConfigurationFiles.Add("");
-    settings.ConfigurationFiles.Add("");
+    settings.ConfigurationFiles.Add("csharp-server.yaml");
+    settings.ConfigurationFiles.Add("javascript-client.yaml");
     // ...
 });
 ```
 
 ### Advanced usage
+
 
 ``` csharp
 Setup(context =>

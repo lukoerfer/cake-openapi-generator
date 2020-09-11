@@ -18,7 +18,7 @@ namespace Cake.OpenApiGenerator
         }
 
         [Test]
-        public void ShouldNotFailOnPropertyAlias()
+        public void OpenApiGenerator_WithAnyContext_DoesNotFail()
         {
             Assert.DoesNotThrow(() =>
             {

@@ -1,6 +1,5 @@
 ﻿using Cake.Core;
 using Cake.Core.IO;
-using Cake.OpenApiGenerator.Extensions;
 
 namespace Cake.OpenApiGenerator.Settings
 {

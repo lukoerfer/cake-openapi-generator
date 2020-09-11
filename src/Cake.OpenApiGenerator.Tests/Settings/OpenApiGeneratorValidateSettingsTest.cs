@@ -18,7 +18,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderArgumentsFromRequiredParameters()
+        public void AsArguments_DefaultSettings_EqualsDefaultCommand()
         {
             var arguments = settings.AsArguments().Render();
 
@@ -26,7 +26,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderRecommendInArguments()
+        public void AsArguments_RecommendTrue_ContainsRecommend()
         {
             settings.Recommend = true;
 

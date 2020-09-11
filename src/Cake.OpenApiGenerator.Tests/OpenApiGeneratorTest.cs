@@ -40,7 +40,7 @@ namespace Cake.OpenApiGenerator
         }
 
         [Test]
-        public void ShouldRunProcessOnGenerateWithSettings()
+        public void Generate_WithValidSettings_RunJavaProcess()
         {
             var generator = new OpenApiGenerator(fileSystem, environment, runner, tools, mavenClient);
 
@@ -55,7 +55,7 @@ namespace Cake.OpenApiGenerator
         }
 
         [Test]
-        public void ShouldRunProcessOnGenerateWithConfigurator()
+        public void Generate_WithValidConfigurator_RunsJavaProcess()
         {
             var generator = new OpenApiGenerator(fileSystem, environment, runner, tools, mavenClient);
 
@@ -70,7 +70,7 @@ namespace Cake.OpenApiGenerator
         }
 
         [Test]
-        public void ShouldRunProcessOnValidate()
+        public void Validate_WithValidParameters_RunsJavaProcess()
         {
             var generator = new OpenApiGenerator(fileSystem, environment, runner, tools, mavenClient);
 
@@ -80,7 +80,7 @@ namespace Cake.OpenApiGenerator
         }
 
         [Test]
-        public void ShouldRunProcessOnBatch()
+        public void Batch_WithValidParameters_RunsJavaProcess()
         {
             var generator = new OpenApiGenerator(fileSystem, environment, runner, tools, mavenClient);
 
@@ -90,7 +90,7 @@ namespace Cake.OpenApiGenerator
         }
 
         [Test]
-        public void ShouldRunProcessOnBatchWithSettings()
+        public void Batch_WithValidSettings_RunsJavaProcess()
         {
             var generator = new OpenApiGenerator(fileSystem, environment, runner, tools, mavenClient);
 
@@ -103,7 +103,7 @@ namespace Cake.OpenApiGenerator
         }
 
         [Test]
-        public void ShouldRunProcessOnBatchWithConfigurator()
+        public void Batch_WithValidConfigurator_RunsJavaProcess()
         {
             var generator = new OpenApiGenerator(fileSystem, environment, runner, tools, mavenClient);
 

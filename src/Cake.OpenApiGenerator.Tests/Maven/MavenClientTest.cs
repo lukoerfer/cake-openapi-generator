@@ -29,7 +29,7 @@ namespace Cake.OpenApiGenerator.Maven
         }
 
         [Test]
-        public void ShouldReadPackageFromRemoteRepositoryIfPackageDoesNotExist()
+        public void Resolve_PackageDoesNotExist_ReadsPackageFromRemoteRepository()
         {
             var mavenClient = new MavenClient(fileSystem, localRepository, remoteRepository);
 
@@ -39,7 +39,7 @@ namespace Cake.OpenApiGenerator.Maven
         }
 
         [Test]
-        public void ShouldNotReadFromRemoteRepositoryIfPackageExists()
+        public void Resolve_PackageExists_DoesNotReadFromRemoteRepository()
         {
             var localPackage = new FilePath("group/artifact/1.0.0/artifact-1.0.0.jar");
             fileSystem.CreateFile(localRepository.CombineWithFilePath(localPackage));
@@ -51,7 +51,7 @@ namespace Cake.OpenApiGenerator.Maven
         }
 
         [Test]
-        public void ShouldQueryMetadataIfPackageVersionIsNotDefined()
+        public void Resolve_PackageVersionUndefined_QueriesMetadata()
         {
             var mavenClient = new MavenClient(fileSystem, localRepository, remoteRepository);
 

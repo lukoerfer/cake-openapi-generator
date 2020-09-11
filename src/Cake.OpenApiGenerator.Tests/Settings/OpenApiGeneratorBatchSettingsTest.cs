@@ -22,7 +22,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderArgumentsFromRequiredParameters()
+        public void AsArguments_DefaultSettings_EqualsDefaultCommand()
         {
             var arguments = settings.AsArguments().Render();
 
@@ -30,7 +30,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderAnotherConfigurationFileInArguments()
+        public void AsArguments_MultipleConfigurationFiles_ContainsAllConfigurationFiles()
         {
             settings.ConfigurationFiles.Add("javascript-client.yaml");
 
@@ -40,7 +40,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderFailFastInArguments()
+        public void AsArguments_FailFastDefined_ContainsFailFast()
         {
             settings.FailFast = true;
 
@@ -50,7 +50,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderIncludesBaseDirectoryInArguments()
+        public void AsArguments_IncludesBaseDirectoryDefined_ContainsIncludesBaseDirectory()
         {
             settings.IncludesBaseDirectory = "./baseDir";
 
@@ -60,7 +60,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderThreadCountInArguments()
+        public void AsArguments_ThreadCountDefined_ContainsThreadCount()
         {
             settings.ThreadCount = 4;
 
@@ -70,7 +70,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderRootDirectoryInArguments()
+        public void AsArguments_RootDirectoryDefined_ContainsRootDirectory()
         {
             settings.RootDirectory = "./rootDir";
 
@@ -80,7 +80,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderTimeoutInArguments()
+        public void AsArguments_TimeoutDefined_ContainsTimeout()
         {
             settings.Timeout = TimeSpan.FromMinutes(3);
 
@@ -90,7 +90,7 @@ namespace Cake.OpenApiGenerator.Settings
         }
 
         [Test]
-        public void ShouldRenderVerboseModeInArguments()
+        public void AsArguments_VerboseModeDefined_ContainsVerboseMode()
         {
             settings.Verbose = true;
 

@@ -1,7 +1,5 @@
 ﻿using Cake.Core.IO;
 using Cake.Core.Tooling;
-using Cake.OpenApiGenerator.Extensions;
-using Cake.OpenApiGenerator.Maven;
 
 using System;
 using System.Collections.Generic;
